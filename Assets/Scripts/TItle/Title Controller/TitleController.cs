@@ -6,79 +6,89 @@ public class TitleController : MonoBehaviour
     [SerializeField]
     private GameObject optionPanel, howUsePanel, exitPanel;
 
-    private float panelMoveTime = 0.8f;
+    private float panelMoveTime = 0.3f;
 
-    private Vector3 hidePosition;
-    private Vector3 showPosition;
+    private Vector3 hideOptionPosition;
+    private Vector3 showOptionPosition;
 
-    private RectTransform rectTransform;
+    private RectTransform rt;
 
-    private bool isAnimating;
+    private bool optionAnimating;
     private bool isOption;
 
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
+        rt = optionPanel.GetComponent<RectTransform>();
     }
 
     private void Start()
     {
-        hidePosition = new Vector3(-Screen.width / 2 - gameObject.GetComponent<RectTransform>().rect.width / 2, 0, 0);
-        showPosition = new Vector3(-Screen.width / 4, 0, 0);
+        hideOptionPosition = new Vector3(-Screen.width / 2 - optionPanel.GetComponent<RectTransform>().rect.width / 2, 0, 0);
+        showOptionPosition = new Vector3(-Screen.width / 4, 0, 0);
 
-        rectTransform.anchoredPosition = hidePosition;
+        rt.anchoredPosition = hideOptionPosition;
     }
 
     private void Update()
     {
-        MouseEvent();
+        HandleMouseEvent();
         PressKeys();
     }
 
-    private void MouseEvent()
+    private void HandleMouseEvent()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
-        if (isOption)
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
+        Cursor.visible = isOption;
+        Cursor.lockState = isOption ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     private void PressKeys()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (!isOption && !exitPanel.activeSelf && Input.GetKeyDown(KeyCode.Return))
         {
-            if (isAnimating || isOption) return;
-            StartCoroutine(MovePanel(true));
-            isOption = true;
+            // TODO: ¾À ·Îµå
         }
 
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.F1) && !isOption && !exitPanel.activeSelf)
         {
-            if (isAnimating || !isOption) return;
-            StartCoroutine(MovePanel(false));
-            isOption = false;
+            ToggleOptionPanel(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (exitPanel.activeSelf) ExitGame();
+            if (isOption) ToggleOptionPanel(false);
+            else exitPanel.SetActive(!exitPanel.activeSelf);
+        }
 
-            if (isOption || isAnimating) return;
+        if (exitPanel.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Return)) GameEnd();
+        }
+
+        if (!isOption && !exitPanel.activeSelf && howUsePanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        {
+            howUsePanel.SetActive(false);
         }
     }
 
-    IEnumerator MovePanel(bool isShow)
+    private void ToggleOptionPanel(bool _show)
     {
-        isAnimating = true;
+        if (optionAnimating) return;
 
-        rectTransform = gameObject.GetComponent<RectTransform>();
+        optionAnimating = true;
 
-        Vector3 startPosition = isShow ? hidePosition : showPosition;
-        Vector3 endPosition = isShow ? showPosition : hidePosition;
+        StartCoroutine(MovePanel(_show));
+
+        isOption = _show;
+    }
+
+    private IEnumerator MovePanel(bool _isShow)
+    {
+        optionAnimating = true;
+
+        rt = optionPanel.GetComponent<RectTransform>();
+
+        Vector3 startPosition = _isShow ? hideOptionPosition : showOptionPosition;
+        Vector3 endPosition = _isShow ? showOptionPosition : hideOptionPosition;
 
         float startTime = Time.time;
         float endTime = startTime + panelMoveTime;
@@ -86,19 +96,14 @@ public class TitleController : MonoBehaviour
         while (Time.time < endTime)
         {
             float t = (Time.time - startTime) / panelMoveTime;
-            rectTransform.anchoredPosition = Vector3.Lerp(startPosition, endPosition, t);
+            rt.anchoredPosition = Vector3.Lerp(startPosition, endPosition, t);
             yield return null;
         }
 
-        rectTransform.anchoredPosition = endPosition;
-        isAnimating = false;
+        rt.anchoredPosition = endPosition;
+        optionAnimating = false;
 
-        if (!isShow) Time.timeScale = 1f;
-    }
-
-    private void ExitGame()
-    {
-        if (Input.GetKeyDown(KeyCode.Return)) GameEnd();   
+        if (!_isShow) Time.timeScale = 1f;
     }
 
     private void GameEnd()
@@ -110,4 +115,8 @@ public class TitleController : MonoBehaviour
 #endif
     }
 
+    public void HowToUse()
+    {
+        howUsePanel.SetActive(true);
+    }
 }

@@ -46,6 +46,7 @@ public class AudioManager : SingletonComponent<AudioManager>
         randomMusic = GetComponent<AudioSource>();
         randomMusic.clip = RandomClip();
         randomMusic.Play();
+        randomMusic.loop = true;
     }
 
     public AudioClip RandomClip()
