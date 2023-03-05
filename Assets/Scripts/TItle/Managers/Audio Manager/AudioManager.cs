@@ -43,20 +43,21 @@ public class AudioManager : SingletonComponent<AudioManager>
 
     public void PlayRandomMusic()
     {
-        randomMusic.GetComponent<AudioSource>();
+        randomMusic = GetComponent<AudioSource>();
         randomMusic.clip = RandomClip();
         randomMusic.Play();
     }
 
     public AudioClip RandomClip()
     {
-        AudioClip randomClip = randomClipList.Find(x => x.name.Equals(randomClipList.Count));
+        if (randomClipList.Count == 0)
+        {
+            AudioClip[] clips = Resources.LoadAll<AudioClip>(RANDOM_PATH);
+            randomClipList.AddRange(clips);
+        }
 
-        if (randomClip != null) return randomClip;
-
-        randomClip = Resources.Load<AudioClip>($"{RANDOM_PATH}");
-
-        if (randomClip != null) randomClipList.Add(randomClip);
+        int index = Random.Range(0, randomClipList.Count);
+        AudioClip randomClip = randomClipList[index];
 
         return randomClip;
     }

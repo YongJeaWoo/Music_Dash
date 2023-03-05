@@ -18,7 +18,7 @@ public class RandomOutput : MonoBehaviour
 
     private void RandomMusic()
     {
-        if (SceneManager.GetActiveScene().name != "Loading") return;
+        if (SceneManager.GetActiveScene().name == "Loading") return;
 
         AudioManager.Instance.PlayRandomMusic();
     }
