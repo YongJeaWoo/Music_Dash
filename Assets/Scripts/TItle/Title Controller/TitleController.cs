@@ -45,7 +45,7 @@ public class TitleController : MonoBehaviour
     {
         if (!isOption && !exitPanel.activeSelf && Input.GetKeyDown(KeyCode.Return))
         {
-            // TODO: ¾À ·Îµå
+            LoadingController.LoadScene("Select");
         }
 
         if (Input.GetKeyDown(KeyCode.F1) && !isOption && !exitPanel.activeSelf)
