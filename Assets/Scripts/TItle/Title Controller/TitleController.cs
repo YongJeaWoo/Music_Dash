@@ -6,7 +6,7 @@ public class TitleController : MonoBehaviour
     [SerializeField]
     private GameObject optionPanel, howUsePanel, exitPanel;
 
-    private float panelMoveTime = 0.3f;
+    private float panelMoveTime = 0.25f;
 
     private Vector3 hideOptionPosition;
     private Vector3 showOptionPosition;
@@ -53,7 +53,7 @@ public class TitleController : MonoBehaviour
             ToggleOptionPanel(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !howUsePanel.activeSelf)
         {
             if (isOption) ToggleOptionPanel(false);
             else exitPanel.SetActive(!exitPanel.activeSelf);
@@ -62,11 +62,6 @@ public class TitleController : MonoBehaviour
         if (exitPanel.activeSelf)
         {
             if (Input.GetKeyDown(KeyCode.Return)) GameEnd();
-        }
-
-        if (!isOption && !exitPanel.activeSelf && howUsePanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
-        {
-            howUsePanel.SetActive(false);
         }
     }
 
@@ -118,5 +113,10 @@ public class TitleController : MonoBehaviour
     public void HowToUse()
     {
         howUsePanel.SetActive(true);
+    }
+
+    public void ConfirmHowToUse()
+    {
+        howUsePanel.SetActive(false);
     }
 }
