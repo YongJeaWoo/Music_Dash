@@ -1,7 +1,8 @@
 using SingletonComponent.Component;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class AudioManager : SingletonComponent<AudioManager>
 {
@@ -9,6 +10,13 @@ public class AudioManager : SingletonComponent<AudioManager>
     private List<AudioClip> clipList = new List<AudioClip>();
 
     private AudioSource startMusic;
+
+    [Header("Volume")]
+    [SerializeField]
+    private AudioMixer audioMixer;
+
+    [SerializeField]
+    private Slider masterSlider;
 
     private const string MUSIC_PATH = "InGame/Music/";
     
@@ -28,6 +36,11 @@ public class AudioManager : SingletonComponent<AudioManager>
 
     }
     #endregion
+
+    public void SetMasterVolume()
+    {
+        audioMixer.SetFloat("Master", Mathf.Log10(masterSlider.value) * 20);
+    }
 
     public void PlayMusic(string _clipName)
     {
