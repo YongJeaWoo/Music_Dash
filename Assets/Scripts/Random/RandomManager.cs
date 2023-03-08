@@ -30,7 +30,7 @@ public class RandomManager : SingletonComponent<RandomManager>
 
     public void PlayRandomMusic()
     {
-        randomMusic = GetComponent<AudioSource>();
+        randomMusic = AudioManager.Instance.GetComponent<AudioSource>();
         randomMusic.clip = RandomClip();
         randomMusic.Play();
         randomMusic.loop = true;
