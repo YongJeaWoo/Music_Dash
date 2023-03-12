@@ -19,12 +19,12 @@ public class TitleController : MonoBehaviour
 
         if (!OptionManager.Instance.IsOption && !exitPanel.activeSelf && Input.GetKeyDown(KeyCode.F1))
         {
-            OptionManager.Instance.ToggleOptionPanel(true);
+            OptionManager.Instance.ToggleOptionPanel();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !OptionManager.Instance.IsHowUse)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (OptionManager.Instance.IsOption) OptionManager.Instance.ToggleOptionPanel(false);
+            if (OptionManager.Instance.IsOption) OptionManager.Instance.ToggleOptionPanel();
             else exitPanel.SetActive(!exitPanel.activeSelf);
         }
 
