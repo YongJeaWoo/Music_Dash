@@ -1037,7 +1037,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clipList: []
   audioMixer: {fileID: 24100000, guid: f8f37356ecc77c34397dad0356215e64, type: 2}
-  masterSlider: {fileID: 0}
 --- !u!4 &752137519
 Transform:
   m_ObjectHideFlags: 0
@@ -2059,7 +2058,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1875644673}
   m_Layer: 0
-  m_Name: ++++ Function ++++
+  m_Name: ++++ Panels ++++
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

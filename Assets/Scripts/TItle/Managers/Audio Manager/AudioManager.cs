@@ -15,11 +15,15 @@ public class AudioManager : SingletonComponent<AudioManager>
     [SerializeField]
     private AudioMixer audioMixer;
 
-    [SerializeField]
     private Slider masterSlider;
+    public Slider MasterSlider
+    {
+        get => masterSlider;
+        set => masterSlider = value;
+    }
 
     private const string MUSIC_PATH = "InGame/Music/";
-    
+
     #region SingleTon
     protected override void AwakeInstance()
     {

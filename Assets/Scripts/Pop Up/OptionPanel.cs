@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OptionPanel : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class OptionPanel : MonoBehaviour
     private RectTransform rectTrans;
     private RectTransform howUseRectTrans;
 
-    #region Resolution
+    #region Resolution Info
     [SerializeField]
     private TMP_Dropdown resolutionDropdown;
 
@@ -33,6 +34,8 @@ public class OptionPanel : MonoBehaviour
 
     private void OnEnable()
     {
+
+
         rectTrans = GetComponent<RectTransform>();
         howUseRectTrans = howUsePanel.GetComponent<RectTransform>();
 

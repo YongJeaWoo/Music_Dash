@@ -28,14 +28,14 @@ public class PopupManager : SingletonComponent<PopupManager>
 
     private void Awake()
     {
-        CheckParent();
+        CheckParent(canvasParent);
     }
 
-    private void CheckParent()
+    private void CheckParent(Transform transform)
     {
-        if (canvasParent == null)
+        if (transform == null)
         {
-            GameObject.Find("++++ Function ++++");
+            transform.Find("++++ Panels ++++");
         }
     }
 
