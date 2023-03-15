@@ -71,10 +71,7 @@ public class OptionPanel : MonoBehaviour
 
         playAnimation = true;
 
-        StartCoroutine(MovePanel(rectTrans, false, () =>
-        {
-            PopupManager.Instance.RemovePopUp<OptionPanel>();
-        }));
+        StartCoroutine(MovePanel(rectTrans, false, () => PopupManager.Instance.RemovePopUp<OptionPanel>()));
     }
 
     public void InitializeHowUsePanel()
@@ -93,10 +90,7 @@ public class OptionPanel : MonoBehaviour
 
         playAnimation = true;
 
-        StartCoroutine(MovePanel(howUseRectTrans, false, () =>
-        {
-            isHowUse = false;
-        }));
+        StartCoroutine(MovePanel(howUseRectTrans, false, () => isHowUse = false));
     }
 
     private IEnumerator MovePanel(RectTransform rect, bool _isShow, Action _onComplete = null)
@@ -115,6 +109,7 @@ public class OptionPanel : MonoBehaviour
             rect.anchoredPosition = Vector3.Lerp(startPosition, endPosition, t);
             
             if (rect == howUseRectTrans) howUseRectTrans.anchoredPosition = Vector3.Lerp(howUseRectTrans.anchoredPosition, howPosition, t);
+
             yield return null;
         }
 

@@ -28,14 +28,25 @@ public class PopupManager : SingletonComponent<PopupManager>
 
     private void Awake()
     {
-        CheckParent(canvasParent);
+        // CheckParent(canvasParent);
     }
 
     private void CheckParent(Transform transform)
     {
         if (transform == null)
         {
-            transform.Find("++++ Panels ++++");
+            Transform panels = transform.Find("++++ Panels ++++");
+
+            if (panels != null)
+            {
+                canvasParent = panels;
+                return;
+            }
+        }
+
+        if (canvasParent == null)
+        {
+            Debug.LogError("Canvas parent not found!");
         }
     }
 
