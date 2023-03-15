@@ -17,6 +17,8 @@ public class OptionPanel : MonoBehaviour
 
     private Vector3 hidePosition;
     private Vector3 showPosition;
+    private Vector3 howShowPosition;
+    private Vector3 howHidePosition;
 
     private RectTransform rectTrans;
     private RectTransform howUseRectTrans;
@@ -34,16 +36,18 @@ public class OptionPanel : MonoBehaviour
 
     private void OnEnable()
     {
-
-
         rectTrans = GetComponent<RectTransform>();
         howUseRectTrans = howUsePanel.GetComponent<RectTransform>();
+
+        howUseRectTrans.anchorMin = new Vector2(0.5f, 0.5f);
+        howUseRectTrans.anchorMax = new Vector2(0.5f, 0.5f);
+        howUseRectTrans.pivot = new Vector2(0.5f, 0.5f);
 
         hidePosition = new Vector3(-1440, 0, 0);
         showPosition = new Vector3(-480, 0, 0);
 
-        rectTrans.anchoredPosition = hidePosition;
-        howUseRectTrans.anchoredPosition = hidePosition;
+        howUseRectTrans.anchoredPosition = new Vector2(hidePosition.x + howUseRectTrans.rect.width / 2, howUseRectTrans.anchoredPosition.y);
+        howHidePosition = new Vector3(-960, 0, 0);
     }
 
     public void InitializeOptionPanel()
@@ -99,6 +103,7 @@ public class OptionPanel : MonoBehaviour
     {
         Vector3 startPosition = _isShow ? hidePosition : showPosition;
         Vector3 endPosition = _isShow ? showPosition : hidePosition;
+        Vector3 howPosition = _isShow ? howShowPosition : howHidePosition;
 
         float startTime = Time.time;
         float endTime = startTime + panelMoveTime;
@@ -108,10 +113,14 @@ public class OptionPanel : MonoBehaviour
             float t = (Time.time - startTime) / panelMoveTime;
 
             rect.anchoredPosition = Vector3.Lerp(startPosition, endPosition, t);
+            
+            if (rect == howUseRectTrans) howUseRectTrans.anchoredPosition = Vector3.Lerp(howUseRectTrans.anchoredPosition, howPosition, t);
             yield return null;
         }
 
         rect.anchoredPosition = endPosition;
+
+        if (rect == howUseRectTrans) howUseRectTrans.anchoredPosition = howPosition;
 
         playAnimation = false;
 
