@@ -26,30 +26,6 @@ public class PopupManager : SingletonComponent<PopupManager>
     }
     #endregion
 
-    private void Awake()
-    {
-        // CheckParent(canvasParent);
-    }
-
-    private void CheckParent(Transform transform)
-    {
-        if (transform == null)
-        {
-            Transform panels = transform.Find("++++ Panels ++++");
-
-            if (panels != null)
-            {
-                canvasParent = panels;
-                return;
-            }
-        }
-
-        if (canvasParent == null)
-        {
-            Debug.LogError("Canvas parent not found!");
-        }
-    }
-
     public T GetPopUp<T>() where T : Component
     {
         var res = Resources.Load<T>($"{PATH}/{typeof(T).Name}");

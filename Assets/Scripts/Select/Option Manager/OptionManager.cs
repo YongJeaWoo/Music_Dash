@@ -20,17 +20,6 @@ public class OptionManager : SingletonComponent<OptionManager>
     }
     #endregion
 
-    private void Update()
-    {
-        HandleMouseEvent();
-    }
-
-    private void HandleMouseEvent()
-    {
-        Cursor.visible = IsOption;
-        Cursor.lockState = IsOption ? CursorLockMode.None : CursorLockMode.Locked;
-    }
-
     public void ToggleOptionPanel()
     {
         if (PopupManager.Instance.IsUsePopup<OptionPanel>())
