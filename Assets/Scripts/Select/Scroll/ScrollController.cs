@@ -1,4 +1,6 @@
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DTT.InfiniteScroll
 {
@@ -12,7 +14,7 @@ namespace DTT.InfiniteScroll
 
         private InfiniteScroll infiniteScroll;
 
-        private int selectIndex = 7;
+        private int selectingIndex = 7;
 
         private void Start()
         {
@@ -30,7 +32,7 @@ namespace DTT.InfiniteScroll
 
             if (musicPrefab == null) return;
 
-            for (int i = 0; i < selectIndex; i++)
+            for (int i = 0; i < selectingIndex; i++)
             {
                 var obj = Instantiate(musicPrefab);
                 obj.name = $"Music{i}";
@@ -53,14 +55,34 @@ namespace DTT.InfiniteScroll
 
         private void ScrollUp()
         {
-            infiniteScroll.Next();
-            Debug.Log($"Target : {infiniteScroll.Target}");
+            infiniteScroll.Previous();
+            SetPoint();
         }
 
         private void ScrollDown()
         {
-            infiniteScroll.Previous();
-            Debug.Log($"Target : {infiniteScroll.Target}");
+            infiniteScroll.Next();
+            SetPoint();
+        }
+
+        private void SetPoint()
+        {
+            foreach (var button in contentTransform.GetComponentsInChildren<Button>())
+            {
+                if (button == infiniteScroll.Target.GetComponent<Button>())
+                {
+                    button.targetGraphic.color = Color.white;
+                }
+                else
+                {
+                    button.targetGraphic.color = Color.green;
+                }
+            }
+
+            // TODO : 추후 최적화 필요
+            //Button getButton = musicPrefab.GetComponent<Button>();
+            //getButton = infiniteScroll.Target.GetComponent<Button>();
+            //getButton.targetGraphic.color = Color.white;
         }
     }
 }

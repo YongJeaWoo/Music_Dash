@@ -1,8 +1,10 @@
-using Microsoft.Unity.VisualStudio.Editor;
+using UnityEngine;
 
-public class MusicData 
+[CreateAssetMenu(menuName = "Music/Add Data", fileName = "MusicData")]
+public class MusicData : ScriptableObject
 {
     public string name;
     public string composer;
-    public Image iconImage;
+    public Sprite iconImage;
+    public AnimationClip musicClip;
 }
