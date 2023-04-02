@@ -33,6 +33,7 @@ namespace DTT.InfiniteScroll
             for (int i = 0; i < selectIndex; i++)
             {
                 var obj = Instantiate(musicPrefab);
+                obj.name = $"Music{i}";
                 obj.transform.SetParent(contentTransform);
             }
         }
@@ -53,11 +54,13 @@ namespace DTT.InfiniteScroll
         private void ScrollUp()
         {
             infiniteScroll.Next();
+            Debug.Log($"Target : {infiniteScroll.Target}");
         }
 
         private void ScrollDown()
         {
             infiniteScroll.Previous();
+            Debug.Log($"Target : {infiniteScroll.Target}");
         }
     }
 }
