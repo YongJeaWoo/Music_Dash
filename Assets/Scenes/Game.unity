@@ -294,6 +294,7 @@ RectTransform:
   - {fileID: 1708300936}
   - {fileID: 1809195992}
   - {fileID: 220425948}
+  - {fileID: 1918578322}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -602,7 +603,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fed3a5015db072448bdeca595f19926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons: []
+  buttons:
+  - {fileID: 464028556}
+  - {fileID: 729986358}
+  - {fileID: 1471074826}
+  - {fileID: 241265604}
   optionPanel: {fileID: 1918578321}
 --- !u!1 &307683472
 GameObject:
@@ -3000,7 +3005,7 @@ RectTransform:
   m_Children:
   - {fileID: 1500356488}
   m_Father: {fileID: 1760613290}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3347,7 +3352,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1918578322}
   - {fileID: 1693523665}
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -3627,8 +3631,8 @@ RectTransform:
   - {fileID: 729986357}
   - {fileID: 1471074825}
   - {fileID: 241265603}
-  m_Father: {fileID: 1760613290}
-  m_RootOrder: 0
+  m_Father: {fileID: 195603964}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
