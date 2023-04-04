@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +10,8 @@ namespace DTT.InfiniteScroll
 
         [SerializeField]
         private Transform contentTransform;
+
+        private Button lastSelectedButton;
 
         private InfiniteScroll infiniteScroll;
 
@@ -55,34 +56,25 @@ namespace DTT.InfiniteScroll
 
         private void ScrollUp()
         {
+            if (lastSelectedButton != null) lastSelectedButton.targetGraphic.color = Color.green;
+
             infiniteScroll.Previous();
             SetPoint();
         }
 
         private void ScrollDown()
         {
+            if (lastSelectedButton != null) lastSelectedButton.targetGraphic.color = Color.green;
+
             infiniteScroll.Next();
             SetPoint();
         }
 
         private void SetPoint()
         {
-            foreach (var button in contentTransform.GetComponentsInChildren<Button>())
-            {
-                if (button == infiniteScroll.Target.GetComponent<Button>())
-                {
-                    button.targetGraphic.color = Color.white;
-                }
-                else
-                {
-                    button.targetGraphic.color = Color.green;
-                }
-            }
-
-            // TODO : 추후 최적화 필요
-            //Button getButton = musicPrefab.GetComponent<Button>();
-            //getButton = infiniteScroll.Target.GetComponent<Button>();
-            //getButton.targetGraphic.color = Color.white;
+            Button targetButton = infiniteScroll.Target.GetComponent<Button>();
+            targetButton.targetGraphic.color = Color.white;
+            lastSelectedButton = targetButton;
         }
     }
 }
