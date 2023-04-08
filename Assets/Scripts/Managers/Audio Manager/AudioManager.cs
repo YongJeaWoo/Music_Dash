@@ -13,8 +13,7 @@ public class AudioManager : SingletonComponent<AudioManager>
     [SerializeField]
     private List<AudioClip> clipList = new List<AudioClip>();
 
-    private AudioSource audioSource;
-
+    public AudioSource audioSource;
 
     [Header("Volume")]
     [SerializeField]
@@ -50,10 +49,31 @@ public class AudioManager : SingletonComponent<AudioManager>
     }
 
 
-    #region Play Method
+    #region Utils
+    public void Play()
+    {
+
+    }
+
+    public void Stop()
+    {
+
+    }
+
+    public void Pause()
+    {
+
+    }
+
+    public void UnPause()
+    {
+
+    }
+
+
+
     public void CountPlay(string _clipName)
     {
-        audioSource = GetComponent<AudioSource>();
         AudioClip clip = LoadClip(_clipName);
         audioSource.clip = clip;
         audioSource.Play();
@@ -61,7 +81,6 @@ public class AudioManager : SingletonComponent<AudioManager>
 
     public void InGameMusicPlay(string _clipName)
     {
-        audioSource = GetComponent<AudioSource>();
         AudioClip clip = InGameLoadClip(_clipName);
         audioSource.clip = clip;
         audioSource.Play();
@@ -69,22 +88,11 @@ public class AudioManager : SingletonComponent<AudioManager>
 
     public void RandomMusicPlay()
     {
-        audioSource = GetComponent<AudioSource>();
         audioSource.clip = RandomTitleClip();
         audioSource.Play();
         audioSource.loop = true;
 
         if (SceneManager.GetActiveScene().name == "Loading") audioSource.clip = null;
-    }
-
-    public void StopCountDownMusic()
-    {
-
-    }
-
-    public void MusicAllStop()
-    {
-
     }
     #endregion
 
