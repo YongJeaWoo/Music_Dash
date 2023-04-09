@@ -48,48 +48,46 @@ public class AudioManager : SingletonComponent<AudioManager>
         audioMixer.SetFloat("Master", Mathf.Log10(masterSlider.value) * 20);
     }
 
-
     #region Utils
     public void Play()
     {
-
+        audioSource.Play();
     }
 
     public void Stop()
     {
-
+        audioSource.Stop();
     }
 
     public void Pause()
     {
-
+        audioSource.Pause();
     }
 
     public void UnPause()
     {
-
+        audioSource.UnPause();
     }
-
-
 
     public void CountPlay(string _clipName)
     {
         AudioClip clip = LoadClip(_clipName);
         audioSource.clip = clip;
-        audioSource.Play();
+        Play();
+        audioSource.loop = false;
     }
 
     public void InGameMusicPlay(string _clipName)
     {
         AudioClip clip = InGameLoadClip(_clipName);
         audioSource.clip = clip;
-        audioSource.Play();
+        Play();
     }
 
     public void RandomMusicPlay()
     {
         audioSource.clip = RandomTitleClip();
-        audioSource.Play();
+        Play();
         audioSource.loop = true;
 
         if (SceneManager.GetActiveScene().name == "Loading") audioSource.clip = null;

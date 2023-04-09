@@ -1,4 +1,6 @@
 using SingletonComponent.Component;
+using System.Collections;
+using UnityEngine;
 
 public class GameManager : SingletonComponent<GameManager>
 {
@@ -35,7 +37,14 @@ public class GameManager : SingletonComponent<GameManager>
     private void InitMusic()
     {
         AudioManager.Instance.CountPlay("Start");
+        StartCoroutine(WaitForCountPlay());
+    }
 
-        
+    private IEnumerator WaitForCountPlay()
+    {
+        yield return new WaitUntil(() => !AudioManager.Instance.audioSource.isPlaying);
+
+        AudioManager.Instance.Stop();
+        AudioManager.Instance.InGameMusicPlay("Conflict");
     }
 }

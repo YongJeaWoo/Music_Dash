@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 2205956755068483679}
   - component: {fileID: 2205956755068483649}
   - component: {fileID: 941515527375172466}
+  - component: {fileID: 7257306183558032277}
   m_Layer: 5
   m_Name: Music
   m_TagString: Untagged
@@ -213,6 +214,20 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &7257306183558032277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2205956755068483651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0ebb8fb7f2c6440a3b5cb6b81427c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: {fileID: 0}
+  iconImage: {fileID: 0}
 --- !u!1 &2205956755672755708
 GameObject:
   m_ObjectHideFlags: 0

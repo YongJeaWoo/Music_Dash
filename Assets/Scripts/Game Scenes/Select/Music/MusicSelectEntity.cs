@@ -15,5 +15,4 @@ public class MusicSelectEntity : MonoBehaviour
     {
         musicData = _data;
     }
-
 }
