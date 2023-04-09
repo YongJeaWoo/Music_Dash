@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Music/Add Data", fileName = "MusicData")]
 public class MusicData : ScriptableObject
 {
-    public string name;
-    public string composer;
-    public Sprite iconImage;
+    public string musicName;
+    public string musicComposer;
+    public Sprite icon;
     public AudioClip musicClip;
 }

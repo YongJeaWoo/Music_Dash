@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,15 +12,27 @@ namespace DTT.InfiniteScroll
         [SerializeField]
         private Transform contentTransform;
 
-        private Button lastSelectedButton;
+        private Button currentSelectedButton;
+        public Button CurrentSelectedButton
+        {
+            get
+            {
+                return currentSelectedButton;
+            }
+
+            set
+            {
+                currentSelectedButton = value;
+            }
+        }
 
         private InfiniteScroll infiniteScroll;
 
-        private int selectingIndex = 7;
+        public InfoController info;
 
         private void Start()
         {
-            CheckInit();
+            SetInit();
         }
 
         private void Update()
@@ -27,17 +40,19 @@ namespace DTT.InfiniteScroll
             InputKeys();
         }
 
-        private void CheckInit()
+        private void SetInit()
         {
             infiniteScroll = GetComponent<InfiniteScroll>();
 
             if (musicPrefab == null) return;
 
-            for (int i = 0; i < selectingIndex; i++)
+            foreach(MusicData musicData in MusicDataManager.Instance.GetMusicDataList())
             {
                 var obj = Instantiate(musicPrefab);
-                obj.name = $"Music{i}";
                 obj.transform.SetParent(contentTransform);
+
+                MusicSelectEntity musicSelectEntity = obj.GetComponent<MusicSelectEntity>();
+                if (musicSelectEntity != null) musicSelectEntity.Initialize(musicData);
             }
         }
 
@@ -56,7 +71,7 @@ namespace DTT.InfiniteScroll
 
         private void ScrollUp()
         {
-            if (lastSelectedButton != null) lastSelectedButton.targetGraphic.color = Color.green;
+            if (currentSelectedButton != null) currentSelectedButton.targetGraphic.color = Color.green;
 
             infiniteScroll.Previous();
             SetPoint();
@@ -64,7 +79,7 @@ namespace DTT.InfiniteScroll
 
         private void ScrollDown()
         {
-            if (lastSelectedButton != null) lastSelectedButton.targetGraphic.color = Color.green;
+            if (currentSelectedButton != null) currentSelectedButton.targetGraphic.color = Color.green;
 
             infiniteScroll.Next();
             SetPoint();
@@ -74,7 +89,8 @@ namespace DTT.InfiniteScroll
         {
             Button targetButton = infiniteScroll.Target.GetComponent<Button>();
             targetButton.targetGraphic.color = Color.white;
-            lastSelectedButton = targetButton;
+            currentSelectedButton = targetButton;
+            info.OnSelect();
         }
     }
 }

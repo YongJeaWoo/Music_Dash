@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5ab36cdf58570542857eef3b00b0398, type: 3}
-  m_Name: Secret Dejavu
+  m_Name: Gift box
   m_EditorClassIdentifier: 
-  name: 
-  composer: 
-  iconImage: {fileID: 0}
-  musicClip: {fileID: 8300000, guid: 49b06bcad5c3d5f4299a6435bd554957, type: 3}
+  musicName: Gift box
+  musicComposer: 2
+  icon: {fileID: 21300000, guid: 55518bfe9632f1e449da587d3cb4f14b, type: 3}
+  musicClip: {fileID: 8300000, guid: 3fc53417bda433042945ac5c9c20e5ab, type: 3}

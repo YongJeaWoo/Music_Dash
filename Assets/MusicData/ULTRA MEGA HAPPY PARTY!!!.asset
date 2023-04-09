@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5ab36cdf58570542857eef3b00b0398, type: 3}
-  m_Name: Gift box
+  m_Name: ULTRA MEGA HAPPY PARTY!!!
   m_EditorClassIdentifier: 
-  name: 
-  composer: 
-  iconImage: {fileID: 0}
-  musicClip: {fileID: 8300000, guid: 3fc53417bda433042945ac5c9c20e5ab, type: 3}
+  musicName: ULTRA MEGA HAPPY PARTY!!!
+  musicComposer: 7
+  icon: {fileID: 21300000, guid: e20b4e494663b1443ab59a92325bc904, type: 3}
+  musicClip: {fileID: 8300000, guid: 80a2b5b0405e3fb4ba2477a89a7587fa, type: 3}

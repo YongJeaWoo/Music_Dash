@@ -22,4 +22,5 @@ public class MusicDataManager : SingletonComponent<MusicDataManager>
     }
     #endregion
 
+    public List<MusicData> GetMusicDataList() => musicData;
 }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5ab36cdf58570542857eef3b00b0398, type: 3}
-  m_Name: Rush B
+  m_Name: Pa Pi Pu Pi Pu Pi Pa
   m_EditorClassIdentifier: 
-  name: 
-  composer: 
-  iconImage: {fileID: 0}
-  musicClip: {fileID: 8300000, guid: 15b15b96910e36d4db92cbae61d4b425, type: 3}
+  musicName: Pa Pi Pu Pi Pu Pi Pa
+  musicComposer: 4
+  icon: {fileID: 21300000, guid: eb279f2d6f99d9c4b88959d77d3da293, type: 3}
+  musicClip: {fileID: 8300000, guid: 6a96c8bab04bfad4c8c38a79d0fe9ca7, type: 3}

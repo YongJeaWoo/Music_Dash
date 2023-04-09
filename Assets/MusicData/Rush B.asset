@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5ab36cdf58570542857eef3b00b0398, type: 3}
-  m_Name: Conflict
+  m_Name: Rush B
   m_EditorClassIdentifier: 
-  name: Conflict
-  composer: 
-  iconImage: {fileID: 21300000, guid: e20b4e494663b1443ab59a92325bc904, type: 3}
-  musicClip: {fileID: 8300000, guid: 6359bc3063d50014cb887f146d9d34ae, type: 3}
+  musicName: Rush B
+  musicComposer: 5
+  icon: {fileID: 21300000, guid: e17a6659511eddb4998fa4f57fc3567a, type: 3}
+  musicClip: {fileID: 8300000, guid: 15b15b96910e36d4db92cbae61d4b425, type: 3}
