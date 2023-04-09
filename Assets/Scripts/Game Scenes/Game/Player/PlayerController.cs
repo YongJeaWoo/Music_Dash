@@ -45,11 +45,6 @@ public class PlayerController : MonoBehaviour
         InitPlayer();
     }
 
-    private void Start()
-    {
-
-    }
-
     private void Update()
     {
         JumpAction();
@@ -59,11 +54,30 @@ public class PlayerController : MonoBehaviour
 
     private void InitPlayer()
     {
+        transform.position = new Vector2(-22, -5.5f);
+
         currentHp = maxHp;
         isAttacked = false;
 
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         playerAnimator = GetComponentInChildren<Animator>();
+
+        StartCoroutine(MovePlayer(new Vector2(-14, -5.5f), 1.5f));
+    }
+
+    private IEnumerator MovePlayer(Vector2 targetPosition, float duration)
+    {
+        float elapsedTime = 0f;
+        Vector2 startingPosition = transform.position;
+
+        while(elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            transform.position = Vector2.Lerp(startingPosition, targetPosition, elapsedTime);
+            yield return null;
+        }
+
+        transform.position = targetPosition;
     }
 
     private void GroundAction()
