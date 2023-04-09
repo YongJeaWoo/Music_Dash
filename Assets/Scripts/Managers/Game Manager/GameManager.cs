@@ -45,6 +45,9 @@ public class GameManager : SingletonComponent<GameManager>
         yield return new WaitUntil(() => !AudioManager.Instance.audioSource.isPlaying);
 
         AudioManager.Instance.Stop();
-        AudioManager.Instance.InGameMusicPlay("Conflict");
+
+        MusicData data = MusicDataManager.Instance.GetCurrentMusic();
+
+        AudioManager.Instance.PlayMusicData(data);
     }
 }

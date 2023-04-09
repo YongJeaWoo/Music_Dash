@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd0ebb8fb7f2c6440a3b5cb6b81427c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_button: {fileID: 2205956755068483649}
   m_musicName: {fileID: 2205956755672755706}
   m_musicComposer: {fileID: 2205956755994087403}
   m_icon: {fileID: 572887755735002690}

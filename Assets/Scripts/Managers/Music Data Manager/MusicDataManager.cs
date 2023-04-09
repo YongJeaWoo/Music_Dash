@@ -7,6 +7,8 @@ public class MusicDataManager : SingletonComponent<MusicDataManager>
     [SerializeField]
     private List<MusicData> musicData = null;
 
+    private MusicData m_currentMusic = null;
+
     #region SingleTon
     protected override void AwakeInstance()
     {
@@ -23,4 +25,11 @@ public class MusicDataManager : SingletonComponent<MusicDataManager>
     #endregion
 
     public List<MusicData> GetMusicDataList() => musicData;
+
+    public MusicData GetCurrentMusic() => m_currentMusic;
+
+    public void SetCurrentMusic(MusicData _data)
+    {
+        m_currentMusic = _data;
+    }
 }

@@ -19,13 +19,18 @@ public class InfoController : MonoBehaviour
         scrollController = FindObjectOfType<ScrollController>();
     }
 
-    public void OnSelect()
+    public void OnRefresh()
     {
-        if (scrollController != null && scrollController.CurrentSelectedButton != null)
+        MusicData data = MusicDataManager.Instance.GetCurrentMusic();
+
+        if (null == data) return;
+
+        if (scrollController != null && scrollController.CurrentSelectedEntity != null)
         {
-            m_musicName.text = scrollController.CurrentSelectedButton.GetComponentInChildren<MusicSelectEntity>().m_musicName.text;
-            m_musicComposer.text = scrollController.CurrentSelectedButton.GetComponentInChildren<MusicSelectEntity>().m_musicComposer.text;
-            m_icon.sprite = scrollController.CurrentSelectedButton.GetComponentInChildren<MusicSelectEntity>().m_icon.sprite;
+            m_musicName.text = data.musicName;
+            m_musicComposer.text = data.musicComposer;
+            m_icon.sprite = data.icon;
+            AudioManager.Instance.PlayMusicData(data);
         }
     }
 }

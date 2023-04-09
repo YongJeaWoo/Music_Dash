@@ -12,17 +12,17 @@ namespace DTT.InfiniteScroll
         [SerializeField]
         private Transform contentTransform;
 
-        private Button currentSelectedButton;
-        public Button CurrentSelectedButton
+        private MusicSelectEntity currentSelectedEntity;
+        public MusicSelectEntity CurrentSelectedEntity
         {
             get
             {
-                return currentSelectedButton;
+                return currentSelectedEntity;
             }
 
             set
             {
-                currentSelectedButton = value;
+                currentSelectedEntity = value;
             }
         }
 
@@ -71,7 +71,7 @@ namespace DTT.InfiniteScroll
 
         private void ScrollUp()
         {
-            if (currentSelectedButton != null) currentSelectedButton.targetGraphic.color = Color.green;
+            if (currentSelectedEntity != null) currentSelectedEntity.OnSelect(false);
 
             infiniteScroll.Previous();
             SetPoint();
@@ -79,7 +79,7 @@ namespace DTT.InfiniteScroll
 
         private void ScrollDown()
         {
-            if (currentSelectedButton != null) currentSelectedButton.targetGraphic.color = Color.green;
+            if (currentSelectedEntity != null) currentSelectedEntity.OnSelect(false);
 
             infiniteScroll.Next();
             SetPoint();
@@ -87,10 +87,10 @@ namespace DTT.InfiniteScroll
 
         private void SetPoint()
         {
-            Button targetButton = infiniteScroll.Target.GetComponent<Button>();
-            targetButton.targetGraphic.color = Color.white;
-            currentSelectedButton = targetButton;
-            info.OnSelect();
+            MusicSelectEntity targetEntity = infiniteScroll.Target.GetComponentInChildren<MusicSelectEntity>();
+            targetEntity.OnSelect(true);
+            currentSelectedEntity = targetEntity;
+            info.OnRefresh();
         }
     }
 }

@@ -1,3 +1,4 @@
+using DTT.InfiniteScroll;
 using SingletonComponent.Component;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,6 +55,12 @@ public class AudioManager : SingletonComponent<AudioManager>
         audioSource.Play();
     }
 
+    public void Play(AudioClip _clip)
+    {
+        audioSource.clip = _clip;
+        Play();
+    }
+
     public void Stop()
     {
         audioSource.Stop();
@@ -75,13 +82,6 @@ public class AudioManager : SingletonComponent<AudioManager>
         audioSource.clip = clip;
         Play();
         audioSource.loop = false;
-    }
-
-    public void InGameMusicPlay(string _clipName)
-    {
-        AudioClip clip = InGameLoadClip(_clipName);
-        audioSource.clip = clip;
-        Play();
     }
 
     public void RandomMusicPlay()
@@ -122,18 +122,21 @@ public class AudioManager : SingletonComponent<AudioManager>
         return clip;
     }
 
-    // TODO : 수정 필요 MusicData의 정보를 가져와야 함
-    public AudioClip InGameLoadClip(string _loadClipName)
+    public void PlayMusicData(MusicData musicData)
     {
-        AudioClip clip = clipList.Find(x => x.name.Equals(_loadClipName)) as AudioClip;
+        AudioClip clip = clipList.Find(x => x.name.Equals(musicData.musicClip.name));
 
-        if (clip != null) return clip;
+        if (clip != null)
+        {
+            Play(clip);
+            return;
+        }
 
-        clip = Resources.Load<AudioClip>($"{AudioStorage.INGAME_MUSIC_PATH}{_loadClipName}");
+        clip = musicData.musicClip;
 
         if (clip != null) clipList.Add(clip);
 
-        return clip;
+        Play(clip);
     }
     #endregion
 }
