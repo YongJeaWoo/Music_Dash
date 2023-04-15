@@ -687,11 +687,11 @@ GameObject:
   m_Component:
   - component: {fileID: 336580877}
   - component: {fileID: 336580878}
-  - component: {fileID: 336580880}
   - component: {fileID: 336580879}
-  m_Layer: 0
+  - component: {fileID: 336580880}
+  m_Layer: 7
   m_Name: Model
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -773,7 +773,7 @@ Animator:
   m_GameObject: {fileID: 336580876}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 60371231f7fd38e458ab532360b12d71, type: 2}
+  m_Controller: {fileID: 9100000, guid: 24a04911ea36ef6468dcfe47dd377710, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -784,22 +784,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!70 &336580880
-CapsuleCollider2D:
+--- !u!114 &336580880
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336580876}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.5}
-  m_Size: {x: 1.8, y: 2.5}
-  m_Direction: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34093d2b01bc4d34f9cafc9c70910ff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &404393973
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,9 +842,10 @@ GameObject:
   m_Component:
   - component: {fileID: 449293214}
   - component: {fileID: 449293215}
-  m_Layer: 0
+  - component: {fileID: 449293216}
+  m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -881,10 +878,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81529bb385aa804f81decf7e9efba43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 20
-  jumpPower: 2
-  landing: -5.5
-  landingPower: 25
+--- !u!70 &449293216
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449293213}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.5}
+  m_Size: {x: 1.8, y: 2.5}
+  m_Direction: 0
 --- !u!1 &464028554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1349,6 +1358,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fcb92c5a4bdca049b9bea5c360ce37b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 449293215}
+  textHp: {fileID: 1099444008}
+  sliderHp: {fileID: 220425949}
 --- !u!4 &719538925
 Transform:
   m_ObjectHideFlags: 0
@@ -3327,17 +3339,17 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 3
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

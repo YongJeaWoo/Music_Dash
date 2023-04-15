@@ -1,4 +1,5 @@
 using DTT.InfiniteScroll;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,9 @@ public class InfoController : MonoBehaviour
     private TextMeshProUGUI m_musicComposer;
     [SerializeField]
     private Image m_icon;
+
+    [SerializeField]
+    private Image m_backGround;
 
     private ScrollController scrollController;
 
@@ -30,6 +34,7 @@ public class InfoController : MonoBehaviour
             m_musicName.text = data.musicName;
             m_musicComposer.text = data.musicComposer;
             m_icon.sprite = data.icon;
+            m_backGround.sprite = data.icon;
             AudioManager.Instance.PlayMusicData(data);
         }
     }

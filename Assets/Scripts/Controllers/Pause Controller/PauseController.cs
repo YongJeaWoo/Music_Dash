@@ -21,10 +21,10 @@ public class PauseController : MonoBehaviour
 
     private void Update()
     {
-        PauseControll();
+        PauseControl();
     }
 
-    private void PauseControll()
+    private void PauseControl()
     {
         pauseTimer -= Time.deltaTime;
 
@@ -70,6 +70,7 @@ public class PauseController : MonoBehaviour
 
     private void PauseOption()
     {
+        AudioManager.Instance.Pause();
         Cursor.visible = true;
         optionPanel.SetActive(true);
         Time.timeScale = 0;
@@ -78,6 +79,7 @@ public class PauseController : MonoBehaviour
 
     public void ContinueBTN()
     {
+        AudioManager.Instance.UnPause();
         optionPanel.SetActive(false);
         Time.timeScale = 1;
     }
@@ -90,11 +92,13 @@ public class PauseController : MonoBehaviour
 
     public void SelectBTN()
     {
+        Time.timeScale = 1;
         LoadingController.LoadScene("Select");
     }
 
     public void ExitBTN()
     {
+        Time.timeScale = 1;
         LoadingController.LoadScene("Title");
     }
 }

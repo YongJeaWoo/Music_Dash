@@ -1,6 +1,8 @@
 using SingletonComponent.Component;
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : SingletonComponent<GameManager>
 {
@@ -8,6 +10,12 @@ public class GameManager : SingletonComponent<GameManager>
     // 노트
     // 카운트 음악과 실제 로드 될 음악
 
+    [SerializeField]
+    private Player player;
+    [SerializeField]
+    private TextMeshProUGUI textHp;
+    [SerializeField]
+    private Slider sliderHp;
 
     #region SingleTon
     protected override void AwakeInstance()
@@ -31,7 +39,17 @@ public class GameManager : SingletonComponent<GameManager>
 
     private void Update()
     {
-        
+        PlayerHpSlider();
+    }
+
+    private void PlayerHpSlider()
+    {
+        if (player.CurrentHp >= 0)
+        {
+            player.CurrentHp = Mathf.Max(player.CurrentHp, 0);
+            sliderHp.value = player.CurrentHp / PlayerInfo.PLAYER_MAXHP;
+            textHp.text = $"{player.CurrentHp} / {PlayerInfo.PLAYER_MAXHP}";
+        }
     }
 
     private void InitMusic()
@@ -50,4 +68,5 @@ public class GameManager : SingletonComponent<GameManager>
 
         AudioManager.Instance.PlayMusicData(data);
     }
+
 }

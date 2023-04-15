@@ -1,22 +1,16 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SelectController : MonoBehaviour
 {
     [SerializeField]
     private GameObject exitPanel;
 
-    private Button selectButton;
-
-    private Vector2 centerPosition;
-
     private void Update()
     {
-        PressKeys();
+        KeyActions();
     }
 
-    private void PressKeys()
+    private void KeyActions()
     {
         if (!OptionManager.Instance.IsOption && !exitPanel.activeSelf && Input.GetKeyDown(KeyCode.Return))
         {

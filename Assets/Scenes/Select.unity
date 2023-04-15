@@ -884,7 +884,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 30
+  m_Spacing: 35
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -2152,8 +2152,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  _snapStrength: 10
-  _useSnapping: 0
+  _snapStrength: 13
+  _useSnapping: 1
   _disableInfiniteScroll: 0
 --- !u!114 &1315784558
 MonoBehaviour:
@@ -2974,6 +2974,7 @@ MonoBehaviour:
   m_musicName: {fileID: 167932352}
   m_musicComposer: {fileID: 1457885584}
   m_icon: {fileID: 60503823}
+  m_backGround: {fileID: 892472929}
 --- !u!1 &2008314844
 GameObject:
   m_ObjectHideFlags: 0
