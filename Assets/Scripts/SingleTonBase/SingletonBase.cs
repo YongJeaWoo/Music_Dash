@@ -59,7 +59,7 @@ namespace SingletonComponent
 			protected abstract void ReleaseSingleton();
 		}
 
-		public abstract class SingletonData<T> : SingletonData where T : class, new()
+		public abstract class SingletonComponent<T> : SingletonData where T : class, new()
 		{
 			private static T m_instance = null;
 			public static T Instance

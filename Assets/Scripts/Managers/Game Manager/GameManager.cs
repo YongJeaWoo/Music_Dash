@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class GameManager : SingletonComponent<GameManager>
 {
-    // 플레이어의 체력
     // 노트
     // 카운트 음악과 실제 로드 될 음악
 
@@ -16,6 +15,12 @@ public class GameManager : SingletonComponent<GameManager>
     private TextMeshProUGUI textHp;
     [SerializeField]
     private Slider sliderHp;
+
+    private int combo;
+    public int Combo => combo;
+
+    private float score;
+    public float Score => score;
 
     #region SingleTon
     protected override void AwakeInstance()

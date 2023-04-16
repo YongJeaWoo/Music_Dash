@@ -3,6 +3,7 @@ using UnityEngine;
 #region Enum Collect
 public enum E_AniState
 {
+    None,
     Run,
     Jump,
     Fall,
@@ -12,6 +13,7 @@ public enum E_AniState
 
 public enum E_AttackState
 {
+    None,
     Attack1,
     Attack2,
     Attack3,
