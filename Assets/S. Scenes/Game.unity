@@ -235,7 +235,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -8, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &67465146
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3712b38be6c179b4a8878c34c6abd7bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myPositionTransform: {x: -500, y: 0}
+  myPositionTransform: {x: 0, y: 0}
   offset: {x: 0, y: 0}
 --- !u!212 &67465148
 SpriteRenderer:
@@ -3714,7 +3714,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -8, y: -5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1782808792
@@ -3737,7 +3737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3712b38be6c179b4a8878c34c6abd7bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myPositionTransform: {x: -500, y: -120}
+  myPositionTransform: {x: 0, y: 0}
   offset: {x: 0, y: 0}
 --- !u!212 &1782808794
 SpriteRenderer:
