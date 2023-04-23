@@ -1,26 +1,28 @@
 using SingletonComponent.Component;
 using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : SingletonComponent<GameManager>
 {
     // 노트
-    // 카운트 음악과 실제 로드 될 음악
 
-    [SerializeField]
-    private Player player;
-    [SerializeField]
-    private TextMeshProUGUI textHp;
-    [SerializeField]
-    private Slider sliderHp;
+    E_GameStat currentStat = E_GameStat.Init;
+
+    #region Property
+    public int Combo
+    {
+        get => combo;
+        set => combo = value;
+    }
+    public int Score
+    {
+        get => score;
+        set => score = value;
+    }
+    #endregion
 
     private int combo;
-    public int Combo => combo;
-
-    private float score;
-    public float Score => score;
+    private int score;
 
     #region SingleTon
     protected override void AwakeInstance()
@@ -37,27 +39,39 @@ public class GameManager : SingletonComponent<GameManager>
     }
     #endregion
 
-    private void Start()
+    private void StatClassification()
     {
-        InitMusic();
-    }
-
-    private void Update()
-    {
-        PlayerHpSlider();
-    }
-
-    private void PlayerHpSlider()
-    {
-        if (player.CurrentHp >= 0)
+        switch (currentStat)
         {
-            player.CurrentHp = Mathf.Max(player.CurrentHp, 0);
-            sliderHp.value = player.CurrentHp / PlayerInfo.PLAYER_MAXHP;
-            textHp.text = $"{player.CurrentHp} / {PlayerInfo.PLAYER_MAXHP}";
-        }
+            case E_GameStat.Init:
+                {
+                    Init();
+                }
+                break;
+            case E_GameStat.Ready:
+                {
+
+                }
+                break;
+            case E_GameStat.Play:
+                {
+
+                }
+                break;
+            case E_GameStat.Clear:
+                {
+
+                }
+                break;
+            case E_GameStat.GameOver:
+                {
+
+                }
+                break;
+        } 
     }
 
-    private void InitMusic()
+    private void Init()
     {
         AudioManager.Instance.CountPlay("Start");
         StartCoroutine(WaitForCountPlay());
@@ -65,6 +79,11 @@ public class GameManager : SingletonComponent<GameManager>
 
     private IEnumerator WaitForCountPlay()
     {
+        yield return new WaitForSeconds(1f);
+
+        JudgeManager.Instance.UpJudgeAni.SetTrigger(AnimatorName.JUDGEMENT_NAME);
+        JudgeManager.Instance.DownJudgeAni.SetTrigger(AnimatorName.JUDGEMENT_NAME);
+
         yield return new WaitUntil(() => !AudioManager.Instance.audioSource.isPlaying);
 
         AudioManager.Instance.Stop();
@@ -73,5 +92,4 @@ public class GameManager : SingletonComponent<GameManager>
 
         AudioManager.Instance.PlayMusicData(data);
     }
-
 }

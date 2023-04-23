@@ -1,9 +1,10 @@
 using System.Collections;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
+    public static Player player;
+
     private SpriteRenderer spriteRenderer;
     private AnimationController animationController;
 
@@ -28,13 +29,14 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        JumpAction();
-        GroundAction();
+        InputAction();
         PlayerDead();
     }
 
     private void InitPlayer()
     {
+        player = this;
+
         transform.position = new Vector2(-22, -5.5f);
 
         currentHp = PlayerInfo.PLAYER_MAXHP;
@@ -63,36 +65,11 @@ public class Player : MonoBehaviour
         isMoving = false;
     }
 
-    private void GroundAction()
+    private void InputAction()
     {
         if (currentHp <= 0f) return;
 
-        if (!isMoving && Input.GetButtonDown("KeyDown") && !isFall)
-        {
-            animationController.AttackRandomPlay();
-        }
-    }
-
-    private void InstrusionLanding()
-    {
-        if (currentHp <= 0f) return;
-
-        if (Input.GetButtonDown("KeyDown"))
-        {
-            isFall = true;
-        }
-
-        if (isFall)
-        {
-            transform.position = Vector2.Lerp(transform.position,
-                new Vector2(transform.position.x, PlayerInfo.LANDING), PlayerInfo.LANDING_POWER * Time.deltaTime);
-            animationController.AnimationPlay(E_AniState.Fall);
-        }
-    }
-
-    private void JumpAction()
-    {
-        if (currentHp <= 0f) return;
+        if (!isMoving && Input.GetButtonDown("KeyDown") && !isFall && !isJump) animationController.AttackRandomPlay();
 
         if (!isMoving && Input.GetButtonDown("KeyUp"))
         {
@@ -129,10 +106,23 @@ public class Player : MonoBehaviour
                 animationController.AnimationPlay(E_AniState.Fall);
             }
 
-            if (transform.position.y > playerPos.y)
-            {
-                InstrusionLanding();
-            }
+            if (transform.position.y > playerPos.y) InstrusionLanding();
+        }
+    }
+
+    private void InstrusionLanding()
+    {
+        if (currentHp <= 0f) return;
+
+        if (Input.GetButtonDown("KeyDown"))
+        {
+            isFall = true;
+        }
+
+        if (isFall)
+        {
+            transform.position = Vector2.Lerp(transform.position,
+                new Vector2(transform.position.x, PlayerInfo.LANDING), PlayerInfo.LANDING_POWER * Time.deltaTime);
         }
     }
 
