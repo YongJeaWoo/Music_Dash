@@ -6,7 +6,7 @@ public class GameManager : SingletonComponent<GameManager>
 {
     // ≥Î∆Æ
 
-    E_GameStat currentStat = E_GameStat.Init;
+    private E_GameState currentState = E_GameState.Init;
 
     #region Property
     public int Combo
@@ -39,31 +39,38 @@ public class GameManager : SingletonComponent<GameManager>
     }
     #endregion
 
+    private void Update()
+    {
+        StatClassification();
+    }
+
     private void StatClassification()
     {
-        switch (currentStat)
+        switch (currentState)
         {
-            case E_GameStat.Init:
+            case E_GameState.Init:
                 {
                     Init();
+                    currentState = E_GameState.Ready;
                 }
                 break;
-            case E_GameStat.Ready:
+            case E_GameState.Ready:
+                {
+                    Ready();
+                    currentState = E_GameState.Play;
+                }
+                break;
+            case E_GameState.Play:
                 {
 
                 }
                 break;
-            case E_GameStat.Play:
+            case E_GameState.Clear:
                 {
 
                 }
                 break;
-            case E_GameStat.Clear:
-                {
-
-                }
-                break;
-            case E_GameStat.GameOver:
+            case E_GameState.GameOver:
                 {
 
                 }
@@ -77,6 +84,11 @@ public class GameManager : SingletonComponent<GameManager>
         StartCoroutine(WaitForCountPlay());
     }
 
+    private void Ready()
+    {
+        StartCoroutine(GetReady());
+    }
+
     private IEnumerator WaitForCountPlay()
     {
         yield return new WaitForSeconds(1f);
@@ -84,6 +96,11 @@ public class GameManager : SingletonComponent<GameManager>
         JudgeManager.Instance.UpJudgeAni.SetTrigger(AnimatorName.JUDGEMENT_NAME);
         JudgeManager.Instance.DownJudgeAni.SetTrigger(AnimatorName.JUDGEMENT_NAME);
 
+        yield return null;
+    }
+
+    private IEnumerator GetReady()
+    {
         yield return new WaitUntil(() => !AudioManager.Instance.audioSource.isPlaying);
 
         AudioManager.Instance.Stop();

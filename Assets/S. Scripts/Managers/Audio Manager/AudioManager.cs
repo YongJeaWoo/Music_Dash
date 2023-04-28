@@ -1,4 +1,3 @@
-using DTT.InfiniteScroll;
 using SingletonComponent.Component;
 using System.Collections.Generic;
 using UnityEngine;

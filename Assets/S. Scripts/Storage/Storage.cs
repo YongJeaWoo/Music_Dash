@@ -27,7 +27,7 @@ public enum E_Judge
     Perfect
 }
 
-public enum E_GameStat
+public enum E_GameState
 {
     Init,
     Ready,

@@ -1,4 +1,5 @@
 using SingletonComponent.Component;
+using UnityEngine;
 
 public class OptionManager : SingletonComponent<OptionManager>
 {

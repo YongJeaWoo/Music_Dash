@@ -4,7 +4,7 @@ using TMPro;
 
 public class CountDownText : MonoBehaviour
 {
-    public static bool isCounting = false;
+    private bool isAnimating = false;
 
     private TextMeshProUGUI readyText;
     private Animator readyAnimator;
@@ -16,6 +16,8 @@ public class CountDownText : MonoBehaviour
 
     private void Update()
     {
+        if (isAnimating) return;
+
         CheckCountMusic();
     }
 
@@ -35,19 +37,20 @@ public class CountDownText : MonoBehaviour
 
     private IEnumerator CountDown()
     {
-        var readyTimer = new WaitForSeconds(2.0f);
-        var aniTimer = new WaitForSeconds(2.0f);
+        var timer = new WaitForSeconds(2.0f);
 
         readyText.gameObject.SetActive(true);
         readyAnimator.SetBool(AnimatorName.READY_NAME, true);
         readyText.text = "Ready ...";
-        yield return readyTimer;
+        yield return timer;
 
         readyText.text = "Go !";
-        yield return new WaitForEndOfFrame();
+
         readyAnimator.SetBool(AnimatorName.READY_NAME, false);
-        yield return aniTimer;
-        isCounting = false;
+        isAnimating = true;
+        yield return new WaitForSeconds(readyAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+        isAnimating = false;
         readyText.gameObject.SetActive(false);
 
         yield return null;
