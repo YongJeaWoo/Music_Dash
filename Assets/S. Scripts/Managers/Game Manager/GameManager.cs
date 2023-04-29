@@ -7,6 +7,10 @@ public class GameManager : SingletonComponent<GameManager>
     // ³ëÆ®
 
     private E_GameState currentState = E_GameState.Init;
+    public E_GameState CurrentState
+    {
+        get => currentState;
+    }
 
     #region Property
     public int Combo
@@ -81,22 +85,11 @@ public class GameManager : SingletonComponent<GameManager>
     private void Init()
     {
         AudioManager.Instance.CountPlay("Start");
-        StartCoroutine(WaitForCountPlay());
     }
 
     private void Ready()
     {
         StartCoroutine(GetReady());
-    }
-
-    private IEnumerator WaitForCountPlay()
-    {
-        yield return new WaitForSeconds(1f);
-
-        JudgeManager.Instance.UpJudgeAni.SetTrigger(AnimatorName.JUDGEMENT_NAME);
-        JudgeManager.Instance.DownJudgeAni.SetTrigger(AnimatorName.JUDGEMENT_NAME);
-
-        yield return null;
     }
 
     private IEnumerator GetReady()

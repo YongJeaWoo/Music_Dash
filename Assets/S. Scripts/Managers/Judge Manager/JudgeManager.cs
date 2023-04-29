@@ -13,32 +13,13 @@ public class JudgeManager : SingletonComponent<JudgeManager>
     //{
     //    get =>downVerdict;
     //}
-
-    public SpriteRenderer UpJudgeMent
-    {
-        get => upJudgeMent;
-    }
-    public SpriteRenderer DownJudgeMent
-    {
-        get => downJudgeMent;
-    }
-
-    public Animator UpJudgeAni
-    {
-        get => upJudgeAni;
-    }
-    public Animator DownJudgeAni
-    {
-        get => downJudgeAni;
-    }
     #endregion
 
     // [SerializeField]
     // private SpriteRenderer upVerdict, downVerdict;
 
-    [SerializeField]
-    private SpriteRenderer upJudgeMent, downJudgeMent;
-    private Animator upJudgeAni, downJudgeAni;
+    private UpJudge upJudgeMent = null;
+    private DownJudge downJudgeMent = null;
 
     private Dictionary<E_Judge, Sprite> judgeSprite = new Dictionary<E_Judge, Sprite>();
 
@@ -62,16 +43,23 @@ public class JudgeManager : SingletonComponent<JudgeManager>
     private void Start()
     {
         Init();
-        SetJudgementPosition();
     }
 
     private void Init()
     {
-        upJudgeAni = upJudgeMent.GetComponent<Animator>();
-        downJudgeAni = downJudgeMent.GetComponent<Animator>();
-
         judgeSprite.Add(E_Judge.Cool, Resources.Load<Sprite>(JudgeStorage.JUDGE_COOL_PATH));
         judgeSprite.Add(E_Judge.Perfect, Resources.Load<Sprite>(JudgeStorage.JUDGE_PERFECT_PATH));
+    }
+
+    public UpJudge GetUpJudge() => upJudgeMent;
+    public void SetUpJudge(UpJudge _judge)
+    {
+        upJudgeMent = _judge;
+    }
+    public DownJudge GetDownJudge() => downJudgeMent;
+    public void SetDownJudge(DownJudge _judge)
+    {
+        downJudgeMent = _judge;
     }
 
     private void ScoreProcess(E_Judge judge)
@@ -104,15 +92,15 @@ public class JudgeManager : SingletonComponent<JudgeManager>
         }
     }
 
-    private void SetJudgementPosition()
+    public void SetJudgementPosition()
     {
         Vector2 playerPos = Player.player.transform.position;
 
         Vector2 upJudgementPos = new Vector2(playerPos.x + 12f, playerPos.y + 5.5f);
         Vector2 downJudgementPos = new Vector2(playerPos.x + 12f, playerPos.y - 0.3f);
 
-        Vector2 upJudgePos = new Vector2(upJudgementPos.x, upJudgementPos.y + 2f);
-        Vector2 downJudgePos = new Vector2(downJudgementPos.x, downJudgementPos.y + 2f);
+        // Vector2 upJudgePos = new Vector2(upJudgementPos.x, upJudgementPos.y + 2f);
+        // Vector2 downJudgePos = new Vector2(downJudgementPos.x, downJudgementPos.y + 2f);
 
         // upVerdict.transform.position = upJudgePos;
         // downVerdict.transform.position = downJudgePos;
