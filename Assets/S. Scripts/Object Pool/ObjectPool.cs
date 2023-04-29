@@ -1,29 +1,36 @@
 using SingletonComponent.Component;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPool : SingletonComponent<ObjectPool>
 {
     [SerializeField]
-    private GameObject poolObj;
+    private GameObject[] poolObjs;
 
-    Queue<Note> poolObjQueue = new Queue<Note>();
+    private List<Note>[] poolObjLists;
+
+    private Note noteComponent;
 
     #region SingleTon
     protected override void AwakeInstance()
     {
-        
+
     }
 
     protected override bool InitInstance()
     {
+        noteComponent = poolObjs[0].GetComponent<Note>();
+        poolObjLists = new List<Note>[poolObjs.Length];
+        for (int i = 0; i < poolObjs.Length; i++)
+        {
+            poolObjLists[i] = new List<Note>();
+        }
         return true;
     }
 
     protected override void ReleaseInstance()
     {
-        
+
     }
     #endregion
 
@@ -34,42 +41,52 @@ public class ObjectPool : SingletonComponent<ObjectPool>
 
     private void Initialize(int initCount)
     {
-        for (int i = 0; i < initCount; i++)
+        for (int i = 0; i < poolObjs.Length; i++)
         {
-            poolObjQueue.Enqueue(CreateNewObject());
+            for (int j = 0; j < initCount; j++)
+            {
+                poolObjLists[i].Add(CreateNewObject(poolObjs[i]));
+            }
         }
     }
 
-    private Note CreateNewObject()
+    private Note CreateNewObject(GameObject obj)
     {
-        var newObj = Instantiate(poolObj).GetComponent<Note>();
+        var newObj = Instantiate(obj);
         newObj.gameObject.SetActive(false);
         newObj.transform.SetParent(transform);
-        return newObj;
+        return newObj.GetComponent<Note>();
     }
 
-    public static Note GetObject()
+    public static Note GetObject(int objIndex)
     {
-        if (Instance.poolObjQueue.Count > 0)
+        var instance = Instance;
+        Note obj = null;
+
+        if (instance.poolObjLists[objIndex].Count > 0)
         {
-            var obj = Instance.poolObjQueue.Dequeue();
+            obj = instance.poolObjLists[objIndex][0];
+            instance.poolObjLists[objIndex].RemoveAt(0);
             obj.transform.SetParent(null);
             obj.gameObject.SetActive(true);
-            return obj;
         }
         else
         {
-            var newObj = Instance.CreateNewObject();
-            newObj.gameObject.SetActive(true);
-            newObj.transform.SetParent(null);
-            return newObj;
+            obj = instance.CreateNewObject(instance.poolObjs[objIndex]);
+            obj.gameObject.SetActive(true);
+            obj.transform.SetParent(null);
+            instance.poolObjLists[objIndex].Add(obj);
         }
+
+        return obj;
     }
 
     public static void ReturnObject(Note noteObj)
     {
+        var instance = Instance;
+        int objIndex = System.Array.IndexOf(instance.poolObjs, noteObj.gameObject);
         noteObj.gameObject.SetActive(false);
-        noteObj.transform.SetParent(Instance.transform);
-        Instance.poolObjQueue.Enqueue(noteObj);
+        noteObj.transform.SetParent(instance.transform);
+        instance.poolObjLists[objIndex].Add(noteObj);
     }
 }

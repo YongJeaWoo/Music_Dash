@@ -1568,9 +1568,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fcb92c5a4bdca049b9bea5c360ce37b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 449293215}
-  textHp: {fileID: 1099444008}
-  sliderHp: {fileID: 220425949}
 --- !u!4 &719538925
 Transform:
   m_ObjectHideFlags: 0
@@ -2047,7 +2044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3833bb6b99264846b0ddd9c447baca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolObj: {fileID: 0}
+  poolObjs: []
 --- !u!4 &879614280
 Transform:
   m_ObjectHideFlags: 0
