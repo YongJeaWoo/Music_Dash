@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -36,7 +37,6 @@ public class Player : MonoBehaviour
         }
 
         InputAction();
-        PlayerDead();
     }
 
     public void InitializePlayer()
@@ -135,14 +135,25 @@ public class Player : MonoBehaviour
     {
         isAttacked = true;
         animationController.AnimationPlay(E_AniState.Damage);
+        PlayerDead();
         StartCoroutine(InvincibleTime());
+    }
+
+    private void PlayerDead()
+    {
+        if (currentHp <= 0)
+        {
+            currentHp = 0;
+            animationController.AnimationPlay(E_AniState.Dead);
+            GameManager.Instance.CurrentState = E_GameState.GameOver;
+        }
     }
 
     private IEnumerator InvincibleTime()
     {
         int countTime = 0;
 
-        while (countTime < 8)
+        while (countTime < 10)
         {
             if (countTime % 2 == 0) spriteRenderer.color = new Color32(255, 255, 255, 90);
             else spriteRenderer.color = new Color32(255, 255, 255, 180);
@@ -159,14 +170,6 @@ public class Player : MonoBehaviour
         yield return null;
     }
 
-    private void PlayerDead()
-    {
-        if (currentHp <= 0)
-        {
-            currentHp = 0;
-            animationController.AnimationPlay(E_AniState.Dead);
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

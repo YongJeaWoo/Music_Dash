@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOverPanel : MonoBehaviour
 { 
@@ -13,11 +14,6 @@ public class GameOverPanel : MonoBehaviour
     private void Start()
     {
         Init_Basic();
-    }
-
-    private void Update()
-    {
-        
     }
 
     private void Init_Basic()
@@ -47,6 +43,12 @@ public class GameOverPanel : MonoBehaviour
         gameObject.SetActive(true);
         StopAllCoroutines();
         StartCoroutine(Move(showPosition));
+
+        if (GameManager.Instance.CurrentState == E_GameState.Result)
+        {
+            if (Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (Input.GetKeyDown(KeyCode.Escape)) LoadingController.LoadScene("Select");
+        }
     }
 
     public void Hide()
@@ -54,5 +56,4 @@ public class GameOverPanel : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(Move(hidePosition, () => gameObject.SetActive(false)));
     }
-
 }

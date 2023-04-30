@@ -74,8 +74,6 @@ public class GameManager : SingletonComponent<GameManager>
                 {
                     Debug.Log(CurrentState);
                     Play();
-
-                    if (PlayerManager.Instance.GetPlayerHP() <= 0) CurrentState = E_GameState.GameOver;
                     break;
                 }
             case E_GameState.Clear:
@@ -151,7 +149,7 @@ public class GameManager : SingletonComponent<GameManager>
 
     private IEnumerator Change()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForEndOfFrame();
         CurrentState = E_GameState.Result;
         yield return null;
     }
