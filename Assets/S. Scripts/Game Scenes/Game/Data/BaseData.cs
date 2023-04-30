@@ -24,7 +24,7 @@ public enum E_AttackState
 #region Class Collect
 public class PlayerInfo
 {
-    public const float PLAYER_MAXHP = 100f;
+    public const int PLAYER_MAXHP = 100;
     public const float IMMUTE_TIME = 2.5f;
 
     [Header("Player Behaviour")]

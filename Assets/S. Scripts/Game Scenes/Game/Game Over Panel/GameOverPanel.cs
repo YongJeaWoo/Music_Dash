@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameOverPanel : MonoBehaviour
@@ -28,19 +27,6 @@ public class GameOverPanel : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Show()
-    {
-        gameObject.SetActive(true);
-        StopAllCoroutines();
-        StartCoroutine(Move(showPosition));
-    }
-
-    public void Hide()
-    {
-        StopAllCoroutines();
-        StartCoroutine(Move(hidePosition, () => gameObject.SetActive(false)));
-    }
-
     private IEnumerator Move(Vector3 targetPosition, System.Action onFinished = null)
     {
         Vector3 startPosition = rectTransform.anchoredPosition;
@@ -55,4 +41,18 @@ public class GameOverPanel : MonoBehaviour
         rectTransform.anchoredPosition = targetPosition;
         onFinished?.Invoke();
     }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+        StopAllCoroutines();
+        StartCoroutine(Move(showPosition));
+    }
+
+    public void Hide()
+    {
+        StopAllCoroutines();
+        StartCoroutine(Move(hidePosition, () => gameObject.SetActive(false)));
+    }
+
 }

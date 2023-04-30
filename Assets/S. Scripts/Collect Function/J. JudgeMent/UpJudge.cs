@@ -13,7 +13,6 @@ public class UpJudge : MonoBehaviour
     {
         ani = GetComponent<Animator>();
 
-        JudgeManager.Instance.SetJudgementPosition();
         JudgeManager.Instance.SetUpJudge(this);
 
         if (GameManager.Instance.CurrentState == E_GameState.Init)

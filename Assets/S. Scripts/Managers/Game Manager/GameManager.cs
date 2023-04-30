@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class GameManager : SingletonComponent<GameManager>
 {
-    // ³ëÆ®
-
     private E_GameState currentState = E_GameState.Init;
     public E_GameState CurrentState
     {
         get => currentState;
+        set
+        {
+            ChangeState(value);
+        }
     }
 
     #region Property
@@ -43,46 +45,71 @@ public class GameManager : SingletonComponent<GameManager>
     }
     #endregion
 
-    private void Update()
+    private bool ChangeState(E_GameState _state)
     {
-        StatClassification();
-    }
+        currentState = _state;
 
-    private void StatClassification()
-    {
-        switch (currentState)
+        switch (_state)
         {
             case E_GameState.Init:
                 {
+                    Debug.Log(CurrentState);
                     Init();
-                    currentState = E_GameState.Ready;
+                    CurrentState = E_GameState.Count;
+                    break;
                 }
-                break;
+            case E_GameState.Count:
+                {
+                    Debug.Log(CurrentState);
+                    Count();
+                    break;
+                }
             case E_GameState.Ready:
                 {
+                    Debug.Log(CurrentState);
                     Ready();
-                    currentState = E_GameState.Play;
+                    break;
                 }
-                break;
             case E_GameState.Play:
                 {
+                    Debug.Log(CurrentState);
+                    Play();
 
+                    if (PlayerManager.Instance.GetPlayerHP() <= 0) CurrentState = E_GameState.GameOver;
+                    break;
                 }
-                break;
             case E_GameState.Clear:
                 {
-
+                    Debug.Log(CurrentState);
+                    break;
                 }
-                break;
             case E_GameState.GameOver:
                 {
-
+                    Debug.Log(CurrentState);
+                    GameOver();
+                    break;
                 }
-                break;
-        } 
+            case E_GameState.Result:
+                {
+                    Debug.Log(CurrentState);
+                    Result();
+                    break;
+                }
+        }
+        return false;
     }
 
+    #region Check status
     private void Init()
+    {
+        PlayerManager.Instance.InitPlayer();
+        var getPlayer = PlayerManager.Instance.GetPlayer();
+        getPlayer.InitializePlayer();
+
+        JudgeManager.Instance.SetJudgementPosition();
+    }
+
+    private void Count()
     {
         AudioManager.Instance.CountPlay("Start");
     }
@@ -92,14 +119,46 @@ public class GameManager : SingletonComponent<GameManager>
         StartCoroutine(GetReady());
     }
 
+    private void Play()
+    {
+        MusicStart();
+    }
+
+    private void Clear()
+    {
+
+    }
+
+    private void GameOver()
+    {
+        StartCoroutine(Change());
+    }
+
+    private void Result() 
+    {
+        OptionManager.Instance.GameOverPanel();
+    }
+    #endregion
+
     private IEnumerator GetReady()
     {
         yield return new WaitUntil(() => !AudioManager.Instance.audioSource.isPlaying);
-
         AudioManager.Instance.Stop();
+        yield return new WaitForSeconds(0.3f);
+        CurrentState = E_GameState.Play;
+        yield return null;
+    }
 
+    private IEnumerator Change()
+    {
+        yield return new WaitForSeconds(3.0f);
+        CurrentState = E_GameState.Result;
+        yield return null;
+    }
+
+    private void MusicStart()
+    {
         MusicData data = MusicDataManager.Instance.GetCurrentMusic();
-
         AudioManager.Instance.PlayMusicData(data);
     }
 }

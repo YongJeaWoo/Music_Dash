@@ -3,13 +3,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public static Player player;
-
     private SpriteRenderer spriteRenderer;
     private AnimationController animationController;
 
     [Tooltip("Player Info")]
-    private float currentHp;
+    private int currentHp;
     private Vector2 playerPos = new Vector2(-14, -5.5f);
 
     [Tooltip("Player Behaviour Check")]
@@ -19,25 +17,31 @@ public class Player : MonoBehaviour
     private bool isMoving = true;
 
     [Tooltip("Player Info Property")]
-    public float CurrentHp { get => currentHp; set => currentHp = value; }
-    public bool Immute => PlayerInfo.IMMUTE_TIME > 0f;
-
-    private void Awake()
-    {
-        InitPlayer();
+    public int CurrentHp 
+    { 
+        get => currentHp;
+        set => currentHp = value;
     }
+    public bool Immute => PlayerInfo.IMMUTE_TIME > 0f;
 
     private void Update()
     {
+        // TODO : 테스트용 제거
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Attacked();
+            currentHp -= 10;
+
+            if (currentHp <= 0f) return;
+        }
+
         InputAction();
         PlayerDead();
     }
 
-    private void InitPlayer()
+    public void InitializePlayer()
     {
-        player = this;
-
-        transform.position = new Vector2(-22, -5.5f);
+        transform.position = new Vector2(-22f, -5.5f);
 
         currentHp = PlayerInfo.PLAYER_MAXHP;
         isAttacked = false;
@@ -45,7 +49,7 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         animationController = GetComponentInChildren<AnimationController>();
 
-        StartCoroutine(MovePlayer(new Vector2(-14, -5.5f), 1.5f));
+        StartCoroutine(MovePlayer(new Vector2(-14, -5.5f), 1.8f));
     }
 
     private IEnumerator MovePlayer(Vector2 targetPosition, float duration)
@@ -62,6 +66,7 @@ public class Player : MonoBehaviour
         }
 
         transform.position = targetPosition;
+
         isMoving = false;
     }
 
@@ -156,9 +161,9 @@ public class Player : MonoBehaviour
 
     private void PlayerDead()
     {
-        if (currentHp <= 0f)
+        if (currentHp <= 0)
         {
-            currentHp = 0f;
+            currentHp = 0;
             animationController.AnimationPlay(E_AniState.Dead);
         }
     }
@@ -168,7 +173,7 @@ public class Player : MonoBehaviour
         if (collision.CompareTag("Note") && !isAttacked)
         {
             Attacked();
-            currentHp -= 20f;
+            currentHp -= 20;
         }
     }
 }

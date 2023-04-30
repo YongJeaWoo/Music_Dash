@@ -30,9 +30,11 @@ public enum E_Judge
 public enum E_GameState
 {
     Init,
+    Count,
     Ready,
     Play,
     Clear,
     GameOver,
+    Result
 }
 #endregion

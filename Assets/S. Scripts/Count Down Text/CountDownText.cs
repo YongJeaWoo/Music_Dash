@@ -29,7 +29,7 @@ public class CountDownText : MonoBehaviour
 
     private void CheckCountMusic()
     {
-        if (AudioManager.Instance.audioSource.clip.name.ToString() == "Start" && AudioManager.Instance.audioSource.time >= 2.2f)
+        if (GameManager.Instance.CurrentState == E_GameState.Count && AudioManager.Instance.audioSource.time >= 2.2f)
         {
             StartCoroutine(CountDown());
         }
@@ -52,6 +52,8 @@ public class CountDownText : MonoBehaviour
 
         isAnimating = false;
         readyText.gameObject.SetActive(false);
+
+        GameManager.Instance.CurrentState = E_GameState.Ready;
 
         yield return null;
     }

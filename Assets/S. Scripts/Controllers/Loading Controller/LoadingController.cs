@@ -32,8 +32,10 @@ public class LoadingController : MonoBehaviour
         {
             yield return null;
 
-            if (progressBar.value < 1f) progressBar.value = Mathf.MoveTowards(progressBar.value, 1f, Time.deltaTime * speed);
-            else if (progressBar.value >= 1f) op.allowSceneActivation = true;
+            if (progressBar.value < 1f)
+                progressBar.value = Mathf.MoveTowards(progressBar.value, 1f, Time.deltaTime * speed);
+            else if (progressBar.value >= 1f)
+                op.allowSceneActivation = true;
         }
     }
 }

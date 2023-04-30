@@ -73,6 +73,7 @@ public class JudgeManager : SingletonComponent<JudgeManager>
                     GameManager.Instance.Combo = 0;
                     GameManager.Instance.Score -= 0;
                     // 플레이어 체력 감소
+                    
 
                     if (GameManager.Instance.Score <= 0) GameManager.Instance.Score = 0;
                 }
@@ -94,7 +95,7 @@ public class JudgeManager : SingletonComponent<JudgeManager>
 
     public void SetJudgementPosition()
     {
-        Vector2 playerPos = Player.player.transform.position;
+        Vector2 playerPos = PlayerManager.Instance.GetPlayerPos();
 
         Vector2 upJudgementPos = new Vector2(playerPos.x + 12f, playerPos.y + 5.5f);
         Vector2 downJudgementPos = new Vector2(playerPos.x + 12f, playerPos.y - 0.3f);

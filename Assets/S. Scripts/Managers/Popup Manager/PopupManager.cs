@@ -7,7 +7,7 @@ public class PopupManager : SingletonComponent<PopupManager>
     [SerializeField]
     private Transform canvasParent = null;
 
-    const string PATH = "Prefabs";
+    private const string PATH = "Prefabs";
 
     private List<Component> popUps = new List<Component>();
 

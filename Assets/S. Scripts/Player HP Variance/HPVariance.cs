@@ -17,19 +17,19 @@ public class HPVariance : MonoBehaviour
     {
         PlayerHpSlider();
     }
-
+    
     private void GetComponentInit()
     {
         hpText = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         sliderHP = GetComponent<Slider>();
     }
 
-    private void PlayerHpSlider()
+    public void PlayerHpSlider()
     {
-        if (Player.player.CurrentHp < 0) return;
+        if (PlayerManager.Instance.GetPlayer() == null) return;
 
-        Player.player.CurrentHp = Mathf.Max(Player.player.CurrentHp, 0);
-        sliderHP.value = Player.player.CurrentHp / PlayerInfo.PLAYER_MAXHP;
-        hpText.text = $"{Player.player.CurrentHp} / {PlayerInfo.PLAYER_MAXHP}";
+        Mathf.Max(PlayerManager.Instance.GetPlayerHP(), 0);
+        sliderHP.value = PlayerManager.Instance.GetPlayerHP() / PlayerInfo.PLAYER_MAXHP;
+        hpText.text = $"{PlayerManager.Instance.GetPlayerHP()} / {PlayerInfo.PLAYER_MAXHP}";
     }
 }

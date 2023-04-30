@@ -1,5 +1,4 @@
 using SingletonComponent.Component;
-using UnityEngine;
 
 public class OptionManager : SingletonComponent<OptionManager>
 {
@@ -31,5 +30,18 @@ public class OptionManager : SingletonComponent<OptionManager>
 
         var optionPanel = PopupManager.Instance.GetPopUp<OptionPanel>();
         optionPanel.InitializeOptionPanel();
+    }
+
+    public void GameOverPanel()
+    {
+        if (PopupManager.Instance.IsUsePopup<GameOverPanel>())
+        {
+            var panel = PopupManager.Instance.Find<GameOverPanel>();
+            panel.Show();
+            return;
+        }
+
+        var gameOverPanel = PopupManager.Instance.GetPopUp<GameOverPanel>();
+        gameOverPanel.Hide();
     }
 }

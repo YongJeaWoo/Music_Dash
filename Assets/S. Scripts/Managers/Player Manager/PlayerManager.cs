@@ -3,22 +3,10 @@ using UnityEngine;
 
 public class PlayerManager : SingletonComponent<PlayerManager>
 {
-    Player player;
+    private Player player;
 
-    public void SetPlayer(Player _player)
-    {
-        player = _player;
-    }
-
-    public float PlayerHP()
-    {
-        return player.CurrentHp;
-    }
-
-    public Vector3 PlayerPos()
-    {
-        return player.transform.position;
-    }
+    [SerializeField]
+    private Player playerPrefab;
 
     #region SingleTon
     protected override void AwakeInstance()
@@ -35,5 +23,29 @@ public class PlayerManager : SingletonComponent<PlayerManager>
     {
         throw new System.NotImplementedException();
     }
+    #endregion
+
+    #region Player Frame
+    //public void SetPlayer(Player _player)
+    //{
+    //    player = _player;
+
+    //    if (player != null) return;
+    //}
+
+    public Player GetPlayer() => player;
+
+    public void InitPlayer()
+    {
+        player = Instantiate(playerPrefab);
+    }
+    #endregion
+
+    #region Player HP
+    public float GetPlayerHP() => GetPlayer().CurrentHp;
+    #endregion
+
+    #region Player Position
+    public Vector3 GetPlayerPos() => GetPlayer().transform.position;
     #endregion
 }
