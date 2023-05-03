@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -30,10 +29,8 @@ public class Player : MonoBehaviour
         // TODO : 테스트용 제거
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Attacked();
             currentHp -= 10;
-
-            if (currentHp <= 0f) return;
+            Attacked();
         }
 
         InputAction();
@@ -131,22 +128,30 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Attacked()
+    private void Attacked()
     {
         isAttacked = true;
         animationController.AnimationPlay(E_AniState.Damage);
-        PlayerDead();
+
         StartCoroutine(InvincibleTime());
+
+        PlayerDead();
     }
 
     private void PlayerDead()
     {
-        if (currentHp <= 0)
+        if (CurrentHp <= 0)
         {
             currentHp = 0;
             animationController.AnimationPlay(E_AniState.Dead);
-            GameManager.Instance.CurrentState = E_GameState.GameOver;
+            isAttacked = true;
+            Invoke(nameof(ChangeState), 3f);
         }
+    }
+
+    private void ChangeState()
+    {
+        GameManager.Instance.CurrentState = E_GameState.GameOver;
     }
 
     private IEnumerator InvincibleTime()
@@ -171,12 +176,12 @@ public class Player : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Note") && !isAttacked)
-        {
-            Attacked();
-            currentHp -= 20;
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Note") && !isAttacked)
+    //    {
+    //        Attacked();
+    //        currentHp -= 20;
+    //    }
+    //}
 }

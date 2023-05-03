@@ -37,11 +37,11 @@ public class OptionManager : SingletonComponent<OptionManager>
         if (PopupManager.Instance.IsUsePopup<GameOverPanel>())
         {
             var panel = PopupManager.Instance.Find<GameOverPanel>();
-            panel.Show();
+            panel.Hide();
             return;
         }
 
         var gameOverPanel = PopupManager.Instance.GetPopUp<GameOverPanel>();
-        gameOverPanel.Hide();
+        gameOverPanel.Show();
     }
 }

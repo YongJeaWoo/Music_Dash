@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameOverPanel : MonoBehaviour
 { 
@@ -20,7 +19,6 @@ public class GameOverPanel : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
         rectTransform.anchoredPosition = hidePosition;
-        gameObject.SetActive(false);
     }
 
     private IEnumerator Move(Vector3 targetPosition, System.Action onFinished = null)
@@ -43,12 +41,6 @@ public class GameOverPanel : MonoBehaviour
         gameObject.SetActive(true);
         StopAllCoroutines();
         StartCoroutine(Move(showPosition));
-
-        if (GameManager.Instance.CurrentState == E_GameState.Result)
-        {
-            if (Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            if (Input.GetKeyDown(KeyCode.Escape)) LoadingController.LoadScene("Select");
-        }
     }
 
     public void Hide()
