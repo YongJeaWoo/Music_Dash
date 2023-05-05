@@ -1,51 +1,108 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class GameOverPanel : MonoBehaviour
-{ 
-    private Vector3 hidePosition = new Vector3(1920, 0, 0);
-    private Vector3 showPosition = new Vector3(0, 0, 0);
+{
+    private float panelMoveTime = 0.25f;
+    private bool playAnimation = false;
 
-    private float moveDuration = 1f;
+    private Vector3 hidePosition;
+    private Vector3 showPosition;
 
-    private RectTransform rectTransform;
+    private RectTransform rectTrans;
 
-    private void Start()
+    private void OnEnable()
     {
-        Init_Basic();
+        rectTrans = GetComponent<RectTransform>();
+
+        hidePosition = new Vector3(1920, 0, 0);
+        showPosition = new Vector3(0, 0, 0);
     }
 
-    private void Init_Basic()
+    public void InitializeOverPanel()
     {
-        rectTransform = GetComponent<RectTransform>();
-        rectTransform.anchoredPosition = hidePosition;
+        playAnimation= true;
+        StartCoroutine(MovePanel(true));
     }
 
-    private IEnumerator Move(Vector3 targetPosition, System.Action onFinished = null)
+    public void OnExitOverPanel()
     {
-        Vector3 startPosition = rectTransform.anchoredPosition;
-        float elapsedTime = 0f;
-        while (elapsedTime < moveDuration)
+        if (playAnimation) return;
+
+        playAnimation = true;
+
+        StartCoroutine(MovePanel(true, () => PopupManager.Instance.RemovePopUp<GameOverPanel>()));
+    }
+
+    private IEnumerator MovePanel(bool _isShow, Action _onComplete = null)
+    {
+        Vector3 startPosition = _isShow ? hidePosition : showPosition;
+        Vector3 endPosition = _isShow ? showPosition : hidePosition;
+
+        float startTime = Time.time;
+        float endTime = startTime + panelMoveTime;
+
+        while (Time.time < endTime)
         {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / moveDuration);
-            rectTransform.anchoredPosition = Vector3.Lerp(startPosition, targetPosition, t);
+            float t = (Time.time - startTime) / panelMoveTime;
+
+            rectTrans.anchoredPosition = Vector3.Lerp(startPosition, endPosition, t);
+
             yield return null;
         }
-        rectTransform.anchoredPosition = targetPosition;
-        onFinished?.Invoke();
+
+        rectTrans.anchoredPosition = endPosition;
+
+        playAnimation = false;
+
+        _onComplete?.Invoke();
     }
 
-    public void Show()
-    {
-        gameObject.SetActive(true);
-        StopAllCoroutines();
-        StartCoroutine(Move(showPosition));
-    }
 
-    public void Hide()
-    {
-        StopAllCoroutines();
-        StartCoroutine(Move(hidePosition, () => gameObject.SetActive(false)));
-    }
+    //private Vector3 hidePosition = new Vector3(1920, 0, 0);
+    //private Vector3 showPosition = new Vector3(0, 0, 0);
+
+    //private float moveDuration = 1f;
+
+    //private RectTransform rectTransform;
+
+    //private void Start()
+    //{
+    //    Init_Basic();
+    //}
+
+    //private void Init_Basic()
+    //{
+    //    rectTransform = GetComponent<RectTransform>();
+    //    rectTransform.anchoredPosition = hidePosition;
+    //}
+
+    //private IEnumerator Move(Vector3 targetPosition, System.Action onFinished = null)
+    //{
+    //    Vector3 startPosition = rectTransform.anchoredPosition;
+    //    float elapsedTime = 0f;
+    //    while (elapsedTime < moveDuration)
+    //    {
+    //        elapsedTime += Time.deltaTime;
+    //        float t = Mathf.Clamp01(elapsedTime / moveDuration);
+    //        rectTransform.anchoredPosition = Vector3.Lerp(startPosition, targetPosition, t);
+    //        yield return null;
+    //    }
+    //    rectTransform.anchoredPosition = targetPosition;
+    //    onFinished?.Invoke();
+    //}
+
+    //public void Show()
+    //{
+    //    gameObject.SetActive(true);
+    //    StopAllCoroutines();
+    //    StartCoroutine(Move(showPosition));
+    //}
+
+    //public void Hide()
+    //{
+    //    StopAllCoroutines();
+    //    StartCoroutine(Move(hidePosition, () => gameObject.SetActive(false)));
+    //}
 }
