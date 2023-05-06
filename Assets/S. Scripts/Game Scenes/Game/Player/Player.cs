@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     [Tooltip("Player Behaviour Check")]
     private bool isJump, isTop = false;
     private bool isFall = false;
-    private bool isAttacked;
     private bool isMoving = true;
 
     [Tooltip("Player Info Property")]
@@ -41,7 +40,6 @@ public class Player : MonoBehaviour
         transform.position = new Vector2(-22f, -5.5f);
 
         currentHp = PlayerInfo.PLAYER_MAXHP;
-        isAttacked = false;
 
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         animationController = GetComponentInChildren<AnimationController>();
@@ -130,7 +128,6 @@ public class Player : MonoBehaviour
 
     private void Attacked()
     {
-        isAttacked = true;
         animationController.AnimationPlay(E_AniState.Damage);
 
         StartCoroutine(InvincibleTime());
@@ -144,7 +141,6 @@ public class Player : MonoBehaviour
         {
             currentHp = 0;
             animationController.AnimationPlay(E_AniState.Dead);
-            isAttacked = true;
             Invoke(nameof(ChangeState), 3f);
         }
     }
@@ -169,8 +165,6 @@ public class Player : MonoBehaviour
         }
 
         spriteRenderer.color = new Color32(255, 255, 255, 255);
-
-        isAttacked = false;
 
         yield return null;
     }

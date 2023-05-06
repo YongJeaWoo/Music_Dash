@@ -4,19 +4,8 @@ using UnityEngine;
 
 public class JudgeManager : SingletonComponent<JudgeManager>
 {
-    #region Property
-    //public SpriteRenderer UpVerdict
-    //{
-    //    get => upVerdict;
-    //}
-    //public SpriteRenderer DownVerDict
-    //{
-    //    get =>downVerdict;
-    //}
-    #endregion
-
-    // [SerializeField]
-    // private SpriteRenderer upVerdict, downVerdict;
+    private UpVerdict upVerdict = null;
+    private DownVerdict downVerdict = null;
 
     private UpJudge upJudgeMent = null;
     private DownJudge downJudgeMent = null;
@@ -51,16 +40,13 @@ public class JudgeManager : SingletonComponent<JudgeManager>
         judgeSprite.Add(E_Judge.Perfect, Resources.Load<Sprite>(JudgeStorage.JUDGE_PERFECT_PATH));
     }
 
-    public UpJudge GetUpJudge() => upJudgeMent;
-    public void SetUpJudge(UpJudge _judge)
-    {
-        upJudgeMent = _judge;
-    }
-    public DownJudge GetDownJudge() => downJudgeMent;
-    public void SetDownJudge(DownJudge _judge)
-    {
-        downJudgeMent = _judge;
-    }
+    public void SetUpVerdict(UpVerdict _verdict) => upVerdict = _verdict;
+    public void SetDownVerdict(DownVerdict _verdict) => downVerdict = _verdict;
+
+    public void SetUpJudge(UpJudge _judge) => upJudgeMent = _judge;
+    public void SetDownJudge(DownJudge _judge) => downJudgeMent = _judge;
+
+    public Dictionary<E_Judge, Sprite> GetJudgeSprite() => judgeSprite;
 
     private void ScoreProcess(E_Judge judge)
     {
@@ -100,11 +86,11 @@ public class JudgeManager : SingletonComponent<JudgeManager>
         Vector2 upJudgementPos = new Vector2(playerPos.x + 12f, playerPos.y + 5.5f);
         Vector2 downJudgementPos = new Vector2(playerPos.x + 12f, playerPos.y - 0.3f);
 
-        // Vector2 upJudgePos = new Vector2(upJudgementPos.x, upJudgementPos.y + 2f);
-        // Vector2 downJudgePos = new Vector2(downJudgementPos.x, downJudgementPos.y + 2f);
+        Vector2 upJudgePos = new Vector2(upJudgementPos.x, upJudgementPos.y + 2f);
+        Vector2 downJudgePos = new Vector2(downJudgementPos.x, downJudgementPos.y + 2f);
 
-        // upVerdict.transform.position = upJudgePos;
-        // downVerdict.transform.position = downJudgePos;
+        upVerdict.transform.position = upJudgePos;
+        downVerdict.transform.position = downJudgePos;
 
         upJudgeMent.transform.position = upJudgementPos;
         downJudgeMent.transform.position = downJudgementPos;
