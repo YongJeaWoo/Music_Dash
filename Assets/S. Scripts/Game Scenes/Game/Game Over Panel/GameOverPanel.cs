@@ -30,12 +30,10 @@ public class GameOverPanel : MonoBehaviour
     {
         if (playAnimation) return;
 
-        playAnimation = true;
-
-        StartCoroutine(MovePanel(true, () => PopupManager.Instance.RemovePopUp<GameOverPanel>()));
+        PopupManager.Instance.RemovePopUp<GameOverPanel>();
     }
 
-    private IEnumerator MovePanel(bool _isShow, Action _onComplete = null)
+    private IEnumerator MovePanel(bool _isShow)
     {
         Vector3 startPosition = _isShow ? hidePosition : showPosition;
         Vector3 endPosition = _isShow ? showPosition : hidePosition;
@@ -55,7 +53,5 @@ public class GameOverPanel : MonoBehaviour
         rectTrans.anchoredPosition = endPosition;
 
         playAnimation = false;
-
-        _onComplete?.Invoke();
     }
 }

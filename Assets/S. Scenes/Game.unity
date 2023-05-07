@@ -3078,6 +3078,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deadPanel: {fileID: 311077825}
+  backGrounds:
+  - {fileID: 5298406445895226214}
+  - {fileID: 404393973}
 --- !u!1 &1708300935
 GameObject:
   m_ObjectHideFlags: 0

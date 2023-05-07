@@ -26,6 +26,8 @@ public class PauseController : MonoBehaviour
 
     private void PauseControl()
     {
+        if (GameManager.Instance.CurrentState == E_GameState.GameOver) return;
+
         pauseTimer -= Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.UpArrow))

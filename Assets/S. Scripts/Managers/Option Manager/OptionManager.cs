@@ -3,6 +3,7 @@ using SingletonComponent.Component;
 public class OptionManager : SingletonComponent<OptionManager>
 {
     public bool IsOption => PopupManager.Instance.IsUsePopup<OptionPanel>();
+    public bool IsOver => PopupManager.Instance.IsUsePopup<GameOverPanel>();
 
     #region SingleTon
     protected override void AwakeInstance()
