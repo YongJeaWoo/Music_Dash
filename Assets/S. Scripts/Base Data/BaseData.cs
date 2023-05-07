@@ -13,7 +13,6 @@ public static class JudgeStorage
 
 public static class AnimatorName
 {
-    public const string JUDGEMENT_NAME = "Start";
     public const string READY_NAME = "Ready";
 }
 #endregion

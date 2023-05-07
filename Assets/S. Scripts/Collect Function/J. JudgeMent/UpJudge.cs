@@ -2,22 +2,37 @@ using UnityEngine;
 
 public class UpJudge : MonoBehaviour
 {
-    private Animator ani;
+    private AnimationController ani;
 
     private void Awake()
     {
-        SetInit();
+        JudgeManager.Instance.SetUpJudge(this);
+        
+        ani = GetComponent<AnimationController>();
     }
 
-    private void SetInit()
+    private void OnEnable()
     {
-        ani = GetComponent<Animator>();
+        GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
+    }
 
-        JudgeManager.Instance.SetUpJudge(this);
+    private void OnDisable()
+    {
+        GameManager.Instance.OnGameStateChanged -= HandleGameStateChanged;
+    }
 
-        if (GameManager.Instance.CurrentState == E_GameState.Init)
+    private void HandleGameStateChanged(E_GameState newState)
+    {
+        switch (newState)
         {
-            ani.SetTrigger(AnimatorName.JUDGEMENT_NAME);
+            case E_GameState.Init:
+                ani.JudgeAnimationPlay(E_JudgeState.Init);
+                break;
+            case E_GameState.Count:
+                ani.JudgeAnimationPlay(E_JudgeState.Ready);
+                break;
+            default:
+                break;
         }
     }
 }

@@ -43,6 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Judge
+    uniqueID: 2878903289
+    locked: 0
   - name: Player
     uniqueID: 1651476067
     locked: 0

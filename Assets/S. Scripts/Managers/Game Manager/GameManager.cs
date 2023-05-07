@@ -1,6 +1,7 @@
 using SingletonComponent.Component;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonComponent<GameManager>
@@ -14,6 +15,9 @@ public class GameManager : SingletonComponent<GameManager>
             ChangeState(value);
         }
     }
+
+    public delegate void GameStateChanged(E_GameState newState);
+    public event GameStateChanged OnGameStateChanged;
 
     #region Property
     public int Combo
@@ -49,6 +53,7 @@ public class GameManager : SingletonComponent<GameManager>
     private bool ChangeState(E_GameState _state)
     {
         currentState = _state;
+        OnGameStateChanged?.Invoke(_state);
 
         switch (_state)
         {
@@ -94,6 +99,7 @@ public class GameManager : SingletonComponent<GameManager>
                     break;
                 }
         }
+
         return false;
     }
 

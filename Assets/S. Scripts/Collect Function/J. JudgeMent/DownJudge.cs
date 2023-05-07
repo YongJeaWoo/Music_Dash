@@ -2,22 +2,37 @@ using UnityEngine;
 
 public class DownJudge : MonoBehaviour
 {
-    private Animator ani;
+    private AnimationController ani;
 
     private void Awake()
     {
-        SetInit();
-    }
-
-    private void SetInit()
-    {
-        ani = GetComponent<Animator>();
-
         JudgeManager.Instance.SetDownJudge(this);
 
-        if (GameManager.Instance.CurrentState == E_GameState.Init)
+        ani = GetComponent<AnimationController>();
+    }
+
+    private void OnEnable()
+    {
+        GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.OnGameStateChanged -= HandleGameStateChanged;
+    }
+
+    private void HandleGameStateChanged(E_GameState newState)
+    {
+        switch (newState)
         {
-            ani.SetTrigger(AnimatorName.JUDGEMENT_NAME);
+            case E_GameState.Init:
+                ani.JudgeAnimationPlay(E_JudgeState.Init);
+                break;
+            case E_GameState.Count:
+                ani.JudgeAnimationPlay(E_JudgeState.Ready);
+                break;
+            default:
+                break;
         }
     }
 }

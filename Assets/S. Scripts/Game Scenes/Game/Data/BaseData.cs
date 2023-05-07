@@ -1,6 +1,13 @@
 using UnityEngine;
 
 #region Enum Collect
+public enum E_JudgeState
+{
+    None,
+    Init,
+    Ready
+}
+
 public enum E_AniState
 {
     None,

@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class UpVerdict : MonoBehaviour
 {
-    private Animator ani;
+    private AnimationController ani;
 
-    private void Awake()
+    private void OnEnable()
     {
         SetInit();
     }
 
     private void SetInit()
     {
-        ani = GetComponent<Animator>();
+        ani = GetComponent<AnimationController>();
 
         JudgeManager.Instance.SetUpVerdict(this);
     }

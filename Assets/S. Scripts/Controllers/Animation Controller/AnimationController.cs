@@ -6,11 +6,9 @@ public class AnimationController : MonoBehaviour
 {
     private Animator animator = null;
 
+    private E_JudgeState judgeState = E_JudgeState.None;
     private E_AniState aniState = E_AniState.Run;
-    public E_AniState AniState => aniState;
-
     private E_AttackState attackState = E_AttackState.None;
-    public E_AttackState AttackState => attackState;
 
     public float Speed
     {
@@ -21,6 +19,16 @@ public class AnimationController : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+    }
+
+    public void JudgeAnimationPlay(E_JudgeState _state)
+    {
+        if (judgeState != _state)
+        {
+            Speed = 1f;
+            judgeState = _state;
+            animator.Play(judgeState.ToString(), 0, 0);
+        }
     }
 
     public void AnimationPlay(E_AniState _state)
