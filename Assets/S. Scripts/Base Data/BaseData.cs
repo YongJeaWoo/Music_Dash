@@ -18,6 +18,12 @@ public static class AnimatorName
 #endregion
 
 #region Enum Collect
+public enum E_NoteType
+{
+    Upper,
+    Under
+}
+
 public enum E_Judge
 {
     None,
@@ -32,7 +38,6 @@ public enum E_GameState
     Count,
     Ready,
     Play,
-    Clear,
     GameOver,
     Result
 }

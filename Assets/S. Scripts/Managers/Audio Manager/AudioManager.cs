@@ -121,9 +121,9 @@ public class AudioManager : SingletonComponent<AudioManager>
         return clip;
     }
 
-    public void PlayMusicData(MusicData musicData)
+    public void PlayMusicData(MusicData _data)
     {
-        AudioClip clip = clipList.Find(x => x.name.Equals(musicData.musicClip.name));
+        AudioClip clip = clipList.Find(x => x.name.Equals(_data.musicClip.name));
 
         if (clip != null)
         {
@@ -131,7 +131,7 @@ public class AudioManager : SingletonComponent<AudioManager>
             return;
         }
 
-        clip = musicData.musicClip;
+        clip = _data.musicClip;
 
         if (clip != null) clipList.Add(clip);
 

@@ -9,8 +9,6 @@ public class ObjectPool : SingletonComponent<ObjectPool>
 
     private List<Note>[] poolObjLists;
 
-    private Note noteComponent;
-
     #region SingleTon
     protected override void AwakeInstance()
     {
@@ -19,7 +17,6 @@ public class ObjectPool : SingletonComponent<ObjectPool>
 
     protected override bool InitInstance()
     {
-        noteComponent = poolObjs[0].GetComponent<Note>();
         poolObjLists = new List<Note>[poolObjs.Length];
         for (int i = 0; i < poolObjs.Length; i++)
         {

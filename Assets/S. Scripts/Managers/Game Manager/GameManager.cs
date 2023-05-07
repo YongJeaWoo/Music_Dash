@@ -82,11 +82,6 @@ public class GameManager : SingletonComponent<GameManager>
                     Play();
                     break;
                 }
-            case E_GameState.Clear:
-                {
-                    Debug.Log(CurrentState);
-                    break;
-                }
             case E_GameState.GameOver:
                 {
                     Debug.Log(CurrentState);
@@ -95,7 +90,6 @@ public class GameManager : SingletonComponent<GameManager>
             case E_GameState.Result:
                 {
                     Debug.Log(CurrentState);
-                    Result();
                     break;
                 }
         }
@@ -128,11 +122,6 @@ public class GameManager : SingletonComponent<GameManager>
         MusicStart();
     }
 
-    private void Clear()
-    {
-        
-    }
-
     public void GameOver()
     {
         OptionManager.Instance.GameOverPanel();
@@ -140,7 +129,7 @@ public class GameManager : SingletonComponent<GameManager>
 
     private void Result() 
     {
-
+        
     }
     #endregion
 
@@ -157,5 +146,15 @@ public class GameManager : SingletonComponent<GameManager>
     {
         MusicData data = MusicDataManager.Instance.GetCurrentMusic();
         AudioManager.Instance.PlayMusicData(data);
+
+        if (!AudioManager.Instance.audioSource.isPlaying)
+        {
+            Invoke(nameof(ChangeResult), 2f);
+        }
+    }
+
+    private void ChangeResult()
+    {
+        CurrentState = E_GameState.Result;
     }
 }
