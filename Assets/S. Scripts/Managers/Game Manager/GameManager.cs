@@ -84,7 +84,6 @@ public class GameManager : SingletonComponent<GameManager>
             case E_GameState.GameOver:
                 {
                     Debug.Log(CurrentState);
-                    GameOver();
                     break;
                 }
             case E_GameState.Result:
@@ -124,17 +123,17 @@ public class GameManager : SingletonComponent<GameManager>
 
     private void Clear()
     {
-
+        
     }
 
-    private void GameOver()
+    public void GameOver()
     {
-        StartCoroutine(Change());
+        OptionManager.Instance.GameOverPanel();
     }
 
     private void Result() 
     {
-        OptionManager.Instance.GameOverPanel();
+
     }
     #endregion
 
@@ -144,13 +143,6 @@ public class GameManager : SingletonComponent<GameManager>
         AudioManager.Instance.Stop();
         yield return new WaitForSeconds(0.3f);
         CurrentState = E_GameState.Play;
-        yield return null;
-    }
-
-    private IEnumerator Change()
-    {
-        yield return new WaitForEndOfFrame();
-        CurrentState = E_GameState.Result;
         yield return null;
     }
 
