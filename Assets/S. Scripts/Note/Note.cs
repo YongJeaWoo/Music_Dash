@@ -1,26 +1,50 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Note : MonoBehaviour
 {
-    private E_NoteType upperNote;
-    private E_NoteType underNote;
+    private Vector3 direction;
+
+    private float speed = 1f;
+
+    private IObjectPool<Note> pool;
 
     private void Awake()
     {
-        Init();
         CheckYPos();
     }
 
     private void Update()
     {
-        
+        MoveNote();
     }
 
-    private void Init()
+    private void MoveNote()
     {
-        upperNote = E_NoteType.Upper;
-        underNote = E_NoteType.Under;
+        transform.Translate(-speed * Time.deltaTime, 0, 0);
+        
+        if (transform.position.x < -10f)
+        {
+            Invoke(nameof(DestroyNote), 5f);
+        }
     }
 
+    public void MakeNote(Vector3 _dir)
+    {
+        direction = _dir;
+    }
+
+    public void SetObjectPool(IObjectPool<Note> _pool)
+    {
+        pool = _pool;
+    }
+
+    public void DestroyNote()
+    {
+        pool.Release(this);
+    }
+
+    #region Virtual Method
     public virtual void CheckYPos() { }
+    #endregion
 }

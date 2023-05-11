@@ -1,8 +1,11 @@
+using UnityEngine;
+
 public class UnderNote : Note
 {
     public override void CheckYPos()
     {
-        var posY = transform.position.y;
-        posY = -5.8f;
+        Vector3 pos = transform.position;
+        pos.y = -5.8f;
+        transform.position = pos;
     }
 }
