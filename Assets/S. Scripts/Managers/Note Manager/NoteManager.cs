@@ -1,18 +1,12 @@
 using SingletonComponent.Component;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NoteManager : SingletonComponent<NoteManager>
 {
-    #region Static
-
-    private ObjectPool objectPool;
-
-    #endregion
-
     #region Private Field
 
-
+    private Note note = null;
+    private Bounds bounds;
 
     #endregion
 
@@ -20,7 +14,7 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     protected override void AwakeInstance()
     {
-        InitAwake();
+        
     }
 
     protected override bool InitInstance()
@@ -37,10 +31,21 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     #region Method
 
-    private void InitAwake()
+    private void Update()
     {
-        //objectPool = ObjectPool.Instance;
-        //objectPool.Initialize();
+        ReturnNote();
+    }
+
+    public Note SetNote(Note _note) => note = _note;
+    public Bounds SetBounds(Note _note) => bounds = SetNote(note).Bounds;
+
+    private void ReturnNote()
+    {
+        if (Camera.main.WorldToScreenPoint(transform.position + bounds.extents.x * Vector3.right).x < 0f)
+        {
+            // TODO : 노트 비활성화
+            ObjectPoolManager.Instance.Return();
+        }
     }
 
     #endregion

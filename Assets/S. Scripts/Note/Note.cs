@@ -6,6 +6,11 @@ public class Note : MonoBehaviour
     private float speed = 2f;
     private Bounds bounds;
 
+    public Bounds Bounds
+    {
+        get => bounds;
+    }
+
     private void Awake()
     {
         InitAwake();
@@ -14,7 +19,9 @@ public class Note : MonoBehaviour
     private void InitAwake()
     {
         bounds = GetComponent<Renderer>().bounds;
-        CheckYPos();
+        NoteManager.Instance.SetNote(this);
+        NoteManager.Instance.SetBounds(this);
+        CheckYPos();        
     }
 
     private void Update()
@@ -25,14 +32,10 @@ public class Note : MonoBehaviour
     private void MoveNote()
     {
         transform.Translate(direction * Time.deltaTime * speed);
-
-        if (Camera.main.WorldToScreenPoint(transform.position + bounds.extents.x * Vector3.right).x < 0f)
-        {
-            Destroy(gameObject);
-        }
+        DirectionNote(Vector3.left.normalized);
     }
 
-    public void DirectionNote(Vector3 _dir)
+    private void DirectionNote(Vector3 _dir)
     {
         direction = _dir;
     }

@@ -99,7 +99,6 @@ public class JudgeManager : SingletonComponent<JudgeManager>
     public void JudgeProcess(E_Judge judge)
     {
 
-
         ScoreProcess(judge);
     }
 }

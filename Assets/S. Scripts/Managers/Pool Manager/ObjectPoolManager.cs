@@ -35,7 +35,7 @@ public class ObjectPoolManager : SingletonComponent<ObjectPoolManager>
 
     #region Initialize
 
-    public void Initialize()
+    private void Initialize()
     {
         m_poolObjects.ForEach(CreateObjectPool);
     }

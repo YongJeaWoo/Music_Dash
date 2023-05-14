@@ -80,6 +80,7 @@ public class GameManager : SingletonComponent<GameManager>
                 {
                     Debug.Log(CurrentState);
                     Play();
+                    StartCreateNote();
                     break;
                 }
             case E_GameState.GameOver:
@@ -156,5 +157,11 @@ public class GameManager : SingletonComponent<GameManager>
     private void ChangeResult()
     {
         CurrentState = E_GameState.Result;
+    }
+
+    private void StartCreateNote()
+    {
+        ObjectPoolManager.Instance.Create("UpperNote");
+        ObjectPoolManager.Instance.Create("UnderNote");
     }
 }
