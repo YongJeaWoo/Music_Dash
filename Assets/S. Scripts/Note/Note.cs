@@ -1,11 +1,9 @@
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class Note : MonoBehaviour
 {
     private Vector3 direction;
     private float speed = 2f;
-    private IObjectPool<Note> pool;
     private Bounds bounds;
 
     private void Awake()
@@ -27,26 +25,16 @@ public class Note : MonoBehaviour
     private void MoveNote()
     {
         transform.Translate(direction * Time.deltaTime * speed);
+
+        if (Camera.main.WorldToScreenPoint(transform.position + bounds.extents.x * Vector3.right).x < 0f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void DirectionNote(Vector3 _dir)
     {
         direction = _dir;
-
-        if (Camera.main.WorldToScreenPoint(transform.position + bounds.extents.x * Vector3.right).x < 0f)
-        {
-            Invoke(nameof(DestroyNote), 2f);
-        }
-    }
-
-    public void SetObjectPool(IObjectPool<Note> _pool)
-    {
-        pool = _pool;
-    }
-
-    public void DestroyNote()
-    {
-        pool.Release(this);
     }
 
     #region Virtual Method

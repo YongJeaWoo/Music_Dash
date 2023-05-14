@@ -1,18 +1,47 @@
-using System.Collections;
+using SingletonComponent.Component;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoteManager : MonoBehaviour
+public class NoteManager : SingletonComponent<NoteManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    #region Static
+
+    private ObjectPool objectPool;
+
+    #endregion
+
+    #region Private Field
+
+
+
+    #endregion
+
+    #region Singleton
+
+    protected override void AwakeInstance()
+    {
+        InitAwake();
+    }
+
+    protected override bool InitInstance()
+    {
+        return true;
+    }
+
+    protected override void ReleaseInstance()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    #endregion
+
+    #region Method
+
+    private void InitAwake()
     {
-        
+        //objectPool = ObjectPool.Instance;
+        //objectPool.Initialize();
     }
+
+    #endregion
 }
