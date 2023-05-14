@@ -18,21 +18,36 @@ public class NoteMaker : MonoBehaviour
     private IObjectPool<Note> upperNotePool;
     private IObjectPool<Note> underNotePool;
 
-    private const int MaxPoolSize = 30;
-    private const float NoteCreationInterval = 2f;
+    private const int maxPoolSize = 10;
+    private const float noteCreationInterval = 2f;
+    
+    private float elapsedTime;
 
     private void Awake()
     {
-        upperNotePool = new ObjectPool<Note>(CreateUpperNote, OnGetNote, OnReleaseNote, OnDestroyNote, maxSize: MaxPoolSize);
-        underNotePool = new ObjectPool<Note>(CreateUnderNote, OnGetNote, OnReleaseNote, OnDestroyNote, maxSize: MaxPoolSize);
-
-        Instantiate(upperNotePrefab, Vector3.zero, Quaternion.identity);
-        Instantiate(underNotePrefab, Vector3.zero, Quaternion.identity);
+        NoteObjectPool();
     }
 
-    private void Start()
+    private void Update()
     {
-        InvokeRepeating(nameof(CreateNotes), NoteCreationInterval, NoteCreationInterval);
+        CheckNote();
+    }
+
+    private void NoteObjectPool()
+    {
+        upperNotePool = new ObjectPool<Note>(CreateUpperNote, OnGetNote, OnReleaseNote, OnDestroyNote, maxSize: maxPoolSize);
+        underNotePool = new ObjectPool<Note>(CreateUnderNote, OnGetNote, OnReleaseNote, OnDestroyNote, maxSize: maxPoolSize);
+    }
+
+    private void CheckNote()
+    {
+        elapsedTime += Time.deltaTime;
+
+        if (elapsedTime >= noteCreationInterval)
+        {
+            CreateNotes();
+            elapsedTime = 0f;
+        }
     }
 
     private void CreateNotes()
@@ -40,22 +55,8 @@ public class NoteMaker : MonoBehaviour
         var upperNote = upperNotePool.Get();
         var underNote = underNotePool.Get();
 
-        upperNote.MakeNote(Vector2.left.normalized);
-        underNote.MakeNote(Vector2.left.normalized);
-    }
-
-    private Note CreateUpperNote()
-    {
-        Note upperNote = Instantiate(upperNotePrefab).GetComponent<Note>();
-        upperNote.SetObjectPool(upperNotePool);
-        return upperNote;
-    }
-
-    private Note CreateUnderNote()
-    {
-        Note underNote = Instantiate(underNotePrefab).GetComponent<Note>();
-        underNote.SetObjectPool(underNotePool);
-        return underNote;
+        upperNote.DirectionNote(Vector2.left.normalized);
+        underNote.DirectionNote(Vector2.left.normalized);
     }
 
     private void SetNoteState(Note note, E_NoteState state)
@@ -69,9 +70,24 @@ public class NoteMaker : MonoBehaviour
                 note.gameObject.SetActive(false);
                 break;
             case E_NoteState.Destroyed:
-                Destroy(note.gameObject);
+                note.DestroyNote();
                 break;
         }
+    }
+
+    #region Object Pool Method
+    private Note CreateUpperNote()
+    {
+        Note upperNote = Instantiate(upperNotePrefab).GetComponent<Note>();
+        upperNote.SetObjectPool(upperNotePool);
+        return upperNote;
+    }
+
+    private Note CreateUnderNote()
+    {
+        Note underNote = Instantiate(underNotePrefab).GetComponent<Note>();
+        underNote.SetObjectPool(underNotePool);
+        return underNote;
     }
 
     private void OnGetNote(Note note)
@@ -88,4 +104,5 @@ public class NoteMaker : MonoBehaviour
     {
         SetNoteState(note, E_NoteState.Destroyed);
     }
+    #endregion
 }

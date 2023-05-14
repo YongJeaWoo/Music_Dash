@@ -15,6 +15,12 @@ public static class AnimatorName
 {
     public const string READY_NAME = "Ready";
 }
+
+public static class Number
+{
+    public const float UPPER_Y = 0f;
+    public const float UNDER_Y = -5.8f;
+}
 #endregion
 
 #region Enum Collect

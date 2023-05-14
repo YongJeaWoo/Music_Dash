@@ -5,7 +5,7 @@ public class UpperNote : Note
     public override void CheckYPos()
     {
         Vector3 pos = transform.position;
-        pos.y = 0f;
+        pos.y = Number.UPPER_Y;
         transform.position = pos;
     }
 }

@@ -4,13 +4,18 @@ using UnityEngine.Pool;
 public class Note : MonoBehaviour
 {
     private Vector3 direction;
-
-    private float speed = 1f;
-
+    private float speed = 2f;
     private IObjectPool<Note> pool;
+    private Bounds bounds;
 
     private void Awake()
     {
+        InitAwake();
+    }
+
+    private void InitAwake()
+    {
+        bounds = GetComponent<Renderer>().bounds;
         CheckYPos();
     }
 
@@ -21,17 +26,17 @@ public class Note : MonoBehaviour
 
     private void MoveNote()
     {
-        transform.Translate(-speed * Time.deltaTime, 0, 0);
-        
-        if (transform.position.x < -10f)
-        {
-            Invoke(nameof(DestroyNote), 5f);
-        }
+        transform.Translate(direction * Time.deltaTime * speed);
     }
 
-    public void MakeNote(Vector3 _dir)
+    public void DirectionNote(Vector3 _dir)
     {
         direction = _dir;
+
+        if (Camera.main.WorldToScreenPoint(transform.position + bounds.extents.x * Vector3.right).x < 0f)
+        {
+            Invoke(nameof(DestroyNote), 2f);
+        }
     }
 
     public void SetObjectPool(IObjectPool<Note> _pool)
