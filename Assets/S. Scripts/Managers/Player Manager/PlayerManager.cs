@@ -16,12 +16,12 @@ public class PlayerManager : SingletonComponent<PlayerManager>
 
     protected override bool InitInstance()
     {
-        throw new System.NotImplementedException();
+        return true;
     }
 
     protected override void ReleaseInstance()
     {
-        throw new System.NotImplementedException();
+        
     }
     #endregion
 

@@ -4,12 +4,6 @@ public class Note : MonoBehaviour
 {
     private Vector3 direction;
     private float speed = 2f;
-    private Bounds bounds;
-
-    public Bounds Bounds
-    {
-        get => bounds;
-    }
 
     private void Awake()
     {
@@ -18,9 +12,7 @@ public class Note : MonoBehaviour
 
     private void InitAwake()
     {
-        bounds = GetComponent<Renderer>().bounds;
         NoteManager.Instance.SetNote(this);
-        NoteManager.Instance.SetBounds(this);
         CheckYPos();        
     }
 
@@ -38,6 +30,11 @@ public class Note : MonoBehaviour
     private void DirectionNote(Vector3 _dir)
     {
         direction = _dir;
+    }
+
+    private void OnBecameInvisible()
+    {
+        ObjectPoolManager.Instance.Return(gameObject);
     }
 
     #region Virtual Method

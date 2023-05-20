@@ -1,8 +1,6 @@
 using SingletonComponent.Component;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonComponent<GameManager>
 {
@@ -161,7 +159,16 @@ public class GameManager : SingletonComponent<GameManager>
 
     private void StartCreateNote()
     {
-        ObjectPoolManager.Instance.Create("UpperNote");
-        ObjectPoolManager.Instance.Create("UnderNote");
+        StartCoroutine(CreateNoteCoolTime(2f));
+    }
+
+    private IEnumerator CreateNoteCoolTime(float _coolTime)
+    {
+        while (true)
+        {
+            ObjectPoolManager.Instance.Create("UpperNote");
+            ObjectPoolManager.Instance.Create("UnderNote");
+            yield return new WaitForSeconds(_coolTime);
+        }
     }
 }

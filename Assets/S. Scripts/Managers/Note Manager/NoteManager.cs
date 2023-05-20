@@ -1,12 +1,10 @@
 using SingletonComponent.Component;
-using UnityEngine;
 
 public class NoteManager : SingletonComponent<NoteManager>
 {
     #region Private Field
 
     private Note note = null;
-    private Bounds bounds;
 
     #endregion
 
@@ -31,22 +29,9 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     #region Method
 
-    private void Update()
-    {
-        ReturnNote();
-    }
+    public Note GetNote() => note;
 
     public Note SetNote(Note _note) => note = _note;
-    public Bounds SetBounds(Note _note) => bounds = SetNote(note).Bounds;
-
-    private void ReturnNote()
-    {
-        if (Camera.main.WorldToScreenPoint(transform.position + bounds.extents.x * Vector3.right).x < 0f)
-        {
-            // TODO : 노트 비활성화
-            ObjectPoolManager.Instance.Return();
-        }
-    }
 
     #endregion
 }
