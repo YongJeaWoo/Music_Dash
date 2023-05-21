@@ -1,6 +1,7 @@
 using SingletonComponent.Component;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonComponent<GameManager>
 {
@@ -123,6 +124,24 @@ public class GameManager : SingletonComponent<GameManager>
     public void GameOver()
     {
         PanelManager.Instance.GameOverPanel();
+        GameOverInputKey();
+    }
+
+    private void GameOverInputKey()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (PanelManager.Instance.IsOver) PanelManager.Instance.GameOverPanel();
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (PanelManager.Instance.IsOver) PanelManager.Instance.GameOverPanel();
+
+            LoadingController.LoadScene("Select");
+        }
     }
 
     private void Result() 

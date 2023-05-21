@@ -2,8 +2,14 @@ using SingletonComponent.Component;
 
 public class PanelManager : SingletonComponent<PanelManager>
 {
+
+    #region Property
+
     public bool IsOption => PopupManager.Instance.IsUsePopup<OptionPanel>();
     public bool IsOver => PopupManager.Instance.IsUsePopup<GameOverPanel>();
+    public bool IsResult => PopupManager.Instance.IsUsePopup<ResultPanel>();
+
+    #endregion
 
     #region SingleTon
     protected override void AwakeInstance()
@@ -19,6 +25,8 @@ public class PanelManager : SingletonComponent<PanelManager>
     {
     }
     #endregion
+
+    #region Public Method
 
     public void ToggleOptionPanel()
     {
@@ -45,4 +53,19 @@ public class PanelManager : SingletonComponent<PanelManager>
         var gameOverPanel = PopupManager.Instance.GetPopUp<GameOverPanel>();
         gameOverPanel.InitializeOverPanel();
     }
+
+    public void ResultPanel()
+    {
+        if (PopupManager.Instance.IsUsePopup<ResultPanel>())
+        {
+            var panel = PopupManager.Instance.Find<ResultPanel>();
+            panel.OnExitResultPanel();
+            return;
+        }
+
+        var resultPanel = PopupManager.Instance.GetPopUp<ResultPanel>();
+        resultPanel.InitializeResultPanel();
+    }
+
+    #endregion
 }
