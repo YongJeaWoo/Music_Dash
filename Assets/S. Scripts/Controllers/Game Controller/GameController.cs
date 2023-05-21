@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private Image deadPanel;
+    [SerializeField] private Image fadePanel;
     [SerializeField] private GameObject[] backGrounds;
 
     private bool isFading = false;
     private float fadeTime = 0f;
     private const float fadeSpeed = 1f;
 
-    private void Awake()
+    private void Start()
     {
         Init();
     }
@@ -34,17 +34,17 @@ public class GameController : MonoBehaviour
     private void Init()
     {
         GameManager.Instance.CurrentState = E_GameState.Init;
-        deadPanel.gameObject.SetActive(false);
+        fadePanel.gameObject.SetActive(false);
     }
 
     private IEnumerator FadeOut()
     {
-        deadPanel.gameObject.SetActive(true);
+        fadePanel.gameObject.SetActive(true);
 
         while (fadeTime < 1f)
         {
             fadeTime += Time.deltaTime * fadeSpeed;
-            deadPanel.color = new Color(0f, 0f, 0f, fadeTime);
+            fadePanel.color = new Color(0f, 0f, 0f, fadeTime);
             yield return null;
         }
 
@@ -66,7 +66,7 @@ public class GameController : MonoBehaviour
         {
             if (PanelManager.Instance.IsOver) PanelManager.Instance.GameOverPanel();
 
-            deadPanel.gameObject.SetActive(false);
+            fadePanel.gameObject.SetActive(false);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
@@ -74,7 +74,7 @@ public class GameController : MonoBehaviour
         {
             if (PanelManager.Instance.IsOver) PanelManager.Instance.GameOverPanel();
 
-            deadPanel.gameObject.SetActive(false);
+            fadePanel.gameObject.SetActive(false);
             LoadingController.LoadScene("Select");
         }
     }

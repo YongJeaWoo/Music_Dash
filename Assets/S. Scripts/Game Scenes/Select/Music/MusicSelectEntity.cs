@@ -22,7 +22,7 @@ public class MusicSelectEntity : MonoBehaviour
 
     public void OnSelect(bool _selected)
     {
-        m_button.targetGraphic.color = _selected ? Color.white : Color.green;
+        m_button.targetGraphic.color = _selected ? Color.grey : Color.white;
 
         if(_selected)
         {

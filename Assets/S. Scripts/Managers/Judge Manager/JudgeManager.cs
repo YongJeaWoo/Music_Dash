@@ -88,7 +88,7 @@ public class JudgeManager : SingletonComponent<JudgeManager>
 
         Vector2 upJudgePos = new Vector2(upJudgementPos.x, upJudgementPos.y + 2f);
         Vector2 downJudgePos = new Vector2(downJudgementPos.x, downJudgementPos.y + 2f);
-
+        
         upVerdict.transform.position = upJudgePos;
         downVerdict.transform.position = downJudgePos;
 

@@ -2,7 +2,6 @@ using SingletonComponent.Component;
 
 public class PanelManager : SingletonComponent<PanelManager>
 {
-
     #region Property
 
     public bool IsOption => PopupManager.Instance.IsUsePopup<OptionPanel>();
