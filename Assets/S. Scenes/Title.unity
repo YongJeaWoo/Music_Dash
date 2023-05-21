@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 214928013}
   - component: {fileID: 214928012}
   m_Layer: 0
-  m_Name: Option Manager
+  m_Name: Panel Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

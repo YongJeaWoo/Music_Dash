@@ -12,19 +12,19 @@ public class TitleController : MonoBehaviour
 
     private void PressKeys()
     {
-        if (!OptionManager.Instance.IsOption && !exitPanel.activeSelf && Input.GetKeyDown(KeyCode.Return))
+        if (!PanelManager.Instance.IsOption && !exitPanel.activeSelf && Input.GetKeyDown(KeyCode.Return))
         {
             LoadingController.LoadScene("Select");
         }
 
-        if (!OptionManager.Instance.IsOption && !exitPanel.activeSelf && Input.GetKeyDown(KeyCode.F1))
+        if (!PanelManager.Instance.IsOption && !exitPanel.activeSelf && Input.GetKeyDown(KeyCode.F1))
         {
-            OptionManager.Instance.ToggleOptionPanel();
+            PanelManager.Instance.ToggleOptionPanel();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (OptionManager.Instance.IsOption) OptionManager.Instance.ToggleOptionPanel();
+            if (PanelManager.Instance.IsOption) PanelManager.Instance.ToggleOptionPanel();
             else exitPanel.SetActive(!exitPanel.activeSelf);
         }
 

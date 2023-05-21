@@ -63,7 +63,7 @@ public class DeadController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (OptionManager.Instance.IsOver) OptionManager.Instance.GameOverPanel();
+            if (PanelManager.Instance.IsOver) PanelManager.Instance.GameOverPanel();
 
             deadPanel.gameObject.SetActive(false);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -71,7 +71,7 @@ public class DeadController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (OptionManager.Instance.IsOver) OptionManager.Instance.GameOverPanel();
+            if (PanelManager.Instance.IsOver) PanelManager.Instance.GameOverPanel();
 
             deadPanel.gameObject.SetActive(false);
             LoadingController.LoadScene("Select");

@@ -1,6 +1,6 @@
 using SingletonComponent.Component;
 
-public class OptionManager : SingletonComponent<OptionManager>
+public class PanelManager : SingletonComponent<PanelManager>
 {
     public bool IsOption => PopupManager.Instance.IsUsePopup<OptionPanel>();
     public bool IsOver => PopupManager.Instance.IsUsePopup<GameOverPanel>();

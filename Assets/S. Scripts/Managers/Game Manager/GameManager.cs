@@ -60,38 +60,34 @@ public class GameManager : SingletonComponent<GameManager>
         {
             case E_GameState.Init:
                 {
-                    Debug.Log(CurrentState);
                     Init();
                     CurrentState = E_GameState.Count;
                     break;
                 }
             case E_GameState.Count:
                 {
-                    Debug.Log(CurrentState);
                     Count();
                     break;
                 }
             case E_GameState.Ready:
                 {
-                    Debug.Log(CurrentState);
                     Ready();
                     break;
                 }
             case E_GameState.Play:
                 {
-                    Debug.Log(CurrentState);
                     Play();
                     StartCreateNote();
                     break;
                 }
             case E_GameState.GameOver:
                 {
-                    Debug.Log(CurrentState);
+                    
                     break;
                 }
             case E_GameState.Result:
                 {
-                    Debug.Log(CurrentState);
+                    Result();
                     break;
                 }
         }
@@ -126,13 +122,14 @@ public class GameManager : SingletonComponent<GameManager>
 
     public void GameOver()
     {
-        OptionManager.Instance.GameOverPanel();
+        PanelManager.Instance.GameOverPanel();
     }
 
     private void Result() 
     {
         
     }
+
     #endregion
 
     private IEnumerator GetReady()
