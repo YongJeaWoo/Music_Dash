@@ -6,7 +6,7 @@ public class ObjectPoolManager : SingletonComponent<ObjectPoolManager>
 {
     #region Serialize Field
 
-    [SerializeField] List<GameObject> m_poolObjects = null;
+    [SerializeField] private List<GameObject> m_poolObjects = null;
 
     #endregion
 
@@ -71,7 +71,27 @@ public class ObjectPoolManager : SingletonComponent<ObjectPoolManager>
         return pool.Create(_parent);
     }
 
-    public void Return(GameObject _obj)
+    public GameObject Create(string _poolName, Transform _parent, Vector3 _position)
+    {
+        var pool = GetPool(_poolName);
+
+        if (pool == null)
+        {
+            Debug.LogError($"{_poolName}에 대한 오브젝트 풀이 존재하지 않습니다.");
+            return null;
+        }
+
+        return pool.Create(_parent, _position);
+    }
+
+    //public GameObject Create(string _poolName, Transform _parent, Vector3 _position)
+    //{
+    //    var obj = Create(_poolName, _parent);
+    //    obj.transform.position = _position;
+    //    return obj;
+    //}
+
+    public void Return(GameObject _obj, Transform _parent = null)
     {
         var pool = GetPool(_obj.name);
 

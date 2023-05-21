@@ -1,12 +1,9 @@
 using SingletonComponent.Component;
+using UnityEngine;
 
 public class NoteManager : SingletonComponent<NoteManager>
 {
-    #region Private Field
-
-    private Note note = null;
-
-    #endregion
+    private Note note;
 
     #region Singleton
 
@@ -31,7 +28,10 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     public Note GetNote() => note;
 
-    public Note SetNote(Note _note) => note = _note;
+    public void InitNote(Note _note)
+    {
+        note = _note;
+    }
 
     #endregion
 }

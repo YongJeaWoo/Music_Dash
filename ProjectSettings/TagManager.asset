@@ -43,12 +43,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Judge
-    uniqueID: 2878903289
-    locked: 0
   - name: Player
     uniqueID: 1651476067
     locked: 0
   - name: Dead
     uniqueID: 2348312489
+    locked: 0
+  - name: Note
+    uniqueID: 353660675
     locked: 0

@@ -5,15 +5,9 @@ public class Note : MonoBehaviour
     private Vector3 direction;
     private float speed = 2f;
 
-    private void Awake()
+    private void OnEnable()
     {
-        InitAwake();
-    }
-
-    private void InitAwake()
-    {
-        NoteManager.Instance.SetNote(this);
-        CheckYPos();        
+        NoteManager.Instance.InitNote(this);
     }
 
     private void Update()

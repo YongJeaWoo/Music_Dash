@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class GameManager : SingletonComponent<GameManager>
 {
+    [SerializeField] private GameObject refreshParent;
+
     private E_GameState currentState = E_GameState.Init;
+
+    public delegate void GameStateChanged(E_GameState newState);
+    public event GameStateChanged OnGameStateChanged;
+
+    #region Property
     public E_GameState CurrentState
     {
         get => currentState;
@@ -14,10 +21,6 @@ public class GameManager : SingletonComponent<GameManager>
         }
     }
 
-    public delegate void GameStateChanged(E_GameState newState);
-    public event GameStateChanged OnGameStateChanged;
-
-    #region Property
     public int Combo
     {
         get => combo;
@@ -166,8 +169,9 @@ public class GameManager : SingletonComponent<GameManager>
     {
         while (true)
         {
-            ObjectPoolManager.Instance.Create("UpperNote");
-            ObjectPoolManager.Instance.Create("UnderNote");
+            ObjectPoolManager.Instance.Create("UpperNote", null, refreshParent.transform.position);
+            ObjectPoolManager.Instance.Create("UnderNote", null, refreshParent.transform.position);
+            NoteManager.Instance.GetNote().CheckYPos();
             yield return new WaitForSeconds(_coolTime);
         }
     }
