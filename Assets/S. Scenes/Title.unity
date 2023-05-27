@@ -665,8 +665,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_poolObjects:
-  - {fileID: 8139912301714717333, guid: 88e0b19962d56054ba82521d414b215e, type: 3}
   - {fileID: 7479649598101236468, guid: d1779b291fa9fc34f8ae2e89eea61612, type: 3}
+  - {fileID: 8139912301714717333, guid: 88e0b19962d56054ba82521d414b215e, type: 3}
 --- !u!4 &409655068
 Transform:
   m_ObjectHideFlags: 0
@@ -1450,6 +1450,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 472a2900dde039741a46e2148bd11955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  marginOfError: 0
+  inputDelayMillSec: 0
+  fileLocation: 
+  songDelaySec: 0
+  noteTime: 0
+  noteSpawnX: 0
+  noteTapX: 0
 --- !u!4 &822964182
 Transform:
   m_ObjectHideFlags: 0

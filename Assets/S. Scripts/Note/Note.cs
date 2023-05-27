@@ -2,12 +2,19 @@ using UnityEngine;
 
 public class Note : MonoBehaviour
 {
+    private AudioManager audioManager;
+
+    private double timeInstantiated;
+
     private Vector3 direction;
-    private float speed = 2f;
+
+    public float assignedTime;
 
     private void OnEnable()
     {
+        audioManager = AudioManager.Instance;
         NoteManager.Instance.InitNote(this);
+        timeInstantiated = audioManager.GetAudioSourceTime();
     }
 
     private void Update()
@@ -17,13 +24,18 @@ public class Note : MonoBehaviour
 
     private void MoveNote()
     {
-        transform.Translate(direction * Time.deltaTime * speed);
-        DirectionNote(Vector3.left.normalized);
-    }
+        double timeSinceInstantaited = audioManager.GetAudioSourceTime() - timeInstantiated;
+        float t = (float)(timeSinceInstantaited / (NoteManager.Instance.noteTime * 2));
 
-    private void DirectionNote(Vector3 _dir)
-    {
-        direction = _dir;
+        if (t > 1)
+        {
+            ObjectPoolManager.Instance.Return(gameObject);
+        }
+        else
+        {
+            transform.localPosition = 
+                Vector3.Lerp(Vector3.right * NoteManager.Instance.noteSpawnX, Vector3.right * NoteManager.Instance.noteDespawnX, t);
+        }
     }
 
     private void OnBecameInvisible()

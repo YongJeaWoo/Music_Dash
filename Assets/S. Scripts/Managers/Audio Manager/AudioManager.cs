@@ -49,6 +49,7 @@ public class AudioManager : SingletonComponent<AudioManager>
     }
 
     #region Utils
+
     public void Play()
     {
         audioSource.Play();
@@ -75,6 +76,11 @@ public class AudioManager : SingletonComponent<AudioManager>
         audioSource.UnPause();
     }
 
+    public double GetAudioSourceTime()
+    {
+        return Instance.audioSource.timeSamples / Instance.audioSource.clip.frequency;
+    }
+
     public void CountPlay(string _clipName)
     {
         AudioClip clip = LoadClip(_clipName);
@@ -91,9 +97,11 @@ public class AudioManager : SingletonComponent<AudioManager>
 
         if (SceneManager.GetActiveScene().name == "Loading") audioSource.clip = null;
     }
+
     #endregion
 
     #region Function
+
     public AudioClip RandomTitleClip() 
     {
         if (randomClipList.Count == 0)
@@ -137,5 +145,6 @@ public class AudioManager : SingletonComponent<AudioManager>
 
         Play(clip);
     }
+
     #endregion
 }
