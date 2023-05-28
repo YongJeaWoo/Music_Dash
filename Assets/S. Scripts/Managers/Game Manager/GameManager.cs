@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonComponent<GameManager>
 {
-    [SerializeField] private GameObject refreshParent;
-
     private E_GameState currentState = E_GameState.Init;
 
-    public delegate void GameStateChanged(E_GameState newState);
+    public GameObject refreshParent;
+
     public event GameStateChanged OnGameStateChanged;
+    public delegate void GameStateChanged(E_GameState newState);
 
     #region Property
     public E_GameState CurrentState
@@ -22,20 +22,7 @@ public class GameManager : SingletonComponent<GameManager>
         }
     }
 
-    public int Combo
-    {
-        get => combo;
-        set => combo = value;
-    }
-    public int Score
-    {
-        get => score;
-        set => score = value;
-    }
     #endregion
-
-    private int combo;
-    private int score;
 
     #region SingleTon
     protected override void AwakeInstance()
@@ -78,7 +65,7 @@ public class GameManager : SingletonComponent<GameManager>
             case E_GameState.Play:
                 {
                     Play();
-                    StartCreateNote();
+
                     break;
                 }
             case E_GameState.GameOver:
@@ -164,31 +151,11 @@ public class GameManager : SingletonComponent<GameManager>
     {
         MusicData data = MusicDataManager.Instance.GetCurrentMusic();
         AudioManager.Instance.PlayMusicData(data);
-
-        if (!AudioManager.Instance.audioSource.isPlaying)
-        {
-            Invoke(nameof(ChangeResult), 2f);
-        }
+        NoteManager.Instance.StartInitMidiFile();
     }
 
     private void ChangeResult()
     {
         CurrentState = E_GameState.Result;
-    }
-
-    private void StartCreateNote()
-    {
-        StartCoroutine(CreateNoteCoolTime(2f));
-    }
-
-    private IEnumerator CreateNoteCoolTime(float _coolTime)
-    {
-        while (true)
-        {
-            ObjectPoolManager.Instance.Create("UpperNote", null, refreshParent.transform.position);
-            ObjectPoolManager.Instance.Create("UnderNote", null, refreshParent.transform.position);
-            NoteManager.Instance.GetNote().CheckYPos();
-            yield return new WaitForSeconds(_coolTime);
-        }
     }
 }

@@ -1,19 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    private const string READY_NAME = "Ready";
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI comboText;
+
 
     private Animator comboAnimator;
-    private Animator readyAnimator;
-
-    private bool isCounting = false;
-    public bool IsCounting => isCounting;
-
-    public TextMeshProUGUI readyText, scoreText, comboText;
 
     private void Start()
     {
@@ -22,7 +16,6 @@ public class UIController : MonoBehaviour
 
     private void GetComponentInit() 
     {
-        readyAnimator = GetComponent<Animator>();
         comboAnimator = GetComponent<Animator>();
     }
 
@@ -33,38 +26,12 @@ public class UIController : MonoBehaviour
 
     private void SetShowUI()
     {
-        scoreText.text = $"{GameManager.Instance.Score}";
+        scoreText.text = $"{ScoreManager.Instance.GetScore()}";
 
-        if (GameManager.Instance.Combo >= 5)
+        if (ScoreManager.Instance.GetCombo() >= 5)
         {
-            comboText.text = $"{GameManager.Instance.Combo}";
+            comboText.text = $"{ScoreManager.Instance.GetCombo()}";
             comboAnimator.SetTrigger("Combo");
         }
-    }
-
-    public void ReadyCount()
-    {
-        StartCoroutine(StartCount());
-    }
-
-    private IEnumerator StartCount()
-    {
-        var readyTimer = new WaitForSeconds(1.5f);
-        var goTimer = new WaitForSeconds(0.4f);
-        var aniTimer = new WaitForSeconds(2.0f);
-
-        readyText.gameObject.SetActive(true);
-        readyText.text = "Ready ...";
-        readyAnimator.SetBool(READY_NAME, true);
-        yield return readyTimer;
-
-        readyText.text = "Go !";
-        yield return goTimer;
-        readyAnimator.SetBool(READY_NAME, false);
-        yield return aniTimer;
-        isCounting = false;
-        readyText.gameObject.SetActive(false);
-
-        yield return null;
     }
 }

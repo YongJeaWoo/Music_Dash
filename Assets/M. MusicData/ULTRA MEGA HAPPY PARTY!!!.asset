@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ULTRA MEGA HAPPY PARTY!!!
   m_EditorClassIdentifier: 
   musicName: ULTRA MEGA HAPPY PARTY!!!
-  musicComposer: 7
+  artist: Hino Isuka
+  pattern: ULTRA MEGA HAPPY PARTY!!!.mid
   icon: {fileID: 21300000, guid: e20b4e494663b1443ab59a92325bc904, type: 3}
   musicClip: {fileID: 8300000, guid: 80a2b5b0405e3fb4ba2477a89a7587fa, type: 3}

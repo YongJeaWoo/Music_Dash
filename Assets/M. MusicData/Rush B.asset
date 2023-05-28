@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Rush B
   m_EditorClassIdentifier: 
   musicName: Rush B
-  musicComposer: 5
+  artist: iKz
+  pattern: Rush B.mid
   icon: {fileID: 21300000, guid: e17a6659511eddb4998fa4f57fc3567a, type: 3}
   musicClip: {fileID: 8300000, guid: 15b15b96910e36d4db92cbae61d4b425, type: 3}

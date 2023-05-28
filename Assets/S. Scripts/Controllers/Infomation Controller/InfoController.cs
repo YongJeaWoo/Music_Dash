@@ -1,5 +1,4 @@
 using DTT.InfiniteScroll;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,7 +31,7 @@ public class InfoController : MonoBehaviour
         if (scrollController != null && scrollController.CurrentSelectedEntity != null)
         {
             m_musicName.text = data.musicName;
-            m_musicComposer.text = data.musicComposer;
+            m_musicComposer.text = data.artist;
             m_icon.sprite = data.icon;
             m_backGround.sprite = data.icon;
             AudioManager.Instance.PlayMusicData(data);

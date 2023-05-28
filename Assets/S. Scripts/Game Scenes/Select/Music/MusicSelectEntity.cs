@@ -6,8 +6,10 @@ public class MusicSelectEntity : MonoBehaviour
 {
     public Button m_button;
     public TextMeshProUGUI m_musicName;
-    public TextMeshProUGUI m_musicComposer;
+    public TextMeshProUGUI m_artist;
     public Image m_icon;
+
+    private string m_patternName;
 
     private MusicData musicData = null;
 
@@ -16,7 +18,9 @@ public class MusicSelectEntity : MonoBehaviour
         musicData = _data;
 
         m_musicName.text = musicData.name;
-        m_musicComposer.text = musicData.musicComposer;
+        m_artist.text = musicData.artist;
+        //m_patternName = MusicDataManager.Instance.GetCurrentMusic().pattern;
+
         m_icon.sprite = musicData.icon;
     }
 

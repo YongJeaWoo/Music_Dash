@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Gift box
   m_EditorClassIdentifier: 
   musicName: Gift box
-  musicComposer: 2
+  artist: K.key
+  pattern: Gift box.mid
   icon: {fileID: 21300000, guid: 55518bfe9632f1e449da587d3cb4f14b, type: 3}
   musicClip: {fileID: 8300000, guid: 3fc53417bda433042945ac5c9c20e5ab, type: 3}

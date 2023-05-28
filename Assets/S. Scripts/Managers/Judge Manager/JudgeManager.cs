@@ -48,37 +48,6 @@ public class JudgeManager : SingletonComponent<JudgeManager>
 
     public Dictionary<E_Judge, Sprite> GetJudgeSprite() => judgeSprite;
 
-    private void ScoreProcess(E_Judge judge)
-    {
-        switch (judge)
-        {
-            case E_Judge.None:
-                break;
-            case E_Judge.Miss:
-                {
-                    GameManager.Instance.Combo = 0;
-                    GameManager.Instance.Score -= 0;
-                    // 플레이어 체력 감소
-                    
-
-                    if (GameManager.Instance.Score <= 0) GameManager.Instance.Score = 0;
-                }
-                break;
-            case E_Judge.Cool:
-                {
-                    GameManager.Instance.Combo++;
-                    GameManager.Instance.Score += 10;
-                }
-                break;
-            case E_Judge.Perfect:
-                {
-                    GameManager.Instance.Combo++;
-                    GameManager.Instance.Score += 30;
-                }
-                break;
-        }
-    }
-
     public void SetJudgementPosition()
     {
         Vector2 playerPos = PlayerManager.Instance.GetPlayerPos();
@@ -94,11 +63,5 @@ public class JudgeManager : SingletonComponent<JudgeManager>
 
         upJudgeMent.transform.position = upJudgementPos;
         downJudgeMent.transform.position = downJudgementPos;
-    }
-
-    public void JudgeProcess(E_Judge judge)
-    {
-
-        ScoreProcess(judge);
     }
 }

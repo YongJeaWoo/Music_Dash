@@ -10,24 +10,8 @@ public class NoteManager : SingletonComponent<NoteManager>
 {
     private Note note;
 
-    public double marginOfError;
-
-    public int inputDelayMillSec;
-
     public string fileLocation;
-
     public float songDelaySec;
-    public float noteTime;
-    public float noteSpawnX;
-    public float noteTapX;
-
-    public float noteDespawnX
-    {
-        get
-        {
-            return noteTapX - (noteSpawnX - noteTapX);
-        }
-    }
 
     #region Static Field
 
@@ -58,7 +42,7 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     #region Midifile
 
-    private void StartInitMidiFile()
+    public void StartInitMidiFile()
     {
         if (Application.streamingAssetsPath.StartsWith("http://") || Application.streamingAssetsPath.StartsWith("Https://"))
         {
@@ -72,7 +56,7 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     private IEnumerator ReadFromWebSite()
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get($"{Application.streamingAssetsPath} / {fileLocation}"))
+        using (UnityWebRequest webRequest = UnityWebRequest.Get($"{Application.streamingAssetsPath}/{fileLocation}"))
         {
             yield return webRequest.SendWebRequest();
 
@@ -94,7 +78,7 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     private void ReadFromFile()
     {
-        midiFile = MidiFile.Read($"{Application.streamingAssetsPath} / {fileLocation}");
+        midiFile = MidiFile.Read($"{Application.streamingAssetsPath}/{fileLocation}");
         GetDataFromMidi();
     }
 
