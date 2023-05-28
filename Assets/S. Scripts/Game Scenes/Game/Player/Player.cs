@@ -25,13 +25,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        // TODO : 테스트용 제거
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            currentHp -= 10;
-            Attacked();
-        }
-
         InputAction();
     }
 
