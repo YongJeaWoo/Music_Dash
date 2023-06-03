@@ -2,22 +2,22 @@ using UnityEngine;
 
 public class Note : MonoBehaviour
 {
+    private string noteName;
+    private int noteNumber;
+
     private Vector3 direction;
     private float speed = 1f;
 
-    private double timeInstantiated;
-
+    public string NoteName => noteName;
+    public int NoteNumber => noteNumber;
 
     private void OnEnable()
     {
         NoteManager.Instance.InitNote(this);
-        timeInstantiated = AudioManager.Instance.GetAudioSourceTime();
     }
 
     private void Update()
     {
-        double temp = AudioManager.Instance.GetAudioSourceTime() - timeInstantiated;
-
         MoveNote();
     }
 
@@ -35,6 +35,12 @@ public class Note : MonoBehaviour
     private void OnBecameInvisible()
     {
         ObjectPoolManager.Instance.Return(gameObject);
+    }
+
+    public void InitializeNoteData(string _noteName, int _noteNumber, float _noteStartTick, float _noteDurationTick)
+    {
+        noteName = _noteName;
+        noteNumber = _noteNumber;
     }
 
     #region Virtual Method

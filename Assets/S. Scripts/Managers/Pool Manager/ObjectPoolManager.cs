@@ -19,7 +19,7 @@ public class ObjectPoolManager : SingletonComponent<ObjectPoolManager>
     #region Singleton
     protected override void AwakeInstance()
     {
-        Initialize();
+        Initialized();
     }
 
     protected override bool InitInstance()
@@ -35,7 +35,7 @@ public class ObjectPoolManager : SingletonComponent<ObjectPoolManager>
 
     #region Initialize
 
-    private void Initialize()
+    private void Initialized()
     {
         m_poolObjects.ForEach(CreateObjectPool);
     }

@@ -1450,8 +1450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 472a2900dde039741a46e2148bd11955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileLocation: Manifesto.mid
-  songDelaySec: 0
+  fileLocation: 
 --- !u!4 &822964182
 Transform:
   m_ObjectHideFlags: 0

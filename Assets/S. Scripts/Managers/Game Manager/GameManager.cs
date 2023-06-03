@@ -65,7 +65,7 @@ public class GameManager : SingletonComponent<GameManager>
             case E_GameState.Play:
                 {
                     Play();
-
+                    
                     break;
                 }
             case E_GameState.GameOver:
@@ -143,17 +143,30 @@ public class GameManager : SingletonComponent<GameManager>
         yield return new WaitUntil(() => !AudioManager.Instance.audioSource.isPlaying);
         AudioManager.Instance.Stop();
         yield return new WaitForSeconds(0.3f);
+        StartCoroutine(InitMidiFileAndPlay());
+    }
+
+    private IEnumerator InitMidiFileAndPlay()
+    {
+        NoteManager.Instance.StartInitMidiFile();
+        yield return new WaitUntil(() => NoteManager.Instance.IsMidiFileInitialized);
         CurrentState = E_GameState.Play;
-        yield return null;
     }
 
     private void MusicStart()
     {
         MusicData data = MusicDataManager.Instance.GetCurrentMusic();
-        AudioManager.Instance.PlayMusicData(data);
-        NoteManager.Instance.StartInitMidiFile();
-    }
 
+        if (data != null)
+        {
+            AudioManager.Instance.PlayMusicData(data);
+        }
+        else
+        {
+            Debug.LogError("No music data selected.");
+        }
+    }
+    
     private void ChangeResult()
     {
         CurrentState = E_GameState.Result;
