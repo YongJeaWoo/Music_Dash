@@ -19,10 +19,8 @@ public class MusicSelectEntity : MonoBehaviour
 
         m_musicName.text = musicData.name;
         m_artist.text = musicData.artist;
-        m_patternName = musicData.pattern;
+        m_patternName = musicData.patternName;
         m_icon.sprite = musicData.icon;
-
-        NoteManager.Instance.SetFileLocation(m_patternName);
     }
 
     public void OnSelect(bool _selected)
@@ -32,6 +30,7 @@ public class MusicSelectEntity : MonoBehaviour
         if(_selected)
         {
             MusicDataManager.Instance.SetCurrentMusic(musicData);
+            NoteManager.Instance.fileLocation = musicData.patternName;
         }
     }
 }

@@ -5,7 +5,7 @@ public class MusicData : ScriptableObject
 {
     public string musicName;
     public string artist;
-    public string pattern;
+    public string patternName;
     public Sprite icon;
     public AudioClip musicClip;
 }

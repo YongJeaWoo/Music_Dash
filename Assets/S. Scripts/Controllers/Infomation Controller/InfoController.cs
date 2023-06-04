@@ -12,6 +12,8 @@ public class InfoController : MonoBehaviour
     [SerializeField]
     private Image m_icon;
 
+    private string m_patternName;
+
     [SerializeField]
     private Image m_backGround;
 
@@ -33,6 +35,7 @@ public class InfoController : MonoBehaviour
             m_musicName.text = data.musicName;
             m_musicComposer.text = data.artist;
             m_icon.sprite = data.icon;
+            m_patternName = data.patternName;
             m_backGround.sprite = data.icon;
             AudioManager.Instance.PlayMusicData(data);
         }

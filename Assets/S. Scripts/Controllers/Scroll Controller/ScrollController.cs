@@ -44,7 +44,11 @@ namespace DTT.InfiniteScroll
 
             if (musicPrefab == null) return;
 
-            foreach (MusicData musicData in MusicDataManager.Instance.GetMusicDataList())
+            var musicDataList = MusicDataManager.Instance.GetMusicDataList();
+
+            if (musicDataList == null || musicDataList.Count == 0) return;
+
+            foreach (MusicData musicData in musicDataList)
             {
                 var obj = Instantiate(musicPrefab);
                 obj.transform.SetParent(contentTransform);
@@ -88,7 +92,7 @@ namespace DTT.InfiniteScroll
         {
             MusicSelectEntity targetEntity = infiniteScroll.Target.GetComponentInChildren<MusicSelectEntity>();
             targetEntity.OnSelect(true);
-            currentSelectedEntity = targetEntity;
+            currentSelectedEntity = targetEntity;            
             info.OnRefresh();
         }
     }

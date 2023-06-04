@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 public class NoteManager : SingletonComponent<NoteManager>
 {
     private Note note;
-
+    
     public string fileLocation;
 
     public bool IsMidiFileInitialized { get; private set; }
@@ -66,43 +66,52 @@ public class NoteManager : SingletonComponent<NoteManager>
         }
 
         IsMidiFileInitialized = true;
-        GenerateNotesFromMidi();
+        StartCoroutine(nameof(GenerateNotesFromMidi));
     }
 
     private IEnumerator ReadFromWebSite()
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get($"{Application.streamingAssetsPath}/{fileLocation}"))
-        {
-            yield return webRequest.SendWebRequest();
+        string filePath = Path.Combine(Application.streamingAssetsPath, fileLocation);
 
-            if (webRequest.result != UnityWebRequest.Result.Success)
+        if (File.Exists(filePath))
+        {
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            using (MemoryStream stream = new MemoryStream(fileBytes))
             {
-                Debug.LogError(webRequest.error);
-            }
-            else
-            {
-                byte[] results = webRequest.downloadHandler.data;
-                using (var stream = new MemoryStream(results))
-                {
-                    midiFile = MidiFile.Read(stream);
-                }
+                midiFile = MidiFile.Read(stream);
             }
         }
+        else
+        {
+            Debug.LogError($"File Not Found: {filePath}");
+        }
+
+        yield return null;
     }
 
     private void ReadFromFile()
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, fileLocation);
-        midiFile = MidiFile.Read(filePath);
+
+        if (File.Exists(filePath))
+        {
+            midiFile = MidiFile.Read(filePath);
+        }
+        else
+        {
+            Debug.LogError($"File Not Found : {filePath}");
+        }
     }
 
-    public void GenerateNotesFromMidi()
+    IEnumerator GenerateNotesFromMidi()
     {
         var tempoMap = midiFile.GetTempoMap();
         var notes = midiFile.GetNotes();
 
-        double startTime = notes.First().Time;
-        double currentTime = 0;
+        var noteFirstTime = TimeConverter.ConvertTo<MetricTimeSpan>(notes.First().Time, tempoMap);
+        var startTime = noteFirstTime.TotalMicroseconds / 1000000.0;
+
+        var defaultTime = Time.realtimeSinceStartup;
 
         foreach (var note in notes)
         {
@@ -114,11 +123,9 @@ public class NoteManager : SingletonComponent<NoteManager>
 
             double elapsedTime = noteStartTime - startTime;
 
-            if (elapsedTime >= currentTime)
-            {
-                CreateNoteBasedOnData(note.NoteName.ToString(), note.NoteNumber, (float)noteStartTime, (float)(noteEndTime - noteStartTime));
-                currentTime += 1.0;
-            }
+            yield return new WaitUntil(() => (Time.realtimeSinceStartup - defaultTime) >= elapsedTime);
+
+            CreateNoteBasedOnData(note.NoteName.ToString(), note.NoteNumber, (float)noteStartTime, (float)(noteEndTime - noteStartTime));
         }
     }
 
@@ -130,11 +137,6 @@ public class NoteManager : SingletonComponent<NoteManager>
         noteComponent.InitializeNoteData(noteName, noteNumber, noteStartTime, noteDuration);
         noteComponent.CheckYPos();
         noteObject.SetActive(true);
-    }
-
-    public void SetFileLocation(string _location)
-    {
-        fileLocation = _location;
     }
 
     #endregion

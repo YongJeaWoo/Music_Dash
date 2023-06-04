@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicName: Conflict
   artist: siromaru + cranky
-  pattern: Conflict.midi
+  patternName: Conflict.mid
   icon: {fileID: 21300000, guid: 01639a39a6ed3614295c749141bd1b67, type: 3}
   musicClip: {fileID: 8300000, guid: 6359bc3063d50014cb887f146d9d34ae, type: 3}
