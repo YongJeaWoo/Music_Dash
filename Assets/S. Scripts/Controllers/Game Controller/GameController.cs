@@ -67,6 +67,7 @@ public class GameController : MonoBehaviour
             if (PanelManager.Instance.IsOver) PanelManager.Instance.GameOverPanel();
 
             fadePanel.gameObject.SetActive(false);
+            NoteManager.Instance.ResetMidiFile();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
@@ -75,6 +76,7 @@ public class GameController : MonoBehaviour
             if (PanelManager.Instance.IsOver) PanelManager.Instance.GameOverPanel();
 
             fadePanel.gameObject.SetActive(false);
+            NoteManager.Instance.ResetMidiFile();
             LoadingController.LoadScene("Select");
         }
     }

@@ -89,7 +89,7 @@ public class GameManager : SingletonComponent<GameManager>
         PlayerManager.Instance.InitPlayer();
         var getPlayer = PlayerManager.Instance.GetPlayer();
         getPlayer.InitializePlayer();
-
+        NoteManager.Instance.ResetMidiFile();
         JudgeManager.Instance.SetJudgementPosition();
     }
 

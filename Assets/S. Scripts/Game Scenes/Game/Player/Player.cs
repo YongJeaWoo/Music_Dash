@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private bool isJump, isTop = false;
     private bool isFall = false;
     private bool isMoving = true;
+    private bool isDamaged = false;
 
     [Tooltip("Player Info Property")]
     public int CurrentHp 
@@ -121,6 +122,8 @@ public class Player : MonoBehaviour
 
     private void Attacked()
     {
+        if (!isDamaged) return;
+
         animationController.AnimationPlay(E_AniState.Damage);
 
         StartCoroutine(InvincibleTime());
@@ -147,7 +150,7 @@ public class Player : MonoBehaviour
     {
         int countTime = 0;
 
-        while (countTime < 10)
+        while (countTime < 20)
         {
             if (countTime % 2 == 0) spriteRenderer.color = new Color32(255, 255, 255, 90);
             else spriteRenderer.color = new Color32(255, 255, 255, 180);
@@ -159,16 +162,18 @@ public class Player : MonoBehaviour
 
         spriteRenderer.color = new Color32(255, 255, 255, 255);
 
+        isDamaged = false;
         yield return null;
     }
 
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Note") && !isAttacked)
-    //    {
-    //        Attacked();
-    //        currentHp -= 20;
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Note"))
+        {
+            isDamaged = true;
+            Attacked();
+            currentHp -= 10;
+        }
+    }
 }

@@ -6,7 +6,6 @@ using System.Collections;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class NoteManager : SingletonComponent<NoteManager>
 {
@@ -49,6 +48,14 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     #region Midifile
 
+    public void ResetMidiFile()
+    {
+        StopCoroutine(nameof(InitMidiFile));
+        midiFile = null;
+        IsMidiFileInitialized = false;
+        Resources.UnloadUnusedAssets();
+    }
+
     public void StartInitMidiFile()
     {
         StartCoroutine(InitMidiFile());
@@ -56,6 +63,7 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     private IEnumerator InitMidiFile()
     {
+
         if (Application.streamingAssetsPath.StartsWith("http://") || Application.streamingAssetsPath.StartsWith("Https://"))
         {
             yield return ReadFromWebSite();
@@ -66,7 +74,8 @@ public class NoteManager : SingletonComponent<NoteManager>
         }
 
         IsMidiFileInitialized = true;
-        StartCoroutine(nameof(GenerateNotesFromMidi));
+
+        yield return GenerateNotesFromMidi();
     }
 
     private IEnumerator ReadFromWebSite()
@@ -103,7 +112,7 @@ public class NoteManager : SingletonComponent<NoteManager>
         }
     }
 
-    IEnumerator GenerateNotesFromMidi()
+    private IEnumerator GenerateNotesFromMidi()
     {
         var tempoMap = midiFile.GetTempoMap();
         var notes = midiFile.GetNotes();
@@ -111,7 +120,7 @@ public class NoteManager : SingletonComponent<NoteManager>
         var noteFirstTime = TimeConverter.ConvertTo<MetricTimeSpan>(notes.First().Time, tempoMap);
         var startTime = noteFirstTime.TotalMicroseconds / 1000000.0;
 
-        var defaultTime = Time.realtimeSinceStartup;
+        var defaultTime = 0f;
 
         foreach (var note in notes)
         {
@@ -123,9 +132,15 @@ public class NoteManager : SingletonComponent<NoteManager>
 
             double elapsedTime = noteStartTime - startTime;
 
-            yield return new WaitUntil(() => (Time.realtimeSinceStartup - defaultTime) >= elapsedTime);
+            while(defaultTime < elapsedTime)
+            {
+                defaultTime += Time.deltaTime;
+                yield return null;
+            }
 
             CreateNoteBasedOnData(note.NoteName.ToString(), note.NoteNumber, (float)noteStartTime, (float)(noteEndTime - noteStartTime));
+
+            yield return null;
         }
     }
 

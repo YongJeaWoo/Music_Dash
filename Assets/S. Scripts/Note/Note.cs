@@ -6,7 +6,7 @@ public class Note : MonoBehaviour
     private int noteNumber;
 
     private Vector3 direction;
-    private float speed = 1f;
+    private float speed = 8f;
 
     public string NoteName => noteName;
     public int NoteNumber => noteNumber;
