@@ -507,7 +507,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 207989759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96a0abc4cd0a48741af87ee273df5baa, type: 3}
+  m_Script: {fileID: 11500000, guid: 79ed3c78032b25b459adfe9bb312f907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fadePanel: {fileID: 311077825}
