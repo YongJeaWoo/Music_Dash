@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
         }
 
         DisableBackgrounds();
-        GameManager.Instance.GameOver();
+        PanelManager.Instance.GameOverPanel();
     }
 
     private void DisableBackgrounds()

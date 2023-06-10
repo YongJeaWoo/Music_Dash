@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
     private bool isDamaged = false;
 
     [Tooltip("Player Info Property")]
-    public int CurrentHp 
-    { 
+    public int CurrentHp
+    {
         get => currentHp;
         set => currentHp = value;
     }
@@ -123,39 +123,31 @@ public class Player : MonoBehaviour
     private void Attacked()
     {
         if (!isDamaged) return;
-
         animationController.AnimationPlay(E_AniState.Damage);
-
-        StartCoroutine(InvincibleTime());
-
-        PlayerDead();
+        Dead();
     }
 
-    private void PlayerDead()
+    private void Dead()
     {
         if (CurrentHp <= 0)
         {
-            currentHp = 0;
+            CurrentHp = 0;
             animationController.AnimationPlay(E_AniState.Dead);
-            Invoke(nameof(ChangeState), 3f);
+            GameManager.Instance.PlayerDead();
         }
-    }
-
-    private void ChangeState()
-    {
-        GameManager.Instance.CurrentState = E_GameState.GameOver;
     }
 
     private IEnumerator InvincibleTime()
     {
         int countTime = 0;
+        isDamaged = true;
 
         while (countTime < 20)
         {
             if (countTime % 2 == 0) spriteRenderer.color = new Color32(255, 255, 255, 90);
             else spriteRenderer.color = new Color32(255, 255, 255, 180);
 
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.1f);
 
             countTime++;
         }
@@ -166,14 +158,14 @@ public class Player : MonoBehaviour
         yield return null;
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Note"))
+        if (collision.CompareTag("Note") && !isDamaged)
         {
             isDamaged = true;
             Attacked();
-            currentHp -= 10;
+            CurrentHp -= 10;
+            StartCoroutine(InvincibleTime());
         }
     }
 }

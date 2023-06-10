@@ -88,6 +88,7 @@ public class PauseController : MonoBehaviour
 
     public void RestartBTN()
     {
+        NoteManager.Instance.IsMidiFileInitialized = false;
         NoteManager.Instance.ResetMidiFile();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         NoteManager.Instance.StartInitMidiFile();
@@ -96,6 +97,7 @@ public class PauseController : MonoBehaviour
 
     public void SelectBTN()
     {
+        NoteManager.Instance.IsMidiFileInitialized = false;
         Time.timeScale = 1;
         NoteManager.Instance.ResetMidiFile();
         LoadingController.LoadScene("Select");
@@ -103,6 +105,7 @@ public class PauseController : MonoBehaviour
 
     public void ExitBTN()
     {
+        NoteManager.Instance.IsMidiFileInitialized = false;
         Time.timeScale = 1;
         NoteManager.Instance.ResetMidiFile();
         LoadingController.LoadScene("Title");

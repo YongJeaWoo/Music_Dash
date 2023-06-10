@@ -13,7 +13,7 @@ public class NoteManager : SingletonComponent<NoteManager>
     
     public string fileLocation;
 
-    public bool IsMidiFileInitialized { get; private set; }
+    public bool IsMidiFileInitialized { get; set; }
 
     #region Static Field
 
@@ -52,7 +52,6 @@ public class NoteManager : SingletonComponent<NoteManager>
     {
         StopCoroutine(nameof(InitMidiFile));
         midiFile = null;
-        IsMidiFileInitialized = false;
         Resources.UnloadUnusedAssets();
     }
 
@@ -146,6 +145,8 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     private void CreateNoteBasedOnData(string noteName, int noteNumber, float noteStartTime, float noteDuration)
     {
+        if (!IsMidiFileInitialized) return;
+
         string poolName = (noteName == "G") ? "UpperNote" : "UnderNote";
         GameObject noteObject = objectPoolManager.Create(poolName, null, gameManager.refreshParent.transform.position);
         Note noteComponent = noteObject.GetComponent<Note>();

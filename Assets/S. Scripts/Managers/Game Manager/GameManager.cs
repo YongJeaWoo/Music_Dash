@@ -65,7 +65,6 @@ public class GameManager : SingletonComponent<GameManager>
             case E_GameState.Play:
                 {
                     Play();
-                    
                     break;
                 }
             case E_GameState.GameOver:
@@ -108,27 +107,9 @@ public class GameManager : SingletonComponent<GameManager>
         MusicStart();
     }
 
-    public void GameOver()
+    public void PlayerDead()
     {
-        PanelManager.Instance.GameOverPanel();
-        GameOverInputKey();
-    }
-
-    private void GameOverInputKey()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            if (PanelManager.Instance.IsOver) PanelManager.Instance.GameOverPanel();
-
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (PanelManager.Instance.IsOver) PanelManager.Instance.GameOverPanel();
-
-            LoadingController.LoadScene("Select");
-        }
+        CurrentState = E_GameState.GameOver;
     }
 
     private void Result() 
