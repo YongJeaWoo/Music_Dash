@@ -28,7 +28,7 @@ public class ResolutionOption : MonoBehaviour
         foreach (Resolution item in resolutions)
         {
             TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData();
-            option.text = item.width + "x" + item.height + " " + item.refreshRate + "hz";
+            option.text = item.width + "x" + item.height + " " + item.refreshRateRatio + "hz";
             resolutionDropdown.options.Add(option);
 
             if (item.width == Screen.width && item.height == Screen.height)
