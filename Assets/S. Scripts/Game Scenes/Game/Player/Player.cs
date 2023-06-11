@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private bool isFall = false;
     private bool isMoving = true;
     private bool isDamaged = false;
+    private bool isDead = false;
 
     [Tooltip("Player Info Property")]
     public int CurrentHp
@@ -120,21 +121,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Attacked()
-    {
-        if (!isDamaged) return;
-        animationController.AnimationPlay(E_AniState.Damage);
-        Dead();
-    }
-
     private void Dead()
     {
-        if (CurrentHp <= 0)
-        {
-            CurrentHp = 0;
-            animationController.AnimationPlay(E_AniState.Dead);
-            GameManager.Instance.PlayerDead();
-        }
+        GameManager.Instance.ChangeGameOverState();
+        animationController.AnimationPlay(E_AniState.Dead);
+        isDead = true;
     }
 
     private IEnumerator InvincibleTime()
@@ -160,12 +151,18 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Note") && !isDamaged)
+        if (collision.CompareTag("Note") && !isDamaged && !isDead)
         {
             isDamaged = true;
-            Attacked();
             CurrentHp -= 10;
+            animationController.AnimationPlay(E_AniState.Damage);
             StartCoroutine(InvincibleTime());
+
+            if (CurrentHp <= 0) 
+            {
+                CurrentHp = 0;
+                Dead();
+            }
         }
     }
 }

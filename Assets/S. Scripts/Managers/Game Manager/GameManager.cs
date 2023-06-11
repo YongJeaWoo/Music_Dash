@@ -12,6 +12,8 @@ public class GameManager : SingletonComponent<GameManager>
     public event GameStateChanged OnGameStateChanged;
     public delegate void GameStateChanged(E_GameState newState);
 
+    private WaitForSeconds waitSeconds = new WaitForSeconds(0.2f);
+
     #region Property
     public E_GameState CurrentState
     {
@@ -69,7 +71,7 @@ public class GameManager : SingletonComponent<GameManager>
                 }
             case E_GameState.GameOver:
                 {
-                    
+                    StartCoroutine(ScaleTime());
                     break;
                 }
             case E_GameState.Result:
@@ -107,7 +109,19 @@ public class GameManager : SingletonComponent<GameManager>
         MusicStart();
     }
 
-    public void PlayerDead()
+    private IEnumerator ScaleTime()
+    {
+        yield return waitSeconds;
+        Time.timeScale = 0.8f;
+
+        yield return waitSeconds;
+
+        yield return new WaitForEndOfFrame();
+        PanelManager.Instance.GameOverPanel();
+        Time.timeScale = 1f;
+    }
+
+    public void ChangeGameOverState()
     {
         CurrentState = E_GameState.GameOver;
     }

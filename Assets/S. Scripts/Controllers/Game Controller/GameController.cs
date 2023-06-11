@@ -19,8 +19,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.CurrentState != E_GameState.GameOver)
-            return;
+        if (PlayerManager.Instance.GetPlayerHP() > 0) return;
 
         OverInputKeys();
 
@@ -49,7 +48,6 @@ public class GameController : MonoBehaviour
         }
 
         DisableBackgrounds();
-        PanelManager.Instance.GameOverPanel();
     }
 
     private void DisableBackgrounds()
