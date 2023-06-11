@@ -10,6 +10,8 @@ namespace DTT.InfiniteScroll
         [SerializeField]
         private Transform contentTransform;
 
+        private MusicSelectEntity musicSelectEntity = null;
+
         private MusicSelectEntity currentSelectedEntity;
         public MusicSelectEntity CurrentSelectedEntity
         {
@@ -90,9 +92,9 @@ namespace DTT.InfiniteScroll
 
         private void SetPoint()
         {
-            MusicSelectEntity targetEntity = infiniteScroll.Target.GetComponentInChildren<MusicSelectEntity>();
-            targetEntity.OnSelect(true);
-            currentSelectedEntity = targetEntity;            
+            musicSelectEntity = infiniteScroll.Target.GetComponentInChildren<MusicSelectEntity>();
+            musicSelectEntity.OnSelect(true);
+            currentSelectedEntity = musicSelectEntity;
             info.OnRefresh();
         }
     }

@@ -90,8 +90,8 @@ public class PauseController : MonoBehaviour
     {
         NoteManager.Instance.IsMidiFileInitialized = false;
         NoteManager.Instance.ResetMidiFile();
+        NoteManager.Instance.ClearNotes();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        NoteManager.Instance.StartInitMidiFile();
         Time.timeScale = 1;
     }
 

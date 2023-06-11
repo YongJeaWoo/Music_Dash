@@ -21,6 +21,8 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     #endregion
 
+    private float offset;
+
     private ObjectPoolManager objectPoolManager;
     private GameManager gameManager;
 
@@ -51,13 +53,11 @@ public class NoteManager : SingletonComponent<NoteManager>
     public void ResetMidiFile()
     {
         StopCoroutine(nameof(InitMidiFile));
-        midiFile = null;
-        Resources.UnloadUnusedAssets();
     }
 
     public void StartInitMidiFile()
     {
-        StartCoroutine(InitMidiFile());
+        StartCoroutine(nameof(InitMidiFile));
     }
 
     private IEnumerator InitMidiFile()
@@ -153,6 +153,16 @@ public class NoteManager : SingletonComponent<NoteManager>
         noteComponent.InitializeNoteData(noteName, noteNumber, noteStartTime, noteDuration);
         noteComponent.CheckYPos();
         noteObject.SetActive(true);
+    }
+
+    public void ClearNotes()
+    {
+        GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
+
+        for (int i = 0; i < notes.Length; i++)
+        {
+            objectPoolManager.Return(notes[i]);
+        }
     }
 
     #endregion
