@@ -131,13 +131,13 @@ public class NoteManager : SingletonComponent<NoteManager>
 
             double elapsedTime = noteStartTime - startTime;
 
-            while(defaultTime < elapsedTime)
+            while (defaultTime < elapsedTime)
             {
                 defaultTime += Time.deltaTime;
                 yield return null;
             }
 
-            CreateNoteBasedOnData(note.NoteName.ToString(), note.NoteNumber, (float)noteStartTime, (float)(noteEndTime - noteStartTime));
+            CreateNoteBasedOnData(note.NoteName.ToString(), note.NoteNumber, (float)(noteStartTime + offset), (float)(noteEndTime - noteStartTime));
 
             yield return null;
         }
