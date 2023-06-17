@@ -1,7 +1,6 @@
 using SingletonComponent.Component;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonComponent<GameManager>
 {

@@ -66,6 +66,7 @@ public class GameController : MonoBehaviour
 
             fadePanel.gameObject.SetActive(false);
             NoteManager.Instance.ResetMidiFile();
+            NoteManager.Instance.ClearNotes();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
@@ -75,6 +76,7 @@ public class GameController : MonoBehaviour
 
             fadePanel.gameObject.SetActive(false);
             NoteManager.Instance.ResetMidiFile();
+            NoteManager.Instance.ClearNotes();
             LoadingController.LoadScene("Select");
         }
     }

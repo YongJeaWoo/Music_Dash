@@ -21,8 +21,6 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     #endregion
 
-    private float offset;
-
     private ObjectPoolManager objectPoolManager;
     private GameManager gameManager;
 
@@ -137,7 +135,7 @@ public class NoteManager : SingletonComponent<NoteManager>
                 yield return null;
             }
 
-            CreateNoteBasedOnData(note.NoteName.ToString(), note.NoteNumber, (float)(noteStartTime + offset), (float)(noteEndTime - noteStartTime));
+            CreateNoteBasedOnData(note.NoteName.ToString(), note.NoteNumber, (float)(noteStartTime), (float)(noteEndTime - noteStartTime));
 
             yield return null;
         }
@@ -153,6 +151,9 @@ public class NoteManager : SingletonComponent<NoteManager>
         noteComponent.InitializeNoteData(noteName, noteNumber, noteStartTime, noteDuration);
         noteComponent.CheckYPos();
         noteObject.SetActive(true);
+
+        UpJudge.Instance.AddNoteToQueue(noteComponent);
+        DownJudge.Instance.AddNoteToQueue(noteComponent);
     }
 
     public void ClearNotes()
@@ -166,8 +167,6 @@ public class NoteManager : SingletonComponent<NoteManager>
     }
 
     #endregion
-
-    public Note GetNote() => note;
 
     public void InitNote(Note _note)
     {

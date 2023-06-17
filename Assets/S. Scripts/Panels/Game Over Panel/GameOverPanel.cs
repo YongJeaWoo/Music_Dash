@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GameOverPanel : MonoBehaviour
 {
-    private float panelMoveTime = 0.25f;
+    private float panelMoveTime = 0.5f;
     private bool playAnimation = false;
 
     private Vector3 hidePosition;

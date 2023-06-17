@@ -100,6 +100,7 @@ public class PauseController : MonoBehaviour
         NoteManager.Instance.IsMidiFileInitialized = false;
         Time.timeScale = 1;
         NoteManager.Instance.ResetMidiFile();
+        NoteManager.Instance.ClearNotes();
         LoadingController.LoadScene("Select");
     }
 
@@ -108,6 +109,7 @@ public class PauseController : MonoBehaviour
         NoteManager.Instance.IsMidiFileInitialized = false;
         Time.timeScale = 1;
         NoteManager.Instance.ResetMidiFile();
+        NoteManager.Instance.ClearNotes();
         LoadingController.LoadScene("Title");
     }
 }

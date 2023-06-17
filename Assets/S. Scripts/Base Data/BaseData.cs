@@ -18,6 +18,9 @@ public static class AnimatorName
 
 public static class Number
 {
+    public const float PERFECT_DISTANCE = 0.8f;
+    public const float COOL_DISTANCE = 1.0f;
+
     public const float UPPER_Y = 0f;
     public const float UNDER_Y = -5.8f;
 }

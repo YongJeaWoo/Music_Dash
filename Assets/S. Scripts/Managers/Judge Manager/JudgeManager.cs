@@ -46,8 +46,6 @@ public class JudgeManager : SingletonComponent<JudgeManager>
     public void SetUpJudge(UpJudge _judge) => upJudgeMent = _judge;
     public void SetDownJudge(DownJudge _judge) => downJudgeMent = _judge;
 
-    public Dictionary<E_Judge, Sprite> GetJudgeSprite() => judgeSprite;
-
     public void SetJudgementPosition()
     {
         Vector2 playerPos = PlayerManager.Instance.GetPlayerPos();
@@ -64,4 +62,7 @@ public class JudgeManager : SingletonComponent<JudgeManager>
         upJudgeMent.transform.position = upJudgementPos;
         downJudgeMent.transform.position = downJudgementPos;
     }
+
+    public Vector2 GetUpJudgeMentPosition() => upJudgeMent.transform.position;
+    public Vector2 GetDownJudgeMentPosition() => downJudgeMent.transform.position;
 }

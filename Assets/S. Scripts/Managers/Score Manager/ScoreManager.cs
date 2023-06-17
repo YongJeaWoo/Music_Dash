@@ -25,7 +25,7 @@ public class ScoreManager : SingletonComponent<ScoreManager>
     public int GetScore() => score;
     public int GetCombo() => combo;
 
-    private void ScoreProcess(E_Judge judge)
+    public void ScoreProcess(E_Judge judge)
     {
         switch (judge)
         {
