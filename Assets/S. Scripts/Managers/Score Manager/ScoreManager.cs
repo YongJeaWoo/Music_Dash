@@ -35,7 +35,6 @@ public class ScoreManager : SingletonComponent<ScoreManager>
                 {
                     combo = 0;
                     score -= 0;
-                    // 플레이어 체력 감소
 
                     if (score <= 0) score = 0;
                 }

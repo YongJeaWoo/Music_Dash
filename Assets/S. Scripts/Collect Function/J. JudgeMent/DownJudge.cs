@@ -72,10 +72,10 @@ public class DownJudge : MonoBehaviour
 
         if (Input.GetButtonDown("KeyDown"))
         {
-            UnderNote[] noteObj = FindObjectsOfType<UnderNote>();
-
-            foreach (UnderNote note in noteObj)
+            if (noteQueue.Count > 0)
             {
+                UnderNote note = noteQueue.Peek();
+
                 Vector2 notePos = note.transform.position;
                 Vector2 judgementPos = JudgeManager.Instance.GetDownJudgeMentPosition();
 
@@ -83,15 +83,20 @@ public class DownJudge : MonoBehaviour
 
                 if (distance <= Number.PERFECT_DISTANCE)
                 {
-                    Debug.Log("Perfect Under Perfect");
+                    Debug.Log("Perfect Under Note");
+                    ScoreManager.Instance.ScoreProcess(E_Judge.Perfect);
+                    noteQueue.Dequeue();
+                    ObjectPoolManager.Instance.Return(note.gameObject);
+                }
+                else if (distance <= Number.COOL_DISTANCE)
+                {
+                    Debug.Log("Cool Under Note");
+                    ScoreManager.Instance.ScoreProcess(E_Judge.Cool);
+                    noteQueue.Dequeue();
                     ObjectPoolManager.Instance.Return(note.gameObject);
                 }
 
-                else if (distance <= Number.COOL_DISTANCE)
-                {
-                    Debug.Log("Cool Under Perfect");
-                    ObjectPoolManager.Instance.Return(note.gameObject);
-                }
+                UIManager.Instance.GetShowUI();
             }
         }
     }

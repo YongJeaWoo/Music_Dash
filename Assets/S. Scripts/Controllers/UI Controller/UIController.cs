@@ -31,7 +31,7 @@ public class UIController : MonoBehaviour
         if (ScoreManager.Instance.GetCombo() >= 5)
         {
             comboText.text = $"{ScoreManager.Instance.GetCombo()}";
-            comboAnimator.SetTrigger("Combo");
+            // comboAnimator.SetTrigger("Combo");
         }
     }
 }

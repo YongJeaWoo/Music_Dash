@@ -55,7 +55,7 @@ public class AnimationController : MonoBehaviour
         Speed = 1f;
         attackState = newState;
         animator.Play(attackState.ToString(), 0, 0f);
-        StartCoroutine(AfterAttack());
+        StartCoroutine(nameof(AfterAttack));
     }
 
     private IEnumerator AfterAttack()

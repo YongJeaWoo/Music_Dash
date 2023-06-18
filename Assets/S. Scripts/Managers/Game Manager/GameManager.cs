@@ -71,11 +71,13 @@ public class GameManager : SingletonComponent<GameManager>
             case E_GameState.GameOver:
                 {
                     StartCoroutine(ScaleTime());
+                    UIManager.Instance.TurnOnText(false);
                     break;
                 }
             case E_GameState.Result:
                 {
                     Result();
+                    UIManager.Instance.TurnOnText(false);
                     break;
                 }
         }
@@ -91,6 +93,7 @@ public class GameManager : SingletonComponent<GameManager>
         getPlayer.InitializePlayer();
         NoteManager.Instance.ResetMidiFile();
         JudgeManager.Instance.SetJudgementPosition();
+        UIManager.Instance.TurnOnText(true);
     }
 
     private void Count()

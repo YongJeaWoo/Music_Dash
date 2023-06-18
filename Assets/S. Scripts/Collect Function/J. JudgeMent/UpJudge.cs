@@ -84,15 +84,20 @@ public class UpJudge : MonoBehaviour
                 if (distance <= Number.PERFECT_DISTANCE)
                 {
                     Debug.Log("Perfect Upper Note");
+                    ScoreManager.Instance.ScoreProcess(E_Judge.Perfect);
+                    noteQueue.Dequeue();
                     ObjectPoolManager.Instance.Return(note.gameObject);
                 }
                 else if (distance <= Number.COOL_DISTANCE)
                 {
                     Debug.Log("Cool Upper Note");
+                    ScoreManager.Instance.ScoreProcess(E_Judge.Cool);
+                    noteQueue.Dequeue();
                     ObjectPoolManager.Instance.Return(note.gameObject);
                 }
 
-                noteQueue.Dequeue();
+                UIManager.Instance.GetShowUI();
+                PlayerManager.Instance.JumpAttackPlayer();
             }
         }
     }
@@ -104,4 +109,6 @@ public class UpJudge : MonoBehaviour
             noteQueue.Enqueue(upperNote);
         }
     }
+
+    public Queue<UpperNote> GetNoteQueue() => noteQueue;
 }

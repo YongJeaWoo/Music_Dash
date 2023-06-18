@@ -1,4 +1,5 @@
 using SingletonComponent.Component;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerManager : SingletonComponent<PlayerManager>
@@ -7,6 +8,8 @@ public class PlayerManager : SingletonComponent<PlayerManager>
 
     [SerializeField]
     private Player playerPrefab;
+
+    private AnimationController playerAnimationController;
 
     #region SingleTon
     protected override void AwakeInstance()
@@ -38,7 +41,24 @@ public class PlayerManager : SingletonComponent<PlayerManager>
     public void InitPlayer()
     {
         player = Instantiate(playerPrefab);
+        playerAnimationController = player.GetComponentInChildren<AnimationController>();
     }
+
+    public void JumpAttackPlayer()
+    {
+        StartCoroutine(nameof(JumpAttack));
+    }
+
+    private IEnumerator JumpAttack()
+    {
+        player.transform.position = new Vector2(player.transform.position.x, PlayerInfo.JUMP_POWER);
+        playerAnimationController.AttackRandomPlay();
+        yield return new WaitForEndOfFrame();
+
+        player.transform.position = Vector2.Lerp(player.transform.position, new Vector2(player.transform.position.x, PlayerInfo.JUMP_POWER),
+                    PlayerInfo.GRAVITY_POWER * Time.deltaTime);
+    }
+    
     #endregion
 
     #region Player HP
