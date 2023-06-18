@@ -74,7 +74,7 @@ public class DownJudge : MonoBehaviour
             UnderNote note = noteQueue.Peek();
 
             Vector2 notePos = note.transform.position;
-            Vector2 judgementPos = JudgeManager.Instance.GetUpJudgeMentPosition();
+            Vector2 judgementPos = JudgeManager.Instance.GetDownJudgeMentPosition();
 
             float distance = notePos.x - judgementPos.x;
 

@@ -42,6 +42,7 @@ public class ScoreManager : SingletonComponent<ScoreManager>
                 break;
             case E_Judge.Cool:
                 {
+                    // TODO : JudgeManager 에서 판정 verdict 정보 가져와야 함
                     combo++;
                     score += 10;
                 }
