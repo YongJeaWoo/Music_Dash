@@ -4,16 +4,17 @@ using TMPro;
 
 public class UIManager : SingletonComponent<UIManager>
 {
-    [SerializeField] GameObject canvasObj;
-
+    [SerializeField] private GameObject canvasObj;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI comboText;
+    public GameObject comboBackground;
 
     #region Singleton
 
     protected override void AwakeInstance()
     {
         canvasObj.SetActive(false);
+        comboBackground.SetActive(false);
     }
 
     protected override bool InitInstance()
@@ -33,19 +34,15 @@ public class UIManager : SingletonComponent<UIManager>
         canvasObj.SetActive(_isTurn);
     }
 
-    public void GetShowUI()
+    public void ShowUI()
     {
-        SetShowUI();
-    }
-
-    private void SetShowUI()
-    {
-        var combo = ScoreManager.Instance.GetCombo();
-
         scoreText.text = $"{ScoreManager.Instance.GetScore()}";
+        
+        var combo = ScoreManager.Instance.GetCombo();
 
         if (combo >= 5)
         {
+            comboBackground.SetActive(true);
             comboText.text = $"{ScoreManager.Instance.GetCombo()}";
         }
     }

@@ -52,3 +52,6 @@ TagManager:
   - name: Note
     uniqueID: 353660675
     locked: 0
+  - name: UI
+    uniqueID: 2147879685
+    locked: 0

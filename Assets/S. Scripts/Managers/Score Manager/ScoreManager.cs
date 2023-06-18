@@ -33,6 +33,7 @@ public class ScoreManager : SingletonComponent<ScoreManager>
                 break;
             case E_Judge.Miss:
                 {
+                    UIManager.Instance.comboBackground.SetActive(false);
                     combo = 0;
                     score -= 0;
 

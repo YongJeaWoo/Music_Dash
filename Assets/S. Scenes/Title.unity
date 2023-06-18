@@ -1386,6 +1386,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2758242358937861559, guid: e33f274f861319949844f171bc40254a, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122265321779625613, guid: e33f274f861319949844f171bc40254a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122265321779625613, guid: e33f274f861319949844f171bc40254a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6095898256652633348, guid: e33f274f861319949844f171bc40254a, type: 3}
       propertyPath: m_Name
       value: GUI Canvas
@@ -1393,6 +1405,18 @@ PrefabInstance:
     - target: {fileID: 6095898256652633348, guid: e33f274f861319949844f171bc40254a, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6970653708442813654, guid: e33f274f861319949844f171bc40254a, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6970653708442813654, guid: e33f274f861319949844f171bc40254a, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6970653708442813654, guid: e33f274f861319949844f171bc40254a, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -2147087611
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2450,6 +2474,7 @@ MonoBehaviour:
   canvasObj: {fileID: 660863782}
   scoreText: {fileID: 660863781}
   comboText: {fileID: 660863779}
+  comboBackground: {fileID: 1880708353}
 --- !u!4 &1536252636
 Transform:
   m_ObjectHideFlags: 0
@@ -2706,6 +2731,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1880708353 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3832393195459519187, guid: e33f274f861319949844f171bc40254a, type: 3}
+  m_PrefabInstance: {fileID: 660863778}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1980380172
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,6 +39,7 @@ public class UpJudge : MonoBehaviour
     private void Update()
     {
         Judge();
+        MissNote();
     }
 
     private void OnEnable()
@@ -66,6 +67,41 @@ public class UpJudge : MonoBehaviour
         }
     }
 
+    private void MissNote()
+    {
+        if (noteQueue.Count > 0)
+        {
+            UpperNote note = noteQueue.Peek();
+
+            Vector2 notePos = note.transform.position;
+            Vector2 judgementPos = JudgeManager.Instance.GetUpJudgeMentPosition();
+
+            float distance = notePos.x - judgementPos.x;
+
+            if (distance < Number.MISS_DISTANCE)
+            {
+                noteQueue.Dequeue();
+            }
+        }
+    }
+
+    private UpperNote ActiveNote()
+    {
+        if (noteQueue.Count > 0)
+        {
+            UpperNote note = noteQueue.Peek();
+
+            if (note.isActiveAndEnabled) return note;
+            else
+            {
+                noteQueue.Dequeue();
+                return ActiveNote();
+            }
+        }
+
+        return null;
+    }
+
     private void Judge()
     {
         if (GameManager.Instance.CurrentState != E_GameState.Play) return;
@@ -74,7 +110,9 @@ public class UpJudge : MonoBehaviour
         {
             if (noteQueue.Count > 0)
             {
-                UpperNote note = noteQueue.Peek();
+                UpperNote note = ActiveNote();
+
+                if (note == null) return;
 
                 Vector2 notePos = note.transform.position;
                 Vector2 judgementPos = JudgeManager.Instance.GetUpJudgeMentPosition();
@@ -96,7 +134,7 @@ public class UpJudge : MonoBehaviour
                     ObjectPoolManager.Instance.Return(note.gameObject);
                 }
 
-                UIManager.Instance.GetShowUI();
+                UIManager.Instance.ShowUI();
                 PlayerManager.Instance.JumpAttackPlayer();
             }
         }

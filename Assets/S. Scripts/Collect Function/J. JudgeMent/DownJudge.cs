@@ -39,6 +39,7 @@ public class DownJudge : MonoBehaviour
     private void Update()
     {
         Judge();
+        MissNote();
     }
 
     private void OnEnable()
@@ -64,6 +65,41 @@ public class DownJudge : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void MissNote()
+    {
+        if (noteQueue.Count > 0)
+        {
+            UnderNote note = noteQueue.Peek();
+
+            Vector2 notePos = note.transform.position;
+            Vector2 judgementPos = JudgeManager.Instance.GetUpJudgeMentPosition();
+
+            float distance = notePos.x - judgementPos.x;
+
+            if (distance < Number.MISS_DISTANCE)
+            {
+                noteQueue.Dequeue();
+            }
+        }
+    }
+
+    private UnderNote ActiveNote()
+    {
+        if (noteQueue.Count > 0)
+        {
+            UnderNote note = noteQueue.Peek();
+
+            if (note.isActiveAndEnabled) return note;
+            else
+            {
+                noteQueue.Dequeue();
+                return ActiveNote();
+            }
+        }
+
+        return null;
     }
 
     private void Judge()
@@ -96,7 +132,7 @@ public class DownJudge : MonoBehaviour
                     ObjectPoolManager.Instance.Return(note.gameObject);
                 }
 
-                UIManager.Instance.GetShowUI();
+                UIManager.Instance.ShowUI();
             }
         }
     }
