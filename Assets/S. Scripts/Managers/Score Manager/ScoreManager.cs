@@ -42,13 +42,16 @@ public class ScoreManager : SingletonComponent<ScoreManager>
                 break;
             case E_Judge.Cool:
                 {
-                    // TODO : JudgeManager 에서 판정 verdict 정보 가져와야 함
+                    JudgeManager.Instance.GetUpVerdict().HandleVerdictStateChanged(E_Judge.Cool);
+                    JudgeManager.Instance.GetDownVerdict().HandleVerdictStateChanged(E_Judge.Cool);
                     combo++;
                     score += 10;
                 }
                 break;
             case E_Judge.Perfect:
                 {
+                    JudgeManager.Instance.GetUpVerdict().HandleVerdictStateChanged(E_Judge.Perfect);
+                    JudgeManager.Instance.GetDownVerdict().HandleVerdictStateChanged(E_Judge.Perfect);
                     combo++;
                     score += 20;
                 }

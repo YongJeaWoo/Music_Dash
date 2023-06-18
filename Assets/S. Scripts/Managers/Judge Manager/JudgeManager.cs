@@ -43,6 +43,9 @@ public class JudgeManager : SingletonComponent<JudgeManager>
     public void SetUpVerdict(UpVerdict _verdict) => upVerdict = _verdict;
     public void SetDownVerdict(DownVerdict _verdict) => downVerdict = _verdict;
 
+    public UpVerdict GetUpVerdict() => upVerdict;
+    public DownVerdict GetDownVerdict() => downVerdict;
+
     public void SetUpJudge(UpJudge _judge) => upJudgeMent = _judge;
     public void SetDownJudge(DownJudge _judge) => downJudgeMent = _judge;
 
