@@ -147,6 +147,4 @@ public class UpJudge : MonoBehaviour
             noteQueue.Enqueue(upperNote);
         }
     }
-
-    public Queue<UpperNote> GetNoteQueue() => noteQueue;
 }
