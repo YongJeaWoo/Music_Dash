@@ -25,6 +25,8 @@ public class ScoreManager : SingletonComponent<ScoreManager>
     public int GetScore() => score;
     public int GetCombo() => combo;
 
+    public int SetComboZero() => combo = 0;
+
     public void ScoreProcess(E_Judge judge)
     {
         switch (judge)
@@ -32,13 +34,6 @@ public class ScoreManager : SingletonComponent<ScoreManager>
             case E_Judge.None:
                 break;
             case E_Judge.Miss:
-                {
-                    UIManager.Instance.comboBackground.SetActive(false);
-                    combo = 0;
-                    score -= 0;
-
-                    if (score <= 0) score = 0;
-                }
                 break;
             case E_Judge.Cool:
                 {

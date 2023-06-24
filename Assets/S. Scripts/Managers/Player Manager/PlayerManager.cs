@@ -44,19 +44,9 @@ public class PlayerManager : SingletonComponent<PlayerManager>
         playerAnimationController = player.GetComponentInChildren<AnimationController>();
     }
 
-    public void JumpAttackPlayer()
+    public void PlayerJumpAttack()
     {
-        StartCoroutine(nameof(JumpAttack));
-    }
-
-    private IEnumerator JumpAttack()
-    {
-        player.transform.position = new Vector2(player.transform.position.x, PlayerInfo.JUMP_POWER);
-        playerAnimationController.AttackRandomPlay();
-        yield return new WaitForEndOfFrame();
-
-        player.transform.position = Vector2.Lerp(player.transform.position, new Vector2(player.transform.position.x, PlayerInfo.JUMP_POWER),
-                    PlayerInfo.GRAVITY_POWER * Time.deltaTime);
+        player.JumpAttack();
     }
     
     #endregion

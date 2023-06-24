@@ -10,7 +10,7 @@ using UnityEngine;
 public class NoteManager : SingletonComponent<NoteManager>
 {
     private Note note;
-    
+
     public string fileLocation;
 
     public bool IsMidiFileInitialized { get; set; }
@@ -23,6 +23,9 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     private ObjectPoolManager objectPoolManager;
     private GameManager gameManager;
+
+    private Judges upJudge;
+    private Judges downJudge;
 
     #region Singleton
 
@@ -145,15 +148,30 @@ public class NoteManager : SingletonComponent<NoteManager>
     {
         if (!IsMidiFileInitialized) return;
 
-        string poolName = (noteName == "G") ? "UpperNote" : "UnderNote";
+        var isUpJudge = noteName == "G";
+
+        string poolName = isUpJudge ? "UpperNote" : "UnderNote";
         GameObject noteObject = objectPoolManager.Create(poolName, null, gameManager.refreshParent.transform.position);
         Note noteComponent = noteObject.GetComponent<Note>();
         noteComponent.InitializeNoteData(noteName, noteNumber, noteStartTime, noteDuration);
         noteComponent.CheckYPos();
         noteObject.SetActive(true);
 
-        UpJudge.Instance.AddNoteToQueue(noteComponent);
-        DownJudge.Instance.AddNoteToQueue(noteComponent);
+        if (upJudge != null && isUpJudge)
+        {
+            upJudge.AddNoteToQueue(noteComponent);
+        }
+
+        if (downJudge != null && !isUpJudge)
+        {
+            downJudge.AddNoteToQueue(noteComponent);
+        }
+    }
+
+    public void SetJudgement()
+    {
+        upJudge = gameManager.UpJudge;
+        downJudge = gameManager.DownJudge;
     }
 
     public void ClearNotes()

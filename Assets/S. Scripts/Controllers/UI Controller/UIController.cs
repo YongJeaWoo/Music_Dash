@@ -6,7 +6,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI comboText;
 
-
     private Animator comboAnimator;
 
     private void Start()
@@ -31,7 +30,7 @@ public class UIController : MonoBehaviour
         if (ScoreManager.Instance.GetCombo() >= 5)
         {
             comboText.text = $"{ScoreManager.Instance.GetCombo()}";
-            // comboAnimator.SetTrigger("Combo");
+            comboAnimator.SetTrigger("Combo");
         }
     }
 }

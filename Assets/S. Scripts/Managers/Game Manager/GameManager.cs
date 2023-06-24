@@ -13,6 +13,9 @@ public class GameManager : SingletonComponent<GameManager>
 
     private WaitForSeconds waitSeconds = new WaitForSeconds(0.2f);
 
+    private Judges upJudge;
+    private Judges downJudge;
+
     #region Property
     public E_GameState CurrentState
     {
@@ -23,6 +26,8 @@ public class GameManager : SingletonComponent<GameManager>
         }
     }
 
+    public Judges UpJudge => upJudge;
+    public Judges DownJudge => downJudge;
     #endregion
 
     #region SingleTon
@@ -94,6 +99,12 @@ public class GameManager : SingletonComponent<GameManager>
         NoteManager.Instance.ResetMidiFile();
         JudgeManager.Instance.SetJudgementPosition();
         UIManager.Instance.TurnOnText(true);
+
+        JudgeManager judgeManager = JudgeManager.Instance;
+
+        upJudge = judgeManager.GetUpJudgement();
+        downJudge = judgeManager.GetdownJudgement();
+        NoteManager.Instance.SetJudgement();
     }
 
     private void Count()

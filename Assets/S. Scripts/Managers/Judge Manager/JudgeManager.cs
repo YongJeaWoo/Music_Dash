@@ -7,11 +7,14 @@ public class JudgeManager : SingletonComponent<JudgeManager>
     private UpVerdict upVerdict = null;
     private DownVerdict downVerdict = null;
 
-    private UpJudge upJudgeMent = null;
-    private DownJudge downJudgeMent = null;
+    private Judges upJudgeMent = null;
+    private Judges downJudgeMent = null;
+
+    private Vector2 upJudgementPosition;
+    private Vector2 downJudgementPosition;
 
     private Dictionary<E_Judge, Sprite> judgeSprite = new Dictionary<E_Judge, Sprite>();
-
+    
     #region SingleTon
     protected override void AwakeInstance()
     {
@@ -46,8 +49,8 @@ public class JudgeManager : SingletonComponent<JudgeManager>
     public UpVerdict GetUpVerdict() => upVerdict;
     public DownVerdict GetDownVerdict() => downVerdict;
 
-    public void SetUpJudge(UpJudge _judge) => upJudgeMent = _judge;
-    public void SetDownJudge(DownJudge _judge) => downJudgeMent = _judge;
+    public void SetUpJudge(Judges _judge) => upJudgeMent = _judge;
+    public void SetDownJudge(Judges _judge) => downJudgeMent = _judge;
 
     public void SetJudgementPosition()
     {
@@ -64,8 +67,11 @@ public class JudgeManager : SingletonComponent<JudgeManager>
 
         upJudgeMent.transform.position = upJudgementPos;
         downJudgeMent.transform.position = downJudgementPos;
+
+        upJudgementPosition = upJudgeMent.transform.position;
+        downJudgementPosition = downJudgeMent.transform.position;
     }
 
-    public Vector2 GetUpJudgeMentPosition() => upJudgeMent.transform.position;
-    public Vector2 GetDownJudgeMentPosition() => downJudgeMent.transform.position;
+    public Judges GetUpJudgement() => upJudgeMent;
+    public Judges GetdownJudgement() => downJudgeMent;
 }

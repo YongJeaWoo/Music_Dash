@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Player : MonoBehaviour
 {
@@ -121,6 +123,13 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void JumpAttack()
+    {
+        transform.position = new Vector2(transform.position.x, PlayerInfo.JUMP_POWER);
+
+        animationController.AttackRandomPlay();
+    }
+
     private void Dead()
     {
         GameManager.Instance.ChangeGameOverState();
@@ -155,6 +164,8 @@ public class Player : MonoBehaviour
         {
             isDamaged = true;
             CurrentHp -= 10;
+            UIManager.Instance.comboBackground.SetActive(false);
+            ScoreManager.Instance.SetComboZero();
             animationController.AnimationPlay(E_AniState.Damage);
             StartCoroutine(InvincibleTime());
 
