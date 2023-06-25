@@ -36,7 +36,8 @@ public class UIManager : SingletonComponent<UIManager>
 
     public void ShowUI()
     {
-        scoreText.text = $"{ScoreManager.Instance.GetScore()}";
+        int score = ScoreManager.Instance.GetScore();
+        scoreText.text = score.ToString("D6");
         
         var combo = ScoreManager.Instance.GetCombo();
 

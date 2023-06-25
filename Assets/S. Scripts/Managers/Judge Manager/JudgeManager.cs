@@ -12,7 +12,7 @@ public class JudgeManager : SingletonComponent<JudgeManager>
 
     private Vector2 upJudgementPosition;
     private Vector2 downJudgementPosition;
-
+    
     private Dictionary<E_Judge, Sprite> judgeSprite = new Dictionary<E_Judge, Sprite>();
     
     #region SingleTon
@@ -46,8 +46,8 @@ public class JudgeManager : SingletonComponent<JudgeManager>
     public void SetUpVerdict(UpVerdict _verdict) => upVerdict = _verdict;
     public void SetDownVerdict(DownVerdict _verdict) => downVerdict = _verdict;
 
-    public UpVerdict GetUpVerdict() => upVerdict;
-    public DownVerdict GetDownVerdict() => downVerdict;
+    public Verdicts GetUpVerdict() => upVerdict;
+    public Verdicts GetDownVerdict() => downVerdict;
 
     public void SetUpJudge(Judges _judge) => upJudgeMent = _judge;
     public void SetDownJudge(Judges _judge) => downJudgeMent = _judge;
@@ -74,4 +74,17 @@ public class JudgeManager : SingletonComponent<JudgeManager>
 
     public Judges GetUpJudgement() => upJudgeMent;
     public Judges GetdownJudgement() => downJudgeMent;
+
+    public Sprite GetJudgeSprite(E_Judge _judge)
+    {
+        if (judgeSprite.ContainsKey(_judge))
+        {
+            return judgeSprite[_judge];
+        }
+        else
+        {
+            Debug.LogError($"Judge Sprite Error : {_judge}");
+            return null;
+        }
+    }
 }

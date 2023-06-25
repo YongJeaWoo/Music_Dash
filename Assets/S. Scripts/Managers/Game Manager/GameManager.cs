@@ -16,6 +16,9 @@ public class GameManager : SingletonComponent<GameManager>
     private Judges upJudge;
     private Judges downJudge;
 
+    private Verdicts upVerdict;
+    private Verdicts downVerdict;
+
     #region Property
     public E_GameState CurrentState
     {
@@ -28,6 +31,9 @@ public class GameManager : SingletonComponent<GameManager>
 
     public Judges UpJudge => upJudge;
     public Judges DownJudge => downJudge;
+
+    public Verdicts UpVerdict => upVerdict;
+    public Verdicts DownVerdict => downVerdict;
     #endregion
 
     #region SingleTon
@@ -104,7 +110,12 @@ public class GameManager : SingletonComponent<GameManager>
 
         upJudge = judgeManager.GetUpJudgement();
         downJudge = judgeManager.GetdownJudgement();
+
+        upVerdict = judgeManager.GetUpVerdict();
+        downVerdict = judgeManager.GetDownVerdict();
+
         NoteManager.Instance.SetJudgement();
+        ScoreManager.Instance.SetVerdict();
     }
 
     private void Count()

@@ -6,4 +6,9 @@ public class UpJudge : Judges
         JudgeManager.Instance.SetUpJudge(this);
         keyCode = "KeyUp";
     }
+
+    protected override Verdicts GetVerdicts()
+    {
+        return JudgeManager.Instance.GetUpVerdict();
+    }
 }

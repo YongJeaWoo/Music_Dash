@@ -48,7 +48,7 @@ public class PauseController : MonoBehaviour
             SetButtonSelect(buttons[selectedIndex], true);
         }
 
-        else if (Input.GetKeyDown(KeyCode.Return))
+        else if (optionPanel.activeSelf && Input.GetKeyDown(KeyCode.Return))
         {
             buttons[selectedIndex].onClick.Invoke();
         }

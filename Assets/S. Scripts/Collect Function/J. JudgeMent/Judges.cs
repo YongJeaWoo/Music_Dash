@@ -8,6 +8,8 @@ public abstract class Judges : MonoBehaviour
     protected AnimationController ani;
     protected Queue<Note> noteQueue;
 
+    private Verdicts verdict;
+    
     protected virtual void Awake()
     {
         ani = GetComponent<AnimationController>();
@@ -85,7 +87,6 @@ public abstract class Judges : MonoBehaviour
         return null;
     }
 
-
     public void AddNoteToQueue(Note _note)
     {
         if (_note != null && _note.gameObject.activeSelf)
@@ -96,11 +97,12 @@ public abstract class Judges : MonoBehaviour
 
     private void Judge()
     {
+        ScoreManager scoreManager = ScoreManager.Instance;
+
         if (GameManager.Instance.CurrentState != E_GameState.Play) return;
 
         if (Input.GetButtonDown(keyCode))
         {
-            Debug.Log(keyCode);
             if (noteQueue.Count > 0)
             {
                 Note note = ActiveNote();
@@ -117,14 +119,16 @@ public abstract class Judges : MonoBehaviour
                 if (distance <= Number.PERFECT_DISTANCE)
                 {
                     Debug.Log("Perfect");
-                    ScoreManager.Instance.ScoreProcess(E_Judge.Perfect);
+                    scoreManager.ScoreProcess(E_Judge.Perfect);
+                    scoreManager.SetVerdict(_GetVerdicts(), E_Judge.Perfect);
                     noteQueue.Dequeue();
                     ObjectPoolManager.Instance.Return(note.gameObject);
                 }
                 else if (distance <= Number.COOL_DISTANCE)
                 {
                     Debug.Log("Cool");
-                    ScoreManager.Instance.ScoreProcess(E_Judge.Cool);
+                    scoreManager.ScoreProcess(E_Judge.Cool);
+                    scoreManager.SetVerdict(_GetVerdicts(), E_Judge.Cool);
                     noteQueue.Dequeue();
                     ObjectPoolManager.Instance.Return(note.gameObject);
                 }
@@ -133,4 +137,12 @@ public abstract class Judges : MonoBehaviour
             }
         }
     }
+
+    protected Verdicts _GetVerdicts()
+    {
+        verdict = GetVerdicts();
+        return verdict;
+    }
+
+    protected abstract Verdicts GetVerdicts();
 }

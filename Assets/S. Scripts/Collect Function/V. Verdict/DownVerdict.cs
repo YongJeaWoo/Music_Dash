@@ -1,35 +1,8 @@
-using UnityEngine;
-
-public class DownVerdict : MonoBehaviour
+public class DownVerdict : Verdicts
 {
-    private AnimationController ani;
-
-    private void OnEnable()
+    protected override void Awake()
     {
-        SetInit();
-    }
-
-    private void SetInit()
-    {
-        ani = GetComponent<AnimationController>();
-
+        base.Awake();
         JudgeManager.Instance.SetDownVerdict(this);
-    }
-
-    public void HandleVerdictStateChanged(E_Judge judgeState)
-    {
-        switch (judgeState)
-        {
-            case E_Judge.None:
-                break;
-            case E_Judge.Miss:
-                break;
-            case E_Judge.Cool:
-                ani.VerdictAnimationPlay(E_Judge.Cool);
-                break;
-            case E_Judge.Perfect:
-                ani.VerdictAnimationPlay(E_Judge.Perfect);
-                break;
-        }
     }
 }

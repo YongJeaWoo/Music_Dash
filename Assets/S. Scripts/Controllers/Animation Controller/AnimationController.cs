@@ -6,7 +6,6 @@ public class AnimationController : MonoBehaviour
 {
     private Animator animator = null;
 
-    private E_Judge verdict = E_Judge.None;
     private E_JudgeState judgeState = E_JudgeState.None;
     private E_AniState aniState = E_AniState.Run;
     private E_AttackState attackState = E_AttackState.None;
@@ -24,12 +23,8 @@ public class AnimationController : MonoBehaviour
 
     public void VerdictAnimationPlay(E_Judge _verdict)
     {
-        if (verdict != _verdict)
-        {
-            Speed = 1f;
-            verdict = _verdict;
-            animator.Play(verdict.ToString(), 0, 0);
-        }
+        Speed = 1f;
+        animator.Play(_verdict.ToString(), 0, 0);
     }
 
     public void JudgeAnimationPlay(E_JudgeState _state)

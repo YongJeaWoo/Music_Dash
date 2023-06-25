@@ -30,7 +30,6 @@ public enum E_AttackState
 public enum E_Judge
 {
     None,
-    Miss,
     Cool,
     Perfect
 }
@@ -78,8 +77,8 @@ public static class AnimatorName
 
 public static class Number
 {
-    public const float PERFECT_DISTANCE = .5f;
-    public const float COOL_DISTANCE = 1f;
+    public const float PERFECT_DISTANCE = .6f;
+    public const float COOL_DISTANCE = 1.2f;
     public const float MISS_DISTANCE = -1f;
 
     public const float UPPER_Y = 0f;

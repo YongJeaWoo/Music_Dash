@@ -6,4 +6,9 @@ public class DownJudge : Judges
         JudgeManager.Instance.SetDownJudge(this);
         keyCode = "KeyDown";
     }
+
+    protected override Verdicts GetVerdicts()
+    {
+        return JudgeManager.Instance.GetDownVerdict();
+    }
 }
