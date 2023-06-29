@@ -1,3 +1,4 @@
+using DTT.InfiniteScroll;
 using SingletonComponent.Component;
 using System.Collections;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class GameManager : SingletonComponent<GameManager>
     public event GameStateChanged OnGameStateChanged;
     public delegate void GameStateChanged(E_GameState newState);
 
-    private WaitForSeconds waitSeconds = new WaitForSeconds(0.2f);
+    private WaitForSeconds waitSeconds = new WaitForSeconds(1f);
 
     private Judges upJudge;
     private Judges downJudge;
@@ -81,6 +82,8 @@ public class GameManager : SingletonComponent<GameManager>
                 }
             case E_GameState.GameOver:
                 {
+                    NoteManager.Instance.ClearNotes();
+                    NoteManager.Instance.ResetMidiFile();
                     StartCoroutine(ScaleTime());
                     UIManager.Instance.TurnOnText(false);
                     break;
@@ -99,14 +102,14 @@ public class GameManager : SingletonComponent<GameManager>
     #region Check status
     private void Init()
     {
+        JudgeManager judgeManager = JudgeManager.Instance;
+        
         PlayerManager.Instance.InitPlayer();
         var getPlayer = PlayerManager.Instance.GetPlayer();
         getPlayer.InitializePlayer();
         NoteManager.Instance.ResetMidiFile();
         JudgeManager.Instance.SetJudgementPosition();
         UIManager.Instance.TurnOnText(true);
-
-        JudgeManager judgeManager = JudgeManager.Instance;
 
         upJudge = judgeManager.GetUpJudgement();
         downJudge = judgeManager.GetdownJudgement();
@@ -136,7 +139,7 @@ public class GameManager : SingletonComponent<GameManager>
     private IEnumerator ScaleTime()
     {
         yield return waitSeconds;
-        Time.timeScale = 0.8f;
+        Time.timeScale = 0.6f;
 
         yield return waitSeconds;
 

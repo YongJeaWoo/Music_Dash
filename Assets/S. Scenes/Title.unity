@@ -1390,6 +1390,10 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3177601317469510117, guid: e33f274f861319949844f171bc40254a, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4122265321779625613, guid: e33f274f861319949844f171bc40254a, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -1418,7 +1422,8 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -2147087611
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3177601317469510117, guid: e33f274f861319949844f171bc40254a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

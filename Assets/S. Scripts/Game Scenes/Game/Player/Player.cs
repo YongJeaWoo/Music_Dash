@@ -132,9 +132,9 @@ public class Player : MonoBehaviour
 
     private void Dead()
     {
-        GameManager.Instance.ChangeGameOverState();
         animationController.AnimationPlay(E_AniState.Dead);
         isDead = true;
+        GameManager.Instance.ChangeGameOverState();
     }
 
     private IEnumerator InvincibleTime()
