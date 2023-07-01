@@ -157,6 +157,16 @@ public class NoteManager : SingletonComponent<NoteManager>
         noteComponent.CheckYPos();
         noteObject.SetActive(true);
 
+        Note firstNote = upJudge.GetFirstNote() ?? downJudge.GetFirstNote();
+
+        if (firstNote != null)
+        {
+            float distance = Mathf.Abs(firstNote.transform.position.x - upJudge.transform.position.x);
+            float delay = Mathf.Max(0, distance - Number.CHECK_DISTANCE);
+
+            Invoke(nameof(GameManager.Instance.MusicStart), delay);
+        }
+
         if (upJudge != null && isUpJudge)
         {
             upJudge.AddNoteToQueue(noteComponent);

@@ -77,7 +77,7 @@ public class GameManager : SingletonComponent<GameManager>
                 }
             case E_GameState.Play:
                 {
-                    Play();
+                    // Play();
                     break;
                 }
             case E_GameState.GameOver:
@@ -133,7 +133,7 @@ public class GameManager : SingletonComponent<GameManager>
 
     private void Play()
     {
-        MusicStart();
+        // MusicStart();
     }
 
     private IEnumerator ScaleTime()
@@ -175,7 +175,7 @@ public class GameManager : SingletonComponent<GameManager>
         CurrentState = E_GameState.Play;
     }
 
-    private void MusicStart()
+    public void MusicStart()
     {
         MusicData data = MusicDataManager.Instance.GetCurrentMusic();
 
