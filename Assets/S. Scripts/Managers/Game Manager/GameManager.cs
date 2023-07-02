@@ -179,6 +179,7 @@ public class GameManager : SingletonComponent<GameManager>
         if (data != null)
         {
             AudioManager.Instance.PlayMusicData(data);
+            StartCoroutine(nameof(WaitForMusicEnd));
         }
         else
         {
@@ -186,8 +187,9 @@ public class GameManager : SingletonComponent<GameManager>
         }
     }
     
-    private void ChangeResult()
+    private IEnumerator WaitForMusicEnd()
     {
+        yield return new WaitUntil(() => !AudioManager.Instance.audioSource.isPlaying);
         CurrentState = E_GameState.Result;
     }
 }
