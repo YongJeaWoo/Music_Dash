@@ -54,6 +54,7 @@ public class PlayerInfo
     [Header("Player Behaviour")]
     public const float GRAVITY_POWER = 20f;
     public const float JUMP_POWER = 2f;
+    public const float MIDDLE_JUMP = -2f;
     public const float LANDING = -5.5f;
     public const float LANDING_POWER = 25f;
 }

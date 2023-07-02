@@ -1,4 +1,3 @@
-using DTT.InfiniteScroll;
 using SingletonComponent.Component;
 using System.Collections;
 using UnityEngine;
@@ -84,7 +83,7 @@ public class GameManager : SingletonComponent<GameManager>
                 {
                     NoteManager.Instance.ClearNotes();
                     NoteManager.Instance.ResetMidiFile();
-                    StartCoroutine(ScaleTime());
+                    StartCoroutine(nameof(ScaleTime));
                     UIManager.Instance.TurnOnText(false);
                     break;
                 }
@@ -138,9 +137,7 @@ public class GameManager : SingletonComponent<GameManager>
 
     private IEnumerator ScaleTime()
     {
-        yield return waitSeconds;
         Time.timeScale = 0.6f;
-
         yield return waitSeconds;
 
         yield return new WaitForEndOfFrame();
@@ -155,7 +152,7 @@ public class GameManager : SingletonComponent<GameManager>
 
     private void Result() 
     {
-        
+        PanelManager.Instance.ResultPanel();
     }
 
     #endregion

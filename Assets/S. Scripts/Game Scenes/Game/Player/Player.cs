@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     private bool isDamaged = false;
     private bool isDead = false;
 
+    private bool isKeyDownPressed = false;
+    private bool isKeyUpPressed = false;
+
     [Tooltip("Player Info Property")]
     public int CurrentHp
     {
@@ -66,13 +69,40 @@ public class Player : MonoBehaviour
     {
         if (currentHp <= 0f) return;
 
-        if (!isMoving && Input.GetButtonDown("KeyDown") && !isFall && !isJump) animationController.AttackRandomPlay();
+        if (!isMoving && Input.GetButtonDown("KeyDown") && !isFall && !isJump)
+        {
+            animationController.AttackRandomPlay();
+            isKeyDownPressed = true;
+        }
 
         if (!isMoving && Input.GetButtonDown("KeyUp"))
         {
             isJump = true;
             isFall = false;
             animationController.AnimationPlay(E_AniState.Jump);
+            isKeyUpPressed = true;
+        }
+
+        if (isKeyDownPressed && isKeyUpPressed)
+        {
+            if (transform.position.y > PlayerInfo.MIDDLE_JUMP)
+            {
+                transform.position = new Vector2(transform.position.x, PlayerInfo.MIDDLE_JUMP);
+            }
+            else
+            {
+                transform.position = playerPos;
+            }
+
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, PlayerInfo.MIDDLE_JUMP),
+                PlayerInfo.GRAVITY_POWER * Time.deltaTime);
+
+            Debug.Log($"At the Same Time Press PosY 2 : {transform.position.y}");
+
+            animationController.AttackRandomPlay();
+
+            isKeyDownPressed = false;
+            isKeyUpPressed = false;
         }
 
         else if (transform.position.y <= playerPos.y)

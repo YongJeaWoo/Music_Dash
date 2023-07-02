@@ -24,6 +24,8 @@ public class NoteManager : SingletonComponent<NoteManager>
     private ObjectPoolManager objectPoolManager;
     private GameManager gameManager;
 
+    private float judgeLine;
+
     private Judges upJudge;
     private Judges downJudge;
 
@@ -77,7 +79,7 @@ public class NoteManager : SingletonComponent<NoteManager>
 
         yield return GenerateNotesFromMidi();
     }
-
+    
     private IEnumerator ReadFromWebSite()
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, fileLocation);
@@ -161,10 +163,10 @@ public class NoteManager : SingletonComponent<NoteManager>
 
         if (firstNote != null)
         {
-            float distance = Mathf.Abs(firstNote.transform.position.x - upJudge.transform.position.x);
-            float delay = Mathf.Max(0, distance - Number.CHECK_DISTANCE);
+            float distance = Mathf.Abs(firstNote.transform.position.x - judgeLine);
+            float delay = Mathf.Max(0, (distance - Number.CHECK_DISTANCE) / firstNote.Speed);
 
-            Invoke(nameof(GameManager.Instance.MusicStart), delay);
+            StartCoroutine(MusicStart(delay));
         }
 
         if (upJudge != null && isUpJudge)
@@ -178,10 +180,18 @@ public class NoteManager : SingletonComponent<NoteManager>
         }
     }
 
+    private IEnumerator MusicStart(float _delay)
+    {
+        yield return new WaitForSecondsRealtime(_delay);
+        GameManager.Instance.MusicStart();
+    }
+
     public void SetJudgement()
     {
         upJudge = gameManager.UpJudge;
         downJudge = gameManager.DownJudge;
+
+        judgeLine = upJudge.transform.position.x;
     }
 
     public void ClearNotes()

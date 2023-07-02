@@ -141,8 +141,7 @@ public abstract class Judges : MonoBehaviour
     public Note GetFirstNote()
     {
         if (noteQueue.Count > 0) return noteQueue.Peek();
-
-        return null;
+        else return null;
     }
 
     protected Verdicts _GetVerdicts()

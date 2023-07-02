@@ -50,7 +50,7 @@ namespace DTT.InfiniteScroll
 
             if (musicDataList == null || musicDataList.Count == 0) return;
 
-            MusicData firstMusicData = musicDataList[3];
+            MusicData firstMusicData = musicDataList[2];
 
             foreach (MusicData musicData in musicDataList)
             {

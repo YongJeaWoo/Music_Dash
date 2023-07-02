@@ -57,7 +57,6 @@ public class PopupManager : SingletonComponent<PopupManager>
 
         if (index >= 0)
         {
-            // popUps[index].gameObject.SetActive(false);
             Destroy(popUps[index].gameObject);
             popUps.RemoveAt(index);
         }

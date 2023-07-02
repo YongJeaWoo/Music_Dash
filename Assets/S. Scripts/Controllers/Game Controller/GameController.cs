@@ -64,15 +64,19 @@ public class GameController : MonoBehaviour
         {
             if (PanelManager.Instance.IsOver) PanelManager.Instance.GameOverPanel();
 
+            if (PanelManager.Instance.IsResult) PanelManager.Instance.ResultPanel();
+
             fadePanel.gameObject.SetActive(false);
             NoteManager.Instance.ResetMidiFile();
             NoteManager.Instance.ClearNotes();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             if (PanelManager.Instance.IsOver) PanelManager.Instance.GameOverPanel();
+
+            if (PanelManager.Instance.IsResult) PanelManager.Instance.ResultPanel();
 
             fadePanel.gameObject.SetActive(false);
             NoteManager.Instance.ResetMidiFile();
