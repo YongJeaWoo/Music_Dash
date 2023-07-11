@@ -76,11 +76,13 @@ public class GameManager : SingletonComponent<GameManager>
                 }
             case E_GameState.Play:
                 {
+                    Debug.Log($"Now : {_state}");
                     // Play();
                     break;
                 }
             case E_GameState.GameOver:
                 {
+                    Debug.Log($"Now : {_state}");
                     NoteManager.Instance.ClearNotes();
                     NoteManager.Instance.ResetMidiFile();
                     StartCoroutine(nameof(ScaleTime));
@@ -89,6 +91,7 @@ public class GameManager : SingletonComponent<GameManager>
                 }
             case E_GameState.Result:
                 {
+                    Debug.Log($"Now : {_state}");
                     Result();
                     UIManager.Instance.TurnOnText(false);
                     break;

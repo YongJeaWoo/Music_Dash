@@ -114,11 +114,8 @@ public abstract class Judges : MonoBehaviour
 
                 float distance = Mathf.Abs(notePos.x - judgementPos.x);
 
-                if (keyCode == "KeyUp") PlayerManager.Instance.PlayerJumpAttack();
-
                 if (distance <= Number.PERFECT_DISTANCE)
                 {
-                    Debug.Log("Perfect");
                     scoreManager.ScoreProcess(E_Judge.Perfect);
                     scoreManager.SetVerdict(_GetVerdicts(), E_Judge.Perfect);
                     noteQueue.Dequeue();
@@ -126,7 +123,6 @@ public abstract class Judges : MonoBehaviour
                 }
                 else if (distance <= Number.COOL_DISTANCE)
                 {
-                    Debug.Log("Cool");
                     scoreManager.ScoreProcess(E_Judge.Cool);
                     scoreManager.SetVerdict(_GetVerdicts(), E_Judge.Cool);
                     noteQueue.Dequeue();

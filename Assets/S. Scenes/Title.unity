@@ -1393,7 +1393,7 @@ PrefabInstance:
     - target: {fileID: 2758242358937861559, guid: e33f274f861319949844f171bc40254a, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: a2aaf80605a25294989541f164f81f0f, type: 2}
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 2758242358937861559, guid: e33f274f861319949844f171bc40254a, type: 3}
       propertyPath: m_fontStyle
       value: 0
@@ -1405,7 +1405,7 @@ PrefabInstance:
     - target: {fileID: 2758242358937861559, guid: e33f274f861319949844f171bc40254a, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 1642530579775666941, guid: a2aaf80605a25294989541f164f81f0f, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 2758242358937861559, guid: e33f274f861319949844f171bc40254a, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
@@ -1448,7 +1448,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3177601317469510117, guid: e33f274f861319949844f171bc40254a, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1598134648338237662, guid: e33f274f861319949844f171bc40254a, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e33f274f861319949844f171bc40254a, type: 3}

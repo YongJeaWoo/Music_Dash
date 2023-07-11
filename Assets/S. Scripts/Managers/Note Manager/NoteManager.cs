@@ -2,9 +2,11 @@ using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Interaction;
 using Melanchall.DryWetMidi.MusicTheory;
 using SingletonComponent.Component;
+using System;
 using System.Collections;
 using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NoteManager : SingletonComponent<NoteManager>
@@ -121,11 +123,14 @@ public class NoteManager : SingletonComponent<NoteManager>
 
         var noteFirstTime = TimeConverter.ConvertTo<MetricTimeSpan>(notes.First().Time, tempoMap);
         var startTime = noteFirstTime.TotalMicroseconds / 1000000.0;
-
         var defaultTime = 0f;
 
-        foreach (var note in notes)
+        var noteList = notes.ToList();
+
+        for (var n = 0; n < noteList.Count; ++n)
         {
+            var note = noteList[n];
+
             var noteOnTime = TimeConverter.ConvertTo<MetricTimeSpan>(note.Time, tempoMap);
             var noteOffTime = TimeConverter.ConvertTo<MetricTimeSpan>(note.Time + note.Length, tempoMap);
 
@@ -140,13 +145,13 @@ public class NoteManager : SingletonComponent<NoteManager>
                 yield return null;
             }
 
-            CreateNoteBasedOnData(note.NoteName.ToString(), note.NoteNumber, (float)(noteStartTime), (float)(noteEndTime - noteStartTime));
+            CreateNoteBasedOnData(n, note.NoteName.ToString(), note.NoteNumber, (float)(noteStartTime), (float)(noteEndTime - noteStartTime));
 
             yield return null;
         }
     }
 
-    private void CreateNoteBasedOnData(string noteName, int noteNumber, float noteStartTime, float noteDuration)
+    private void CreateNoteBasedOnData(int index, string noteName, int noteNumber, float noteStartTime, float noteDuration)
     {
         if (!IsMidiFileInitialized) return;
 
@@ -159,16 +164,6 @@ public class NoteManager : SingletonComponent<NoteManager>
         noteComponent.CheckYPos();
         noteObject.SetActive(true);
 
-        Note firstNote = upJudge.GetFirstNote() ?? downJudge.GetFirstNote();
-
-        if (firstNote != null)
-        {
-            float distance = Mathf.Abs(firstNote.transform.position.x - judgeLine);
-            float delay = Mathf.Max(0, (distance - Number.CHECK_DISTANCE) / firstNote.Speed);
-
-            StartCoroutine(MusicStart(delay));
-        }
-
         if (upJudge != null && isUpJudge)
         {
             upJudge.AddNoteToQueue(noteComponent);
@@ -177,6 +172,13 @@ public class NoteManager : SingletonComponent<NoteManager>
         if (downJudge != null && !isUpJudge)
         {
             downJudge.AddNoteToQueue(noteComponent);
+        }
+
+        if (index == 0)
+        {
+            float distance = Mathf.Abs(noteComponent.transform.position.x - judgeLine);
+            float delay = (noteComponent.Speed != 0) ? Mathf.Max(0, (distance - Number.CHECK_DISTANCE) / noteComponent.Speed) : 0;
+            StartCoroutine(MusicStart(delay));
         }
     }
 

@@ -1,34 +1,28 @@
 using System.Collections;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class Player : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private AnimationController animationController;
 
-    [Tooltip("Player Info")]
     private int currentHp;
     private Vector2 playerPos = new Vector2(-14, -5.5f);
 
-    [Tooltip("Player Behaviour Check")]
-    private bool isJump, isTop = false;
-    private bool isFall = false;
-    private bool isMoving = true;
+    private bool isMoving = false;
+    private bool isJumping = false;
+    private bool isFalling = false;
     private bool isDamaged = false;
     private bool isDead = false;
 
     private bool isKeyDownPressed = false;
     private bool isKeyUpPressed = false;
 
-    [Tooltip("Player Info Property")]
     public int CurrentHp
     {
         get => currentHp;
         set => currentHp = value;
     }
-    public bool Immute => PlayerInfo.IMMUTE_TIME > 0f;
 
     private void Update()
     {
@@ -69,108 +63,91 @@ public class Player : MonoBehaviour
     {
         if (currentHp <= 0f) return;
 
-        if (!isMoving && Input.GetButtonDown("KeyDown") && !isFall && !isJump)
+        if (!isMoving)
         {
-            animationController.AttackRandomPlay();
-            isKeyDownPressed = true;
-        }
-
-        if (!isMoving && Input.GetButtonDown("KeyUp"))
-        {
-            isJump = true;
-            isFall = false;
-            animationController.AnimationPlay(E_AniState.Jump);
-            isKeyUpPressed = true;
-        }
-
-        if (isKeyDownPressed && isKeyUpPressed)
-        {
-            if (transform.position.y > PlayerInfo.MIDDLE_JUMP)
+            if (Input.GetButtonDown("KeyDown") && !isFalling && !isJumping)
             {
-                transform.position = new Vector2(transform.position.x, PlayerInfo.MIDDLE_JUMP);
-            }
-            else
-            {
-                transform.position = playerPos;
+                animationController.AttackRandomPlay();
+                isKeyDownPressed = true;
             }
 
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, PlayerInfo.MIDDLE_JUMP),
-                PlayerInfo.GRAVITY_POWER * Time.deltaTime);
-
-            Debug.Log($"At the Same Time Press PosY 2 : {transform.position.y}");
-
-            animationController.AttackRandomPlay();
-
-            isKeyDownPressed = false;
-            isKeyUpPressed = false;
-        }
-
-        else if (transform.position.y <= playerPos.y)
-        {
-            isJump = false;
-            isTop = false;
-            isFall = false;
-            transform.position = playerPos;
-            animationController.AnimationPlay(E_AniState.Run);
-        }
-
-        if (isJump)
-        {
-            if (transform.position.y <= PlayerInfo.JUMP_POWER - 0.1f && !isTop && !isFall)
+            if (Input.GetButtonDown("KeyUp"))
             {
-                transform.position = Vector2.Lerp(transform.position, new Vector2(transform.position.x, PlayerInfo.JUMP_POWER),
+                if (!isJumping && !isFalling)
+                {
+                    isJumping = true;
+                    animationController.AnimationPlay(E_AniState.Jump);
+                }
+                else if (isJumping && !isFalling)
+                {
+                    isFalling = true;
+                    animationController.AnimationPlay(E_AniState.Fall);
+                }
+
+                isKeyUpPressed = true;
+            }
+
+            if (isKeyDownPressed && isKeyUpPressed)
+            {
+                if (transform.position.y > PlayerInfo.MIDDLE_JUMP)
+                {
+                    transform.position = new Vector2(transform.position.x, PlayerInfo.MIDDLE_JUMP);
+                }
+                else
+                {
+                    transform.position = playerPos;
+                }
+
+                transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, PlayerInfo.MIDDLE_JUMP),
                     PlayerInfo.GRAVITY_POWER * Time.deltaTime);
+
+                animationController.AttackRandomPlay();
+
+                isKeyDownPressed = false;
+                isKeyUpPressed = false;
             }
 
-            else
+            if (!isJumping && !isFalling && transform.position.y <= playerPos.y)
             {
-                isTop = true;
+                animationController.AnimationPlay(E_AniState.Run);
             }
 
-            if (transform.position.y > playerPos.y && isTop)
+            if (isJumping)
+            {
+                if (transform.position.y <= PlayerInfo.JUMP_POWER - 0.1f && !isFalling)
+                {
+                    transform.position = Vector2.Lerp(transform.position, new Vector2(transform.position.x, PlayerInfo.JUMP_POWER),
+                        PlayerInfo.GRAVITY_POWER * Time.deltaTime);
+                }
+                else
+                {
+                    isJumping = false;
+                    isFalling = true;
+                }
+            }
+
+            if (isFalling)
             {
                 transform.position = Vector2.MoveTowards(transform.position, playerPos, PlayerInfo.GRAVITY_POWER * Time.deltaTime);
-                animationController.AnimationPlay(E_AniState.Fall);
+
+                if (transform.position.y <= playerPos.y)
+                {
+                    isFalling = false;
+                    animationController.AnimationPlay(E_AniState.Run);
+                }
             }
-
-            if (transform.position.y > playerPos.y) InstrusionLanding();
         }
-    }
-
-    private void InstrusionLanding()
-    {
-        if (currentHp <= 0f) return;
-
-        if (Input.GetButtonDown("KeyDown"))
-        {
-            isFall = true;
-        }
-
-        if (isFall)
-        {
-            transform.position = Vector2.Lerp(transform.position,
-                new Vector2(transform.position.x, PlayerInfo.LANDING), PlayerInfo.LANDING_POWER * Time.deltaTime);
-        }
-    }
-
-    public void JumpAttack()
-    {
-        transform.position = new Vector2(transform.position.x, PlayerInfo.JUMP_POWER);
-
-        animationController.AttackRandomPlay();
     }
 
     private void Dead()
     {
         animationController.AnimationPlay(E_AniState.Dead);
-        isDead = true;
         GameManager.Instance.ChangeGameOverState();
     }
 
     private IEnumerator InvincibleTime()
     {
         int countTime = 0;
-        isDamaged = true;
 
         while (countTime < 20)
         {
@@ -183,26 +160,26 @@ public class Player : MonoBehaviour
         }
 
         spriteRenderer.color = new Color32(255, 255, 255, 255);
-
-        isDamaged = false;
-        yield return null;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Note") && !isDamaged && !isDead)
+        if (collision.CompareTag("Note") && !isDead)
         {
-            isDamaged = true;
-            CurrentHp -= 10;
-            UIManager.Instance.comboBackground.SetActive(false);
-            ScoreManager.Instance.SetComboZero();
-            animationController.AnimationPlay(E_AniState.Damage);
-            StartCoroutine(InvincibleTime());
-
-            if (CurrentHp <= 0) 
+            if (currentHp > 0 && !isJumping && !isFalling)
             {
-                CurrentHp = 0;
-                Dead();
+                isDamaged = true;
+                CurrentHp -= 10;
+                UIManager.Instance.comboBackground.SetActive(false);
+                ScoreManager.Instance.SetComboZero();
+                animationController.AnimationPlay(E_AniState.Damage);
+                StartCoroutine(InvincibleTime());
+
+                if (CurrentHp <= 0)
+                {
+                    CurrentHp = 0;
+                    Dead();
+                }
             }
         }
     }

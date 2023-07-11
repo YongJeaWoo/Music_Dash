@@ -43,11 +43,6 @@ public class PlayerManager : SingletonComponent<PlayerManager>
         player = Instantiate(playerPrefab);
         playerAnimationController = player.GetComponentInChildren<AnimationController>();
     }
-
-    public void PlayerJumpAttack()
-    {
-        player.JumpAttack();
-    }
     
     #endregion
 
