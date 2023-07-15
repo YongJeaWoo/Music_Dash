@@ -81,7 +81,7 @@ public static class Number
     public const float PERFECT_DISTANCE = .6f;
     public const float COOL_DISTANCE = 1.2f;
     public const float MISS_DISTANCE = -1f;
-    public const float CHECK_DISTANCE = 3.8f;
+    public const float CHECK_DISTANCE = 6.5f;
 
     public const float UPPER_Y = 0f;
     public const float UNDER_Y = -5.8f;

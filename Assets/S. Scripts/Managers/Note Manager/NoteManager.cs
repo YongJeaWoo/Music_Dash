@@ -2,11 +2,9 @@ using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Interaction;
 using Melanchall.DryWetMidi.MusicTheory;
 using SingletonComponent.Component;
-using System;
 using System.Collections;
 using System.IO;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class NoteManager : SingletonComponent<NoteManager>
@@ -30,6 +28,8 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     private Judges upJudge;
     private Judges downJudge;
+
+    private Coroutine noteGenerationCoroutine;
 
     #region Singleton
 
@@ -57,16 +57,29 @@ public class NoteManager : SingletonComponent<NoteManager>
 
     public void ResetMidiFile()
     {
-        StopCoroutine(nameof(InitMidiFile));
+        if (noteGenerationCoroutine != null)
+        {
+            StopCoroutine(noteGenerationCoroutine);
+            noteGenerationCoroutine = null;
+        }
+
+        IsMidiFileInitialized = false;
     }
 
     public void StartInitMidiFile()
     {
-        StartCoroutine(nameof(InitMidiFile));
+        if (noteGenerationCoroutine == null)
+        {
+            noteGenerationCoroutine = StartCoroutine(InitMidiFile());
+        }
     }
 
     private IEnumerator InitMidiFile()
     {
+        if (IsMidiFileInitialized)
+            yield break;
+
+        ResetMidiFile();
 
         if (Application.streamingAssetsPath.StartsWith("http://") || Application.streamingAssetsPath.StartsWith("Https://"))
         {
@@ -81,7 +94,7 @@ public class NoteManager : SingletonComponent<NoteManager>
 
         yield return GenerateNotesFromMidi();
     }
-    
+
     private IEnumerator ReadFromWebSite()
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, fileLocation);
@@ -123,7 +136,6 @@ public class NoteManager : SingletonComponent<NoteManager>
 
         var noteFirstTime = TimeConverter.ConvertTo<MetricTimeSpan>(notes.First().Time, tempoMap);
         var startTime = noteFirstTime.TotalMicroseconds / 1000000.0;
-        var defaultTime = 0f;
 
         var noteList = notes.ToList();
 
@@ -139,15 +151,11 @@ public class NoteManager : SingletonComponent<NoteManager>
 
             double elapsedTime = noteStartTime - startTime;
 
-            while (defaultTime < elapsedTime)
-            {
-                defaultTime += Time.deltaTime;
-                yield return null;
-            }
+            float delay = (float)elapsedTime;
 
-            CreateNoteBasedOnData(n, note.NoteName.ToString(), note.NoteNumber, (float)(noteStartTime), (float)(noteEndTime - noteStartTime));
+            yield return new WaitForSecondsRealtime(delay);
 
-            yield return null;
+            CreateNoteBasedOnData(n, note.NoteName.ToString(), note.NoteNumber, (float)noteStartTime, (float)(noteEndTime - noteStartTime));
         }
     }
 

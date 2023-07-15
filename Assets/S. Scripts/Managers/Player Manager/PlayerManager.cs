@@ -1,5 +1,4 @@
 using SingletonComponent.Component;
-using System.Collections;
 using UnityEngine;
 
 public class PlayerManager : SingletonComponent<PlayerManager>

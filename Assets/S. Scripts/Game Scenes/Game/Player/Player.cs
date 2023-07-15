@@ -139,6 +139,37 @@ public class Player : MonoBehaviour
         }
     }
 
+    private IEnumerator PlayAttackAnimation()
+    {
+        Judges judges = FindObjectOfType<Judges>();
+        Note firstNote = judges.GetFirstNote();
+        if (firstNote != null)
+        {
+            float notePosX = firstNote.transform.position.x;
+            float playerPosX = transform.position.x;
+            float distance = Mathf.Abs(notePosX - playerPosX);
+
+            if (distance <= Number.CHECK_DISTANCE)
+            {
+                transform.position = new Vector2(transform.position.x, PlayerInfo.MIDDLE_JUMP);
+                animationController.AttackRandomPlay();
+            }
+        }
+
+        while (!Input.GetButtonUp("KeyUp"))
+        {
+            yield return null;
+        }
+
+        transform.position = playerPos;
+
+        while (isJumping)
+        {
+            yield return null;
+            animationController.AttackRandomPlay();
+        }
+    }
+
     private void Dead()
     {
         animationController.AnimationPlay(E_AniState.Dead);
