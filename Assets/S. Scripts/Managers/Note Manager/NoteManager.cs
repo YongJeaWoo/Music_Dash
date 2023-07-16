@@ -137,6 +137,8 @@ public class NoteManager : SingletonComponent<NoteManager>
         var noteFirstTime = TimeConverter.ConvertTo<MetricTimeSpan>(notes.First().Time, tempoMap);
         var startTime = noteFirstTime.TotalMicroseconds / 1000000.0;
 
+        var defaultTime = 0f;
+
         var noteList = notes.ToList();
 
         for (var n = 0; n < noteList.Count; ++n)
@@ -149,13 +151,17 @@ public class NoteManager : SingletonComponent<NoteManager>
             double noteStartTime = noteOnTime.TotalMicroseconds / 1000000.0;
             double noteEndTime = noteOffTime.TotalMicroseconds / 1000000.0;
 
-            double elapsedTime = noteStartTime - startTime;
+            var elapsedTime = noteStartTime - startTime;
 
-            float delay = (float)elapsedTime;
-
-            yield return new WaitForSecondsRealtime(delay);
+            while (defaultTime < elapsedTime)
+            {
+                defaultTime += Time.deltaTime;
+                yield return null;
+            }
 
             CreateNoteBasedOnData(n, note.NoteName.ToString(), note.NoteNumber, (float)noteStartTime, (float)(noteEndTime - noteStartTime));
+
+            yield return null;
         }
     }
 
